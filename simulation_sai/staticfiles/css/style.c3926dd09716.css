@@ -1,0 +1,173 @@
+.login{
+    width:400px;
+    height: 230px;
+    margin-top: -300px;
+    margin-left: 850px;
+    background-color:#5bacc7;
+    border: 8px solid white;
+}
+
+.loginform{
+    flex-basis: 50%;
+    
+    font-family: Georgia, serif;
+    
+
+}
+.loginform h2{
+    text-align: center;
+    color:white;
+    font-family: 'Times New Roman', Times, serif;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+
+.tbox{
+    border-radius: 3px;
+    outline: none;
+
+}
+.center-align {
+    text-align: center;
+    margin-top: 100px;
+    color: white;
+    font-size: 55px;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+.left-align {
+    text-align: left;
+    font-size: 25px;
+    font-family: Georgia, serif;
+    margin-top: 90px;
+    margin-left: 20px;
+    color: white;
+}
+.right-align {
+    text-align: right;
+    margin-top: -150px;
+    font-family: apple-system;
+    font-style: italic;
+    font-size: 35px;
+    margin-right: 20px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+}
+.right-align-1{
+    text-align: right;
+    font-size: 23px;
+    font-family: Georgia, serif;
+    margin-top: 50px;
+    margin-right: 20px;
+    color: white;
+}
+
+body{
+    background-color: #1a7d9e;
+}
+.container{
+    display: flex;
+    margin-top: 50px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color:white;
+}
+
+.container-a{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+    
+}
+
+.container-b{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+}
+
+.container-c{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightpink;
+    font-size: 15px;
+}
+
+.container-d{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+}
+
+.container-e{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+}
+
+.container-f{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightpink;
+}
+
+.card{
+    background-color:beige;
+    width: 180px;
+    height: 400px;
+    margin: 10px;
+}
+
+.card-image{
+    margin-top: 62px;
+}
+
+#lowReferenceBtn, #highReferenceBtn {
+    background-color: green;
+    color: white;
+    margin-top: 5px;
+    height: 50px;
+    width: 250px;
+    margin-left: 80px;
+}
+
+#login-button {
+    background-color: red;
+    color: white;
+    margin-top: 5px;
+    height: 30px;
+    width: 200px;
+    margin-left: 400px;
+    text-decoration: none; 
+    display: inline-block; 
+}
+
+
+#cancel-button {
+    background-color: red;
+    color: white;
+    margin-top: 5px;
+    height: 30px;
+    width: 200px;
+    margin-left: 400px;
+    text-decoration: none; 
+    display: inline-block; 
+}

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home page</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap-5.3.3-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Font-Awesome-4.7.0/css/font-awesome.min.css' %}">
+    <style>
+        body {
+            background-color: #1a7d9e;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            color: white;
+            text-shadow: 4px 4px 8px black;
+        }
+
+        .gallery {
+            margin-top: 220px;
+            margin-left: 300px;
+            position: relative;
+            width: 400px; /* Adjust this value based on your preference */
+            height: 400px; /* Adjust this value based on your preference */
+        }
+
+        .image-container {
+            position: absolute;
+            text-align: center;
+            transform-origin: center;
+        }
+
+        .image-container img {
+            height: 100px; /* Adjust this value based on your preference */
+            width: 100px; /* Adjust this value based on your preference */
+            background-color:white;
+            box-shadow: 5px 5px 15px 1px black;
+            border-radius: 50%;
+            margin: 15px; /* Adjust this value for spacing */
+           
+        }
+
+        .image-container p {
+            margin: 5px 0 0;
+            font-size: 16px; /* Adjust this value for increased font size */
+            font-weight: bold; /* Make the font bold */
+        }
+
+        .center-image {
+            position: absolute;
+            text-align: center;
+            transform: translate(-50%, -50%);
+            top: 23%;
+            left: 20%; 
+        }
+
+        .center-image img {
+            height: 150px; /* Adjust this value based on your preference */
+            width: 150px; /* Adjust this value based on your preference */
+            background-color: white;
+            box-shadow: 5px 5px 15px 1px black;
+            border-radius: 50%;
+        }
+
+        .center-image p {
+            margin: 5px 0 0;
+            font-size: 16px; /* Adjust this value for increased font size */
+            font-weight: bold; /* Make the font bold */
+        }
+
+        @keyframes rotateImages{
+            from{transform: rotate(0deg);}
+            to{transform: rotate(360deg);}
+        }
+
+        .image-1 { transform: rotate(0deg) translate(210px) rotate(0deg); }
+        .image-2 { transform: rotate(45deg) translate(210px) rotate(-45deg); }
+        .image-3 { transform: rotate(90deg) translate(210px) rotate(-90deg); }
+        .image-4 { transform: rotate(135deg) translate(210px) rotate(-135deg); }
+        .image-5 { transform: rotate(180deg) translate(210px) rotate(-180deg); }
+        .image-6 { transform: rotate(225deg) translate(210px) rotate(-225deg); }
+        .image-7 { transform: rotate(270deg) translate(210px) rotate(-270deg); }
+        .image-8 { transform: rotate(315deg) translate(210px) rotate(-315deg); }
+
+        .notify{
+            margin-top: -500px;
+            margin-left: -200px;
+        }
+
+        #notification{
+            height: 50px;
+            width: 280px;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            border: 2px solid black;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+       
+        #logout-btn {
+            height: 50px;
+            width: 150px;
+            margin-top: -500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: red;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            border: 2px solid black;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #logout-btn:hover{
+            background-color: orangered;
+        }
+    </style>
+</head>
+<body>
+    <div class="notify">
+        <input type="text" id="notification1" readonly style="display: none;" ><br>
+        <input type="text" id="notification2" readonly style="display: none;" ><br>
+        <input type="text" id="notification3" readonly style="display: none;" >
+    </div>
+    <div class="gallery">
+        <div class="center-image">
+            <img src="{% static 'images/Gauge.jpg' %}">
+        </div>
+
+        <div class="image-container image-1">
+            <a href="/probe/">
+                <img src="{% static 'images/calibration.jpg' %}"></a>
+                <p>Probe Calibration</p>
+        </div>
+
+        <div class="image-container image-2">
+            <a href="/parameter/">
+                <img src="{% static 'images/para.jpg' %}"></a>
+                <p>Parameter Settings</p>
+            
+        </div>
+
+        <div class="image-container image-3">
+            <a href="/measurebox/">
+                <img src="{% static 'images/measure.jpg' %}"></a>
+                <p>Part Selection</p>
+         
+        </div>
+
+        <div class="image-container image-4">
+            <a href="/utility/">
+            <img src="{% static 'images/master.jpg' %}"></a>
+            <p>Utility</p>
+        </div>
+
+        <div class="image-container image-5">
+            <a href="/report/">
+            <img src="{% static 'images/report.jpg' %}"></a>
+            <p>Report</p>
+        </div>
+
+        <div class="image-container image-6">
+            <a href="/spc/">
+            <img src="{% static 'images/spc.jpg' %}"></a>
+            <p>SPC</p>
+        </div>
+
+        <div class="image-container image-7">
+            <a href="/trace/">
+            <img src="{% static 'images/general_settings.png' %}"></a>
+            <p>General Settings</p>
+        </div>
+
+        <div class="image-container image-8">
+            <a href="/comport/">
+            <img src="{% static 'images/comport_settings.png' %}"></a>
+            <p>Comport Settings</p>
+        </div>
+    </div>
+
+
+    <input type="text" id="db_port" value="{{ comport_com_port }}" hidden>
+    <input type="text" id="com_ports" value="{{ ports_string }}" hidden>
+    <input type="text" id="baud_rate" value="{{ comport_baud_rate }}" hidden>
+    <input type="text" id="parity" value="{{ comport_parity }}" hidden>
+    <input type="text" id="stopbit" value="{{ comport_stopbit }}" hidden>
+    <input type="text" id="databit" value="{{ comport_databit }}" hidden>
+    <textarea id="serial-data-display" cols="50" rows="10" readonly hidden></textarea>
+
+    <button id="logout-btn">LOGOUT</button>
+
+
+    
+    <script>
+
+
+
+
+
+// Initialize WebSocket connection
+// Initialize WebSocket connections
+const socket1 = new WebSocket('ws://localhost:8000/ws/index/');
+const socket2 = new WebSocket('ws://localhost:8000/ws/measurement/');
+
+// Object to track received data status for each COM port
+let comPortStatus = {};
+let comPortOrder = []; // Track the order of received COM ports
+
+// Function to display notifications
+function displayNotification(elementId, message, isSuccess) {
+    const notificationBox = document.getElementById(elementId);
+    notificationBox.value = message;
+    notificationBox.style.backgroundColor = isSuccess ? "green" : "red";
+}
+
+// Function to start serial communication for socket1
+function startSerialCommunication() {
+    if (socket1.readyState === WebSocket.OPEN) {
+        const dbPorts = document.getElementById("db_port").value.split(" ");
+        const comPorts = document.getElementById("com_ports").value.split(" ");
+        const baudRates = document.getElementById("baud_rate").value.split(" ");
+        const parities = document.getElementById("parity").value.split(" ");
+        const stopbits = document.getElementById("stopbit").value.split(" ");
+        const databits = document.getElementById("databit").value.split(" ");
+
+        let foundMatch = false;
+
+        dbPorts.forEach((dbPort, index) => {
+            if (comPorts.includes(dbPort)) {
+                foundMatch = true;
+                if (!comPortStatus[dbPort]) {
+                    comPortStatus[dbPort] = false; // Initially mark as no data received
+                    comPortOrder.push(dbPort); // Track order of first two COMs
+                }
+
+                socket1.send(JSON.stringify({
+                    command: 'start_communication',
+                    com_port: dbPort,
+                    baud_rate: baudRates[index] || baudRates[0],
+                    parity: parities[index] || parities[0],
+                    stopbit: stopbits[index] || stopbits[0],
+                    databit: databits[index] || databits[0]
+                }));
+            }
+        });
+
+        if (!foundMatch) {
+            displayNotification("notification1", `No matching COM port found`, false);
+            displayNotification("notification2", `No matching COM port found`, false);
+        }
+    } else {
+        setTimeout(startSerialCommunication, 3000);
+    }
+}
+
+// Function to start serial communication for socket2 (only for baud rate 4800)
+function startMeasurementCommunication() {
+    if (socket2.readyState === WebSocket.OPEN) {
+        const dbPorts = document.getElementById("db_port").value.split(" ");
+        const comPorts = document.getElementById("com_ports").value.split(" ");
+        const baudRates = document.getElementById("baud_rate").value.split(" ");
+        const parities = document.getElementById("parity").value.split(" ");
+        const stopbits = document.getElementById("stopbit").value.split(" ");
+        const databits = document.getElementById("databit").value.split(" ");
+
+        let found4800 = false;
+
+        comPorts.forEach((comPort, index) => {
+            if (baudRates[index] === "4800") {
+                found4800 = true;
+                socket2.send(JSON.stringify({
+                    command: 'start_communication',
+                    com_port: dbPorts,
+                    baud_rate: "4800",
+                    parity: parities[index] || parities[0],
+                    stopbit: stopbits[index] || stopbits[0],
+                    databit: databits[index] || databits[0]
+                }));
+            }
+        });
+
+        if (!found4800) {
+            displayNotification("notification3", `No matching COM port found`, false);
+        }
+    } else {
+        setTimeout(startMeasurementCommunication, 3000);
+    }
+}
+
+// WebSocket event listeners for socket1
+socket1.onopen = function() {
+    console.log("WebSocket connection established for index.");
+    startSerialCommunication();
+};
+
+socket1.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    const message = data.message;
+    const comPort = data.com_port;
+
+    if (comPort) {
+        comPortStatus[comPort] = true; // Mark that data has been received
+
+        if (!comPortOrder.includes(comPort)) {
+            comPortOrder.push(comPort);
+        }
+    }
+
+    const serialDataDisplay = document.getElementById("serial-data-display");
+    serialDataDisplay.value += message + '\n';
+    serialDataDisplay.scrollTop = serialDataDisplay.scrollHeight;
+
+    // Assign first and second COM ports based on order
+    const firstCOM = comPortOrder[0] || null;
+    const secondCOM = comPortOrder[1] || null;
+
+    if (comPort === firstCOM) {
+        displayNotification("notification1", `Connected: ${firstCOM} `, true);
+    }
+    if (comPort === secondCOM) {
+        displayNotification("notification2", `Connected: ${secondCOM} `, true);
+    }
+};
+
+// WebSocket event listeners for socket2
+socket2.onopen = function() {
+    console.log("WebSocket connection established for measurement.");
+    startMeasurementCommunication();
+};
+
+socket2.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    const message = data.message;
+    const comPort = data.com_port;
+
+    if (comPort) {
+        comPortStatus[comPort] = true; // Mark that data has been received
+
+        if (!comPortOrder.includes(comPort)) {
+            comPortOrder.push(comPort);
+        }
+    }
+
+    const thirdCOM = comPortOrder[2] || null;
+
+    if (comPort === thirdCOM) {
+        displayNotification("notification3", `Connected: ${thirdCOM} `, true);
+    }
+};
+
+// Function to check for disconnected COM ports every **1 second**
+setInterval(() => {
+    Object.keys(comPortStatus).forEach((comPort) => {
+        if (!comPortStatus[comPort]) {
+            // Handle disconnected COM ports separately
+            if (comPort === comPortOrder[0]) {
+                displayNotification("notification1", `${comPort} Disconnected!`, false);
+            }
+            if (comPort === comPortOrder[1]) {
+                displayNotification("notification2", `${comPort} Disconnected!`, false);
+            }
+            if (comPort === comPortOrder[2]) {
+                displayNotification("notification3", `${comPort} Disconnected!`, false);
+            }
+        }
+        comPortStatus[comPort] = false; // Reset for next check
+    });
+
+    // Ensure "No COM available" message is displayed if ports are removed
+    if (!comPortOrder[0]) {
+        displayNotification("notification1", `No COM port available`, false);
+    }
+    if (!comPortOrder[1]) {
+        displayNotification("notification2", `No COM port available`, false);
+    }
+    if (!comPortOrder[2]) {
+        displayNotification("notification3", `No COM port available`, false);
+    }
+}, 1000);
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            window.location.href = "{% url 'home' %}";
+        });
+
+       // Function to check if the username and password are correct
+       function checkCredentials(username, password) {
+            if (username === 'o' && password === 'o') {
+                return 'o';
+            } else if (username === 'saadmin' && password === 'saadmin') {
+                return 'saadmin';
+            } 
+            else if (username === 'admin' && password === 'admin') {
+                return 'admin';
+            }else {
+                return null;
+            }
+        }
+
+        // Accessing the JSON data passed from Django
+        var userLoginsJson = JSON.parse('{{ user_logins_json | escapejs }}');
+
+        // Logging each user login entry separately
+        userLoginsJson.forEach(function(userLogin, index) {
+            console.log('Username:', userLogin.username);
+            console.log('Password:', userLogin.password);
+
+            // Check the provided credentials
+            var userRole = checkCredentials(userLogin.username, userLogin.password);
+            if (userRole === 'o') {
+                // console.log('User "o" logged in. Limited access.');
+
+                // Enable links to allowed pages for "o"
+                document.querySelector('.image-container.image-3 a').setAttribute('href', '/measurebox/');
+                document.querySelector('.image-container.image-5 a').setAttribute('href', '/report/');
+                document.querySelector('.image-container.image-6 a').setAttribute('href', '/spc/');
+
+                // Disable links to other pages
+                var disabledLinks = document.querySelectorAll('.image-container a:not([href="/measurebox/"]):not([href="/report/"]):not([href="/spc/"])');
+                disabledLinks.forEach(function(link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault(); // Prevent default link behavior
+                        alert('You do not have access to this page under the username "o".');
+                    });
+                });
+            } 
+            if (userRole === 'admin') {
+                // console.log('User "admin" logged in. Limited access.');
+
+                // Enable links to allowed pages for "o"
+                document.querySelector('.image-container.image-3 a').setAttribute('href', '/measurebox/');
+                document.querySelector('.image-container.image-4 a').setAttribute('href', '/utility/');
+                document.querySelector('.image-container.image-5 a').setAttribute('href', '/report/');
+                document.querySelector('.image-container.image-8 a').setAttribute('href', '/comport/');
+                document.querySelector('.image-container.image-1 a').setAttribute('href', '/probe/');
+                document.querySelector('.image-container.image-2 a').setAttribute('href', '/parameter/');
+                document.querySelector('.image-container.image-6 a').setAttribute('href', '/spc/');
+
+
+                // Disable links to other pages
+                var disabledLinks = document.querySelectorAll 
+                ('.image-container a:not([href="/measurebox/"]):not([href="/utility/"]):not([href="/report/"]):not([href="/comport/"]):not([href="/probe/"]):not([href="/parameter/"]):not([href="/spc/"])');
+                disabledLinks.forEach(function(link) {
+                    link.addEventListener('click', function(event) {
+                        event.preventDefault(); // Prevent default link behavior
+                        alert('You do not have access to this page under the username "admin".');
+                    });
+                });
+            }
+            else if (userRole === 'saadmin') {
+                // console.log('User "admin" logged in. Full access.');
+
+                // Enable links to all pages for "admin"
+                document.querySelectorAll('.image-container a').forEach(function(link) {
+                    var href = link.getAttribute('href');
+                    if (!href) {
+                        // Set the appropriate href attribute for admin
+                        var imgSrc = link.querySelector('img').getAttribute('src');
+                        if (imgSrc.includes('calibration.jpg')) {
+                            link.setAttribute('href', '/probe/');
+                        } else if (imgSrc.includes('para.jpg')) {
+                            link.setAttribute('href', '/parameter/');
+                        } else if (imgSrc.includes('master.jpg')) {
+                            link.setAttribute('href', '/measurebox/');
+                        } else if (imgSrc.includes('measure.jpg')) {
+                            link.setAttribute('href', '/utility/');
+                        } else if (imgSrc.includes('report.jpg')) {
+                            link.setAttribute('href', '/report/');
+                        } else if (imgSrc.includes('spc.jpg')) {
+                            link.setAttribute('href', '/spc/');
+                        } else if (imgSrc.includes('general_settings.png')) {
+                            link.setAttribute('href', '/trace/');
+                        } else if (imgSrc.includes('comport_settings.png')) {
+                            link.setAttribute('href', '/comport/');
+                        }
+                    }
+                });
+            } else {
+                console.log('Invalid credentials.');
+            }
+        });
+    </script>
+</body>
+</html>

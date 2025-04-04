@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Part Selection</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #1a7d9e;
+    }
+
+    .container {
+      text-align: center;
+      padding: 20px;
+      border: 2px solid black;
+      border-radius: 8px;
+      background-color: #f8f8f8;
+      height: 280px;
+      width: 500px;
+      margin-left: -250px;
+      margin-top: -50px;
+    }
+
+    label {
+      display: inline-block;
+      width: 150px;
+      margin-top: 10px;
+      margin-left: 0%;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    select {
+      box-sizing: border-box;
+      width: 10%;
+      height: 30px;
+      width: 200px;
+      font-size: 15px;
+      font-family: 'Courier New', Courier, monospace;
+    }
+
+    #select-btn {
+      width: 200px;
+      height: 40px;
+      background-color: rgb(48, 236, 48);
+      margin-left: 20px;
+      font-size: 20px;
+    }
+
+    #cancel-btn {
+      width: 200px;
+      height: 40px;
+      margin-top: 30px;
+      background-color: red;
+      font-size: 20px;
+    }
+
+    .centered-content {
+      color: white;
+      text-shadow: 2px 2px 4px #000000;
+      text-align: center;
+      margin-top: -450px;
+      margin-left: -500px;
+      font-weight: bold;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+
+    #notification {
+      display: none;
+      position: fixed;
+      height: 25px;
+      width: 500px;
+      top: 75%;
+      left: 45%;
+      transform: translateX(-50%);
+      text-align: center;
+      font-size: large;
+      font-weight: bold;
+      background-color: yellow;
+      color: black;
+      padding: 15px;
+      border-radius: 5px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+    }
+
+    #master-btn,
+    #measure-btn {
+      width: 150px;
+      height: 100px;
+      margin-left: 20px;
+      margin-top: 10px;
+      font-size: 15px;
+      background-color: orangered;
+      color: white;
+      border: 2px solid white;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    #master-btn:hover,
+    #measure-btn:hover {
+      background-color: orange;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <label for="partModel">PART MODEL:</label>
+    <select id="partModel" name="partModel">
+      {% for value in part_model_values %}
+        <option value="{{ value }}" {% if current_selection and current_selection.part_model == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="operator">OPERATOR:</label>
+    <select id="operator" name="operator">
+      {% for value in operator_values %}
+        <option value="{{ value }}" {% if current_selection and current_selection.operator == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="machine">MACHINE:</label>
+    <select id="machine" name="machine">
+      {% for value in machine_name_values %}
+        <option value="{{ value }}" {% if current_selection and current_selection.machine == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select>
+
+    <!-- <label for="shift">SHIFT:</label>
+    <select id="shift" name="shift">
+      {% for value in batch_no_values %}
+        <option value="{{ value }}" {% if current_selection and current_selection.shift == value %}selected{% endif %}>{{ value }}</option>
+      {% endfor %}
+    </select> -->
+
+    <div>
+      <a href="{% url 'index' %}">
+        <button type="button" id="cancel-btn"><b>Cancel</b></button>
+      </a>
+      <button type="button" id="select-btn"><b>Select</b></button>
+    </div>
+    <br>
+  </div>
+  <div>
+    <button type="button" id="master-btn"><b>MASTER</b></button><br>
+    <button type="button" id="measure-btn"><b>MEASUREMENT</b></button>
+  </div>
+
+  <div class="centered-content">
+    <h1><b>Part Selection</b></h1>
+  </div>
+
+  <div id="notification"></div>
+
+  <script>
+
+// document.addEventListener("DOMContentLoaded", function () {
+//     document.querySelectorAll("select").forEach(select => {
+//         select.addEventListener("focus", function () {
+//             let rect = this.getBoundingClientRect(); // Get current position of select box
+//             let optionCount = Math.min(this.options.length, 8); // Show max 8 options at a time
+//             let optionHeight = 30; // Approximate height of each option in px
+//             let totalHeight = optionCount * optionHeight;
+
+//             // Create a floating dropdown
+//             this.style.overflowY = "auto"; // Enable scrolling inside dropdown
+//             this.style.height = `${totalHeight}px`; // Set height for visible options
+//             this.size = optionCount; // Expand dropdown
+//             this.style.top = `${rect.top - totalHeight}px`; // Move dropdown above
+
+//             // Prevent page scroll when dropdown is open
+//             document.body.style.overflow = "hidden";
+//         });
+
+//         select.addEventListener("blur", function () {
+//             this.style.zIndex = "1";
+//             this.style.overflow = "hidden";
+//             this.style.height = "30px"; // Reset height
+//             this.size = 1; // Collapse dropdown
+
+//             // Restore page scrolling
+//             document.body.style.overflow = "auto";
+//         });
+
+//         select.addEventListener("change", function () {
+//             this.blur(); // Collapse after selection
+//         });
+//     });
+// });
+
+
+    document.getElementById('select-btn').addEventListener('click', function() {
+      const partModel = document.getElementById('partModel').value;
+      const operator = document.getElementById('operator').value;
+      const machine = document.getElementById('machine').value;
+      // const shift = document.getElementById('shift').value;
+
+      // console.log('Selected Values:');
+      // console.log('PART MODEL:', partModel);
+      // console.log('OPERATOR:', operator);
+      // console.log('MACHINE:', machine);
+      // console.log('SHIFT:', shift);
+
+      const data = {
+        partModel: partModel,
+        operator: operator,
+        machine: machine,
+        // shift: shift
+      };
+
+      const csrftoken = getCookie('csrftoken');
+
+      fetch('/measurebox/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRFToken': csrftoken
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        // console.log('Server Response:', data);
+        if (data.status === 'success') {
+          displayNotification('Your part selection was successful.');
+          // Set a 5-second delay before reloading the page
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+    
+    });
+
+    function displayNotification(message) {
+      const notificationDiv = document.getElementById('notification');
+      notificationDiv.innerText = message;
+      notificationDiv.style.display = 'block';
+      setTimeout(() => {
+        notificationDiv.style.display = 'none';
+      }, 3000);
+    }
+
+    document.getElementById('master-btn').addEventListener('click', function() {
+      window.location.href = '/master/';
+    });
+
+    document.getElementById('measure-btn').addEventListener('click', function() {
+      window.location.href = '/measurement/';
+    });
+
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+  </script>
+</body>
+</html>

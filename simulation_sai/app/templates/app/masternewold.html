@@ -1,0 +1,3033 @@
+{% extends 'app/layouts/main.html' %}
+
+{% block title %}
+Measurement Page
+{% endblock title %}
+
+{% block content %}
+<style>
+    .box-1{
+        height: 200px;
+        width: 100%;
+        padding: 10px;
+        background-color:rgb(245, 196, 106);
+        border: 2px solid black;    
+    }
+    .box-2{
+        height: 500px;
+        width: 1000px;
+        background-color:lightgrey;
+        border: 1px solid black; 
+        margin-top: -440px;   
+    }
+    label {
+            display: inline-block;
+            width: 100px; 
+            margin-top: 10px;
+            margin-left: 0%;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        select {
+            box-sizing: border-box;
+            width: 10%; 
+            height: 30px;
+        } 
+        input {
+            margin-top: 10px;
+            box-sizing: border-box;
+            width: 10%;
+            font-family: 'Courier New', Courier, monospace;
+        }
+        .center-image{
+            margin-left: 1130px;
+            margin-top: -120px;
+            
+        }
+       .center-image-1{
+        margin-top: -130px;
+       }
+      
+    
+       table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #my-table th,
+    #my-table td{
+    border: 1px solid black;
+    /* padding: 8px; */
+    height: 30px;
+    text-align: center;
+    font-weight: bold;
+    font-size: 16px;
+
+}
+
+#my-table th{
+    background-color:darkmagenta;
+    color: white;
+}
+
+.readingInputs{
+        margin-top: 0px;
+        border: none;
+        outline: none;
+        background-color: lightgrey;
+    }   
+
+
+
+#save-btn{
+    margin-top: 10px;
+            width: 100px;
+            height: 80px;
+            margin-left: 1210px;
+            background-color: pink;
+            
+        }
+        #master-btn{
+            width: 100px;
+            height: 80px;
+            margin-left: 1210px;
+            background-color: rgb(240, 96, 240);
+            
+        }
+
+        #start-btn{
+            width: 100px;
+            height:80px ;
+            margin-left: 1210px;
+            margin-top: 10px;
+            background-color: lightgreen;
+        }
+        
+        #stop-btn{
+            width: 100px;
+            height:80px ;
+            margin-left: 1210px;
+            margin-top: 10px;
+            background-color: coral;
+        }
+        #back-btn{
+            width: 100px;
+            height:80px ;
+            margin-left: 1210px;
+            margin-top: 10px;
+            background-color: rgb(233, 177, 73);
+        }
+
+        .notification-container {
+        position: absolute;
+        top: 60%;
+        left: 35%;
+        transform: translate(-50%, -50%);
+        background-color:orange;
+        height: 120px;
+        width: 900px;
+        z-index: 1000; 
+        border: 2px solid black;
+    }
+    
+    #punch_textarea{
+        margin-top: 5px;
+        margin-left: 10px;
+        width: 800px;
+        height: 50px;
+        font-weight: bold;    /* Makes the text bold */
+        font-size: 30px;      /* Increases the font size */
+    }
+    .disabled {
+        display: none;
+    }
+    .exit-symbol-container {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        cursor: pointer;
+        background-color: red; 
+        padding: 5px; 
+        border-radius: 10%; 
+    }
+
+    /* Exit symbol */
+    .exit-symbol {
+        color: white; /* Set the color of the exit symbol to white */
+    }
+
+    .indicator-box, .indicator-box1 {
+    width: 50%; /* Adjust width as needed */
+    height: 25px; /* Adjust height as needed */
+    border: 1px solid #000; /* Border */
+    margin-left: 0px;
+  
+}
+
+.reset-button {
+  position: relative;
+  background-color: #007bff;
+  border: none;
+  border-radius: 30%;
+  width: 40px;
+  height: 40px;
+  margin-left: 10px;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.reset-symbol {
+  font-size: 20px;
+  color: white;
+  position: relative;
+  z-index: 1;
+}
+
+.reset-button:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 120%;
+  height: 120%;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%) rotateX(55deg) rotateY(30deg);
+  transition: transform 0.5s ease;
+}
+
+.reset-button:hover:before {
+  transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
+}
+
+.notification-container1 {
+  position: fixed;
+  top: 50%;
+  left: 80%;
+  height: 300px;
+  width: 350px;
+  transform: translate(-50%, -50%);
+  background-color:lightblue;
+  border: 2px solid black;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+input[type=checkbox] {
+        transform: scale(1.5); /* Increase the size of the checkbox */
+        margin-right: 5px; /* Add some spacing between checkbox and label */
+    }
+    .arrow-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 8px 16px;
+            border: none;
+            background-color: #FF0000; /* Red background */
+            color: white; /* White text */
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            margin-left: 25px;
+           
+        }
+
+        .arrow-button:hover {
+            background-color: #CC0000; /* Darker red background on hover */
+          
+        }
+
+        .arrow-tail{
+            text-align: center;
+            font-size: 17px;
+            font-weight: bold;
+            
+        }
+
+        
+
+        .center-notification {
+    display: none; /* Initially hidden */
+    position: fixed;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    font-weight: bold;
+    justify-content: center;
+    top: 45%;
+    left: 45%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+    height: 250px;
+    width: 400px;
+    background-color: lightblue; /* Optional: To make it more visible */
+    padding: 20px; /* Optional: For some padding */
+    border: 2px solid black; /* Optional: For some border */
+    border-radius: 8px; /* Optional: For rounded corners */
+}
+
+#overwrite_ok_button{
+    height: 40px;
+    width: 100px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+
+}
+
+#overwrite_cancel_button{
+    height: 40px;
+    width: 100px;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+
+}
+
+#punch_login{
+    height: 40px;
+    width: 100px;
+    background-color: green;
+    color: white;
+    font-weight: bold;
+
+}
+
+#customAlert{
+    display: none;
+    position: fixed; 
+    top: 20px;
+    width: 500px;
+    height: 100px;
+    left: 50%;
+    top: 40%;
+    text-align: center;
+    font-weight: bold;
+    transform: translateX(-50%);
+    background-color: yellow; 
+    color: black; 
+    border: 1px solid black ; 
+    padding: 10px;
+    z-index: 1000;
+}
+
+#box3{
+    height: 440px;
+    width: 200px;
+    background-color:lightgray;
+    margin-left:1005px;
+    margin-top:-440px;
+    border: 1px solid black;
+}
+#attribute{
+    background-color: red;
+    height: 40px;
+}
+
+
+/* Modal Styling */
+.modal {
+    display: none;  
+    margin-left: 20%; 
+    top: 50%; 
+    width: 60%; 
+    height: 30%; 
+    background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+    justify-content: center; 
+    align-items: center;
+}
+
+.modal-content {
+    background-color: green; /* Green background */
+    color: white; /* White text */
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-btn {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 5px;
+}
+
+#confirm-yes {
+    background-color: white;
+    color: green;
+}
+
+#confirm-no {
+    background-color: white;
+    color: red;
+}
+
+#confirm-yes:focus {
+    outline: 3px solid yellow; /* Yellow border for highlight */
+}
+
+</style>
+
+<div class="box-1" id="box1">
+
+    
+
+    <label for="date" style="width: 50px; margin-left:10px;">DATE:</label>
+    <input type="text" id="date" style="width: 210px;background-color:#1a7d9e ;color: white;">
+
+    <label for="operator">OPERATOR:</label>
+    <input type="text" id="operator" >
+
+    <label for="shift" style="width: 70px;">SHIFT:</label>
+    <input type="text" id="shift" class="shift-name" style="width: 8%;" >
+    
+    
+    <label for="accept" style="width: 70px;">ACCEPT:</label>
+    <input type="text" id="accept" value="0" style="background-color: green;width: 5%;">
+
+    <label for="reject" style="width: 70px;">REJECT:</label>
+    <input type="text" id="reject" value="0" style="background-color: red;width: 5%;">
+
+    <label for="rework" style="width: 70px;">REWORK:</label>
+    <input type="text" id="rework" value="0" style="background-color: yellow;width: 5%;">
+    
+    <button class="reset-button" id="reset-button">
+        <span class="reset-symbol">&#8634;</span>
+    </button>
+      
+    <button class="arrow-button"  onclick="redirectToMeasurebox()">
+        <div class="arrow-icon">
+            <div class="arrow-tail"> BACK </div>
+        </div> 
+       </button><br>
+
+
+    
+    <label for="machine" style="margin-left: 120px;" >MACHINE:</label>
+    <input type="text" id="machine" style="width: 8%;">
+
+    <label for="partModel" style="width: 110px;" >PART MODEL:</label>
+    <select id="partModel" name="partModel" style="width: 150px;" >
+        {% for value in part_model_values %}
+            <option value="{{ value }}"><b>{{ value }}</b></option>
+        {% endfor %}
+    </select>
+
+    <label for="comp_srno" style="width: 80px;">COMP NO:</label>
+    <input type="text" id="comp_srno" style="width: 400px; font-weight: bold; font-size: 18px;"><br>
+
+    <label for="part_status" style="font-size: 15px; width: 120px;margin-left: 130px;" >PART STATUS</label>
+    <input type="text" id="part_status" style="width: 170px;height: 40px;">
+    
+    <input type="text" id="customer_name" style="width: 300px;height: 40px; margin-left: 20px;text-align: center;font-weight: bold;">
+    
+    <label for="cycle_mode" style="margin-left: 50px;">PLC_STATUS:</label>
+    <input type="text" id="cycle_mode" readonly ><br>
+
+    <input type="text" id="pre" style="width: 950px;height: 30px;margin-left: 140px;">
+
+    {% load static %}
+    <div class="center-image">
+            <img src="{% static 'images/Gauge.jpg' %}" style="height: 130px;width: 120px; margin-left: 20px; border: 4px solid white;">
+        </div>
+    
+        {% load static %}
+        <div class="center-image-1">
+                <img src="{% static 'images/Gauge.jpg' %}" style="height: 130px;width: 120px;  border: 4px solid black;">
+            </div>    
+</div>
+
+    
+  <div><button type="button" id="master-btn"><b>Master<br>[F1]</b></button></div>
+  <div><button type="button" id="start-btn"><b> Start<br>[F4]</b></button></div>
+  <div><button type="button" id="stop-btn"><b>Stop<br>[F5]</b></button></div>
+  <div><button type="button" id="save-btn" disabled style="filter: blur(2px);"><b> Save<br></b></button></div>
+  <div><button type="button" id="back-btn"><b>Back<br>[F7]</b></button></div>
+  
+
+
+<div class="box-2" id="box2" style="overflow-y: auto;">
+    
+      <table border="1" style="width: 100%;" id="my-table">
+        <thead>
+          <tr>
+            <th style="width: 5%;height: 30px; ">Sr.No</th>
+            <th style="width: 15%;" id="parameter_name">Parameter Name</th>
+            <th style="width: 10%;" id="nominal">Nominal</th>
+            <th style="width: 10%;" id="readings">Readings</th>
+            <th style="width: 10%;" id="lsl">LSL</th>
+            <th style="width: 25%;" id="indicator">Indicator</th>
+            <th style="width: 10%;" id="usl">USL</th>
+            <th style="width: 15%;" id="status">Status</th>
+            <th style="display: none;" id="utl">utl</th>
+            <th style="display: none;" id="ltl">ltl</th>
+          </tr>
+        </thead>
+        <tbody id="table-body" >
+            
+        </tbody>
+      </table>
+    
+</div>
+
+
+<div class="notification-container" id="notification-container">
+    <pre style="margin-top: 10px; font-size: large; font-weight: bold;">Enter Your Punch Number here:</pre>
+    <textarea id="punch_textarea" onkeydown="handleEnterKeyPress(event)"></textarea>
+</div>
+
+<div class="notification-container1" id="notification-container1" style="display:none;">
+    <div class="exit-symbol-container" onclick="closeNotification1()">
+        <span class="exit-symbol">❌</span>
+    </div>
+    <center style="color: white;">
+        <div style="border: 2px solid black;width: 200px;background-color: rgb(167, 27, 167);"><b>RESET VALUES</b></div>
+    </center>
+    <div style="margin-top: 20px; margin-left: 70px;  " id="notificationDiv" >
+        <label for="userid">USER ID:</label>
+        <input type="text" id="userid" style="width: 150px;" ><br>
+        <label for="password">PASSWORD:</label>
+        <input type="text" id="password" style="width: 150px;" ><br><br>
+        <button onclick="handleLogin()" style="margin-left: 60%;width: 100px; background-color: orangered;"><b>OK</b></button><br><br>
+
+    </div>
+</div>
+
+<div id="punch_overwrite" class="center-notification">
+    <div class="exit-symbol-container" onclick="closeNotification()">
+        <span class="exit-symbol">❌</span>
+    </div>
+    <div id="punch_overwrite_container">
+        <p id="error_message"></p>
+        <p>Do you want to OVERWRITE</p>
+        <button id="overwrite_cancel_button" onclick="punchOverwriteCancel()">CANCEL</button>
+        <button id="overwrite_ok_button" onclick="punchOverwrite()">OK</button>
+    </div>
+    <div style="margin-top: 20px; display: none;" id="punch_overwrite_credentials">
+        <label for="userid_punch">USER ID:</label>
+        <input type="text" id="userid_punch" style="width: 150px;"><br>
+        <label for="password_punch">PASSWORD:</label>
+        <input type="text" id="password_punch" style="width: 150px;"><br><br>
+        <button id="overwrite_cancel_button" onclick="punchOverwriteCancel()">CANCEL</button>
+        <button id="punch_login" onclick="punchOverwriteLogin()">OK</button>
+        </div>
+</div>
+
+<div id="customAlert" ></div>
+
+
+<!-- <div class="box-3" id="box3" style="filter: blur(5px); pointer-events: none; opacity: 0.5;"> -->
+    <div class="box-3" id="box3" style="overflow-y: auto;filter: blur(5px); pointer-events: none; opacity: 0.5;">
+        <center id="attribute"><b>ATTRIBUTE PARAMETER</b></center>
+        <label for="attributeParameter" style="width: 200px;margin-top: 0px;">Parameter Name:</label><br>
+    
+        <div class="attribute_input_box" style="display: none;">
+        <input type="text" id="attributeParameter" style="font-weight: bold; margin-top: 0px;" readonly><br>
+    
+        <div class="buttonAR" style="margin-top: 5px;">
+        <button type="button" id="attributeReject">REJECT</button>
+        <button type="button" id="attributeAccept">ACCEPT</button>
+        </div>
+    
+        <input type="text" id="attributeStatus"><br>
+        </div>
+      </div><br>
+  
+
+    <textarea id="probe-A" ></textarea>
+    <textarea id="probe-B" ></textarea>
+    <textarea id="probe-C" ></textarea>
+    <textarea id="probe-D" ></textarea>
+    <textarea id="probe-E" ></textarea>
+    <textarea id="probe-F" ></textarea>
+    <textarea id="probe-G" ></textarea>
+    <textarea id="probe-H" ></textarea>
+    <textarea id="probe-I" ></textarea>
+    <textarea id="probe-J" ></textarea>
+    <textarea id="probe-K" ></textarea>
+
+
+
+<!-- Custom Confirmation Modal -->
+<div id="confirmation-modal" class="modal">
+    <div class="modal-content">
+        <p>Do you want to store this data?</p>
+        <button id="confirm-yes" class="modal-btn">Yes</button>
+        <button id="confirm-no" class="modal-btn">No</button>
+    </div>
+</div>
+
+
+
+<div id="rejectnotify" style="display: none;">
+    <input type="text" style="height: 40px; width: 60px; margin-top: 20px;">
+</div>
+
+<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+
+
+<script>
+  
+
+
+function redirectToMeasurebox() {
+            window.location.href = '/measurebox/';
+        }
+/////////////////////////////////////////////
+window.addEventListener('DOMContentLoaded', (event) => {
+            var inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.setAttribute('autocomplete', 'off');
+            });
+        });
+/////////////////////////////////////////////
+
+//   // Shift values passed from Django as a JSON string
+//   var shiftValues = JSON.parse('{{ shift_values_json|escapejs }}');
+//     console.log("shiftValues", shiftValues);
+
+//     // Array to keep track of shifts that have been notified
+//     let notifiedShifts = [];
+
+//     // Function to convert time strings to Date objects
+//     function convertToTimeObject(timeStr) {
+//         const [time, period] = timeStr.trim().split(' ');
+//         const [hours, minutes, seconds] = time.split(':');
+//         let hours24 = parseInt(hours);
+
+//         if (period === 'PM' && hours24 !== 12) {
+//             hours24 += 12;
+//         } else if (period === 'AM' && hours24 === 12) {
+//             hours24 = 0;
+//         }
+
+//         const now = new Date();
+//         return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours24, minutes, seconds);
+//     }
+
+//     // Function to check the current time against shift times
+//     function checkShiftTimes() {
+//         const now = new Date();
+
+//         shiftValues.forEach(shift => {
+//             const shiftName = shift[0];
+//             const shiftTime = convertToTimeObject(shift[1]);
+
+//             // Only check if this shift hasn't already triggered
+//             if (!notifiedShifts.includes(shiftName)) {
+//                 // If the current time matches the shift time, show notification
+//                 if (now.getHours() === shiftTime.getHours() &&
+//                     now.getMinutes() === shiftTime.getMinutes() &&
+//                     now.getSeconds() === shiftTime.getSeconds()) {
+
+//                     // Display the notification once
+//                     document.getElementById('notification-container1').style.display = 'block';
+//                     document.getElementById('notificationMessage').innerText = `It's time for ${shift[0]}!`;
+
+//                     // Add the shift to the notified list so it doesn't trigger again
+//                     notifiedShifts.push(shiftName);
+//                 }
+//             }
+//         });
+//     }
+
+//     // Close the notification
+//     // Set an interval to check every second to ensure precision
+//     setInterval(checkShiftTimes, 1000);  // Check every second
+
+
+// function updateDateTime() {
+        //     var currentDate = new Date();
+        //     var hours = currentDate.getHours();
+        //     var minutes = currentDate.getMinutes();
+        //     var seconds = currentDate.getSeconds();
+        //     var ampm = hours >= 12 ? 'PM' : 'AM';
+        //     hours = hours % 12;
+        //     hours = hours ? hours : 12; // Handle midnight (0 hours)
+        //     minutes = minutes < 10 ? '0' + minutes : minutes;
+        //     seconds = seconds < 10 ? '0' + seconds : seconds;
+        //     var currentTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
+        //     var day = currentDate.getDate();
+        //     var month = currentDate.getMonth() + 1; // Month is zero-based
+        //     var year = currentDate.getFullYear();
+        //     var currentDateFormatted = day + '/' + month + '/' + year;
+        //     document.getElementById('date').value = currentDateFormatted + ' ' + currentTime;
+        // }
+    
+        // // Update the date and time initially
+        // updateDateTime();
+    
+        // // Update the date and time every second
+        // setInterval(updateDateTime, 1000);
+
+    function closeNotification1() {
+        document.getElementById('notification-container1').style.display = 'none';
+    }
+
+
+
+
+function handleLogin() {
+    var username = document.getElementById('userid').value;
+    var password = document.getElementById('password').value;
+
+    if (username === "admin" && password === "admin") {
+        var data = {
+            id: 'reset_count', 
+            date: document.getElementById('date').value,
+            partModel: document.getElementById('partModel').value,
+
+        };
+
+        
+        console.log("Data to be sent:");
+        console.log(data);
+        const csrftoken = getCookie('csrftoken');
+        $.ajax({
+            type: 'POST',
+            url: '/measurement/',  // Replace with your actual endpoint URL
+            data: JSON.stringify(data),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': csrftoken  // Include the CSRF token in the headers
+            },
+            success: function(response) {
+                console.log("Data saved successfully:", response);
+                alert("Data saved successfully")
+            },
+            error: function(error) {
+                console.error("Error saving data:", error);
+                alert("Error saving data")
+            }
+        });
+    } else {
+        alert("Invalid username or password.");
+    }
+    document.getElementById("notification-container1").style.display = "none";
+    location.reload();
+}
+
+// Get the CSRF token from the cookies
+function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+/////////////////////////////////////////////
+
+function redirectToMasterPage() {
+        if (event.key === 'F1') {
+            window.location.href = '/master/';
+            event.preventDefault();
+        }
+    }
+    document.addEventListener('keydown', redirectToMasterPage);
+
+document.getElementById('master-btn').addEventListener('click', function() {
+        window.location.href = '/master/'; // Replace '/master' with the actual URL of the master page
+    });
+
+
+document.addEventListener('keydown', function(event) {
+    console.log("Key pressed:", event.key);
+    // Check if the pressed key is F4 or F5
+    if (event.key === 'F4' || event.key === 'F5' || event.key === 'F7') {
+        // Prevent the default action of the pressed key
+        event.preventDefault();
+        if (event.key === 'F4') {
+            startAction();
+        } else if (event.key === 'F5') {
+            stopAction();
+        }
+        else if (event.key === 'F7') {
+            stopAction();
+        }
+    }
+});
+
+function startAction() {
+    document.getElementById('start-btn').click();
+}
+
+function stopAction() {
+    document.getElementById('stop-btn').click();
+}
+///////////////////////////////////////////////////////////
+ // Get references to the buttons
+ var startBtn = document.getElementById("start-btn");
+ var stopBtn = document.getElementById("stop-btn");
+
+    // Function to enable start button and disable stop button
+    function enableStartBtn() {
+        startBtn.disabled = false;
+        stopBtn.disabled = true;
+    }
+
+    // Function to enable stop button and disable start button
+    function enableStopBtn() {
+        startBtn.disabled = true;
+        stopBtn.disabled = false;
+    }
+    enableStartBtn();
+
+    // Add event listener for start button click
+    startBtn.addEventListener("click", function() {
+        enableStopBtn(); // Enable stop button
+    });
+
+    // Add event listener for stop button click
+    stopBtn.addEventListener("click", function() {
+        enableStartBtn(); // Enable start button
+    });
+
+///////////////////////////////////////////////////////////
+
+$(document).ready(function(){
+    $("#save-btn").click(function(){
+        // Get form data
+        var formDataArray = [];
+        var allStatusValid = true;
+        $("table tbody tr").each(function(index) {
+            var parameterName = $(this).find("td:nth-child(2)").text();
+            var readings = $(this).find(".readingInputs").val();
+            var nominal = $(this).find("td:nth-child(3)").text();
+            var lsl = $(this).find("td:nth-child(5)").text();
+            var usl = $(this).find("td:nth-child(7)").text();
+            var statusCell = $(this).find("td:nth-child(8)").text();
+            var utl = $(this).find("td:nth-child(9)").text();
+            var ltl = $(this).find("td:nth-child(10)").text();
+            var date = $("#date").val();
+            var operator = $("#operator").val();
+            var shift = $("#shift").val();
+            var machine = $("#machine").val();
+            var partModel = $("#partModel").val();
+            var partStatus = $("#part_status").val();
+            var customerName = $("#customer_name").val();
+            var compSrNo = $("#comp_srno").val();
+
+            if(!statusCell){
+                allStatusValid=false;
+                return false;
+            }
+
+            var rowFormData = {
+                parameterName: parameterName,
+                readings: readings,
+                nominal: nominal,
+                lsl: lsl,
+                usl: usl,
+                utl: utl,
+                ltl: ltl,
+                statusCell: statusCell,
+                date: date,
+                operator: operator,
+                shift: shift,
+                machine: machine,
+                partModel: partModel,
+                partStatus: partStatus,
+                customerName: customerName,
+                compSrNo: compSrNo,
+            };
+
+            formDataArray.push(rowFormData);
+        });
+
+        if(!allStatusValid){
+            showCustomAlert("YOU HAVE NOT DONE PROPER MEASURMENT.., PLEASE DO MEASURMENT PROPERLY")
+            return;
+        }
+
+       // Collect additional attributes and statuses
+var parameterAttributes = [];
+var attributeStatuses = [];
+
+// Iterate over dynamically generated attribute fields
+$(".attribute_input_box").each(function(index) {
+    var attributeParam = $(this).find("input[type='text']").eq(0).val();
+    var attributeStatus = $(this).find("input[type='text']").eq(1).val();
+
+    // Check if the attributeParam and attributeStatus are not empty before adding them
+    if (attributeParam && attributeStatus) {
+        parameterAttributes.push(attributeParam);
+        attributeStatuses.push(attributeStatus);
+    }
+    if(!attributeStatus){
+                allStatusValid=false;
+                return false;
+    }
+});
+
+if(!allStatusValid){
+    showCustomAlert("YOU ARE NOT PROPERLY CALCULATED.DO CORRECT CALCLATION AND THEN SAVE")
+    return;
+}
+
+// Check if parameterAttributes and attributeStatuses have entries before adding to formDataArray
+if (parameterAttributes.length > 0 && attributeStatuses.length > 0) {
+    for (let i = 0; i < parameterAttributes.length; i++) {
+        var extraRowData = {
+            parameterName: parameterAttributes[i],
+            readings: 'N/A',
+            nominal: 'N/A',
+            lsl: 'N/A',
+            usl: 'N/A',
+            utl: 'N/A',
+            ltl: 'N/A',
+            statusCell: attributeStatuses[i],
+            date: $("#date").val(),
+            operator: $("#operator").val(),
+            shift: $("#shift").val(),
+            machine: $("#machine").val(),
+            partModel: $("#partModel").val(),
+            partStatus: $("#part_status").val(),
+            customerName: $("#customer_name").val(),
+            compSrNo: $("#comp_srno").val()
+        };
+
+        formDataArray.push(extraRowData);
+    }
+}
+
+
+        var tableData = { formDataArray: formDataArray };
+
+        console.log('Table data to be sent:', tableData);
+
+        // Send data to the server
+        $.ajax({
+            type: "POST",
+            url: "/measurement/", // Update with your actual endpoint URL
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify({ tableData: tableData }),
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function(response){
+                console.log("Data saved successfully: ", response);
+                showCustomAlert('Data sent successfully: ' + response.message,'success');
+                setTimeout(() =>{ 
+                location.reload();
+            },1000);
+            },
+            error: function(xhr, status, error){
+                console.error("Error occurred while saving data: ", error);
+                console.log('Response text:', xhr.responseText);
+                showCustomAlert('Error sending data: ' + xhr.responseText, 'error'); 
+            }
+        });
+    });
+});
+
+
+function showCustomAlert(message, type) {
+    const customAlert = document.getElementById('customAlert');
+    
+    customAlert.innerText = message;
+    customAlert.style.display = 'block';
+    
+    // Change background color based on the type (success or error)
+    if (type === 'success') {
+        customAlert.style.backgroundColor = 'green';
+        customAlert.style.color = 'white';  // Set text color for better readability
+    } else if (type === 'error') {
+        customAlert.style.backgroundColor = 'red';
+        customAlert.style.color = 'white';  // Set text color for better readability
+    }
+
+    // Hide the alert after 3 seconds
+    setTimeout(function() {
+        customAlert.style.display = 'none';
+    }, 3000);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//////////////////////////////////////////////////////
+
+
+document.getElementById("reset-button").addEventListener("click", function() {
+  document.getElementById("notification-container1").style.display = "block";
+});
+
+
+
+    function handleOk() {
+        document.getElementById("notificationDiv").style.display = "none";
+        document.getElementById("notificationDiv1").style.display = "block";
+    }
+       
+// Function to display serial data
+$(document).ready(function() {
+    let lastResponse; // Variable to store the last response
+    // Function to display serial data
+    function fetchData(selectedModel) {
+        var data = {
+            partModel: selectedModel
+        };
+
+        $.ajax({
+            url: '/measurement/', // Replace with your server URL
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken') // Include CSRF token in the request headers
+            },
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function(response) {
+                console.log('Response received:', response); // Log the response for debugging
+
+                if (!response.parameterNameValues || !response.nominalValues || !response.lslValues || !response.uslValues) {
+                    console.error('Invalid response format:', response);
+                    return;
+                }
+                
+                // Store the response for later use
+                $('#table-body').empty();
+                
+
+                for (var i = 0; i < response.parameterNameValues.length; i++) {
+                    var row = document.createElement("tr");
+
+                    var srNoCell = document.createElement("td");
+                    srNoCell.textContent = i + 1;
+                    row.appendChild(srNoCell);
+
+                    var parameterNameCell = document.createElement("td");
+                    parameterNameCell.textContent = response.parameterNameValues[i];
+                    row.appendChild(parameterNameCell);
+
+                    var nominalCell = document.createElement("td");
+                    nominalCell.textContent = response.nominalValues[i];
+                    row.appendChild(nominalCell);
+
+                    var readingsCell = document.createElement("td");
+                    var readingsInput = document.createElement("input");
+                    // readingsCell.style.color = "black";
+                    readingsInput.type = "text";
+                    readingsInput.id = 'readings-input-' + i;
+                    readingsInput.className = "readingInputs";
+                    readingsInput.style.width = "100%";
+                    readingsInput.style.backgroundColor = "black"; // Change to your desired color
+                    readingsInput.style.fontSize = "22px"; // Set the font size
+
+                    
+
+                    readingsCell.appendChild(readingsInput);
+                    row.appendChild(readingsCell);
+
+                    var lslCell = document.createElement("td");
+                    lslCell.textContent = response.lslValues[i];
+                    row.appendChild(lslCell);
+
+                    var indicatorCell = document.createElement("td");
+                    var indicatorBox = document.createElement("div");
+                    indicatorBox.className = "indicator-box";
+                    indicatorBox.textContent = "";
+                    indicatorBox.id = 'indicator-box-' + i;
+
+                    var indicatorBox1 = document.createElement("div");
+                    indicatorBox1.className = "indicator-box1";
+                    indicatorBox1.textContent = "";
+                    indicatorBox1.id = 'indicator-box1-' + i;
+
+                    indicatorBox.style.display = "inline-block";
+                    indicatorBox1.style.display = "inline-block";
+
+                    indicatorCell.appendChild(indicatorBox);
+                    indicatorCell.appendChild(indicatorBox1);
+                    row.appendChild(indicatorCell);
+
+                    var uslCell = document.createElement("td");
+                    uslCell.textContent = response.uslValues[i];
+                    row.appendChild(uslCell);
+
+                    var statusCell = document.createElement("td");
+                    statusCell.textContent = "";
+                    statusCell.className = "status_cell";
+                    statusCell.id = 'status_cell-' + i;
+                    row.appendChild(statusCell);
+
+
+
+                    var utlCell = document.createElement("td");
+                    utlCell.textContent = response.utlValues[i];
+                    utlCell.style.display = "none";
+                    row.appendChild(utlCell)
+
+                    var ltlCell = document.createElement("td");
+                    ltlCell.textContent = response.ltlValues[i];
+                    ltlCell.style.display = "none";
+                    row.appendChild(ltlCell)
+
+                    $('#table-body').append(row);
+
+                    var customerName = response.customer_name_values;
+                    document.getElementById("customer_name").value = customerName;
+                    
+
+                   
+
+                    
+
+                    console.log("Parameter Name:", response.parameterNameValues[i]);
+                    console.log("Nominal Value:", response.nominalValues[i]);
+                    console.log("LSL Value:", response.lslValues[i]);
+                    console.log("USL Value:", response.uslValues[i]);
+                    console.log("LTL Value:", response.ltlValues[i]);
+                    console.log("UTL Value:", response.utlValues[i]);
+                    console.log("Measurement Mode Value:", response.measurementModeValues[i]);
+                    console.log("O1 Value:", response.o1_values[i]);
+                    console.log("D Value:", response.d_values[i]);
+                    console.log("E Value:", response.e_values[i]);
+                    console.log("E Value:", response.b_values[i]);
+                    console.log("E Value:", response.b1_values[i]);
+                    console.log("Probe Value:", response.probe_values[i]);
+                    console.log("Step No Value:", response.step_no_values[i]);
+                    console.log("customer_name_values:", response.customer_name_values);
+
+                    console.log("parameter_name_single",response.parameter_name_single)
+                   
+                    
+                    displaySerialData(
+                        response.parameterNameValues[i],
+                        response.probe_values[i], 
+                        response.e_values[i], 
+                        response.d_values[i], 
+                        response.o1_values[i], 
+                        readingsInput, 
+                        response.measurementModeValues[i],
+                        response.step_no_values[i],
+                        response.lslValues[i], 
+                        response.uslValues[i],
+                        response.ltlValues[i],
+                        response.utlValues[i],
+                        indicatorBox, 
+                        indicatorBox1, 
+                        statusCell,
+                        response.parameter_factor_values,
+                        response.parameter_name_single,
+                        response.b_values[i],
+                        response.b1_values[i],
+                    );
+                }
+                
+                console.log("parameter_attribute :", response.parameter_attribute);
+                lastResponse = response;
+                
+                createAttributeInputs(response.parameter_attribute);
+                
+                
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', error);
+            }
+        });
+    }
+
+    function saveButtonHandler() {
+        console.log()
+        // Use the last response stored in the outer scope
+        if (lastResponse && lastResponse.parameter_attribute) {
+            createAttributeInputs(lastResponse.parameter_attribute); // Call the function with the attribute data
+        } else {
+            console.error("Response is not defined or parameter_attribute is missing.");
+        }
+    }
+
+   
+    // Call fetchData initially on page load with the selected value
+    fetchData($('#partModel').val());
+
+    // Bind change event to #partModel element
+    $('#partModel').change(function() {
+        var selectedModel = $(this).val();
+        fetchData(selectedModel);
+    });
+
+    $('#save-btn').click(saveButtonHandler); // Ensure to replace '#saveButton' with the actual button ID or selector
+});
+
+
+
+// Function to create attribute input boxes
+function createAttributeInputs(parameterAttributes) {
+    let processedCount = 0; // Variable to keep track of accepted/rejected attributes
+
+    // Assume box2 and box3 are already selected using their IDs
+    const box2 = document.getElementById("box2");
+    const box3 = document.getElementById("box3");
+
+    // Clear previous inputs before creating new ones
+    $('#box3').empty();
+
+    // Loop through the parameter_attribute values and create new input boxes
+    for (let i = 0; i < parameterAttributes.length; i++) {
+        var attributeBox = $('<div class="attribute_input_box"></div>');
+
+        // Create input for parameter attribute
+        var inputField = $('<input>', {
+            type: 'text',
+            id: 'attributeParameter' + i,
+            style: 'font-weight: bold; margin-top: 5px;width:100%;text-align: center;',
+            readonly: true,
+            value: parameterAttributes[i] // Set the value to the attribute
+        });
+
+        // Create status input
+        var statusField = $('<input>', {
+            type: 'text',
+            id: 'attributeStatus' + i,
+            style: 'font-weight: bold; margin-top: 5px;width:100%;text-align: center;height:40px;',
+            readonly: true // Make it readonly to prevent manual editing
+        });
+
+        // Create buttons
+        var buttonAR = $('<div class="buttonAR" style="margin-top: 5px;"></div>');
+        var rejectButton = $('<button>', {
+            type: 'button',
+            id: 'attributeReject' + i,
+            text: 'REJECT',
+            style: 'background-color: coral;margin-left: 10px; '
+        });
+        var acceptButton = $('<button>', {
+            type: 'button',
+            id: 'attributeAccept' + i,
+            text: 'ACCEPT',
+            style: 'background-color: lightgreen;margin-left: 10px; '
+        });
+
+        // Add a double line as a separator
+        var separator1 = document.createElement("hr");  // First horizontal line
+        separator1.style.border = "2px solid black";  // Customize thickness and color
+        separator1.style.marginBottom = "2px";  // Customize thickness and color
+        separator1.style.marginTop = "5px"; 
+
+        // Append elements to the attribute box
+        buttonAR.append(rejectButton).append(acceptButton);
+        attributeBox.append(inputField).append(buttonAR).append(statusField).append(separator1);
+        
+        // Append the attribute box to the main container
+        $('#box3').append(attributeBox);
+
+        // Add event listeners for the buttons
+        (function(index) {
+            acceptButton.on('click', function() {
+                console.log('ACCEPT button clicked for attribute:', parameterAttributes[index]); // Log which button was clicked
+                $('#attributeStatus' + index).val('ACCEPT').css('background-color', '#00ff00'); // Set value and background color
+                checkAllProcessed();
+            });
+
+            rejectButton.on('click', function() {
+                console.log('REJECT button clicked for attribute:', parameterAttributes[index]); // Log which button was clicked
+                $('#attributeStatus' + index).val('REJECT').css('background-color', 'red'); // Set value and background color
+                checkAllProcessed();
+            });
+        })(i); // Immediately invoke with the current index
+    }
+
+    // Function to check if all attributes have been processed
+    function checkAllProcessed() {
+        processedCount++; // Increment the count when an attribute is accepted or rejected
+        if (processedCount === parameterAttributes.length) {
+            // All attributes have been processed, reset box2 to its original state
+            box2.style.filter = "none";
+            box2.style.pointerEvents = "auto";
+        }
+    }
+
+    if (parameterAttributes && parameterAttributes.length > 0) {
+        // Blur Box 2 and make Box 3 interactive if attributes are present
+        box2.style.filter = "blur(3px)";
+        box2.style.pointerEvents = "none";
+        box3.style.filter = "none";
+        box3.style.pointerEvents = "auto";
+        box3.style.opacity = "1";
+    } else {
+        // Reset Box 2 and make Box 3 non-interactive if no attributes are present
+        box2.style.filter = "none";
+        box2.style.pointerEvents = "auto";
+        box3.style.filter = "blur(5px)";
+        box3.style.pointerEvents = "none";
+        box3.style.opacity = "0.5";
+    }
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+
+// Function to handle disabling the buttons
+function disableButtons() {
+    const masterButton = document.getElementById("master-btn");
+
+
+    if (masterButton) {
+        masterButton.disabled = true; // Disable the button
+        masterButton.style.pointerEvents = "none"; // Prevent interaction
+        masterButton.style.opacity = "0.5"; // Optional: Reduce opacity to indicate disabled state
+    }
+
+    
+}
+
+// Function to handle enabling the buttons
+function enableButtons() {
+    const masterButton = document.getElementById("master-btn");
+
+
+    if (masterButton) {
+        masterButton.disabled = false; // Enable the button
+        masterButton.style.pointerEvents = "auto"; // Restore interaction
+        masterButton.style.opacity = "1"; // Restore original opacity
+    }
+
+
+}
+
+
+
+
+
+
+
+var updateDisplayOutput;
+var tirValue;
+var continuousUpdateInterval; // Variable to store the interval ID for continuous update
+var maxValue;
+var minValue;
+var currentStep = 1; // Initialize current step
+
+// Function to start the continuous update
+function startContinuousUpdate() {
+    continuousUpdateInterval = setInterval(updateDisplayOutput, 100); // Adjust the interval as needed
+
+}
+
+// Function to stop the continuous update
+function stopContinuousUpdate() {
+    clearInterval(continuousUpdateInterval);
+}
+
+// Function to handle start button click
+document.getElementById("start-btn").addEventListener("click", function() {
+    if (currentStep <= totalSteps) {
+        showNotification(` measurement is starting for step ${currentStep}.`);
+    }
+    
+    // Start calculation for the current step
+    startContinuousUpdate();
+    disableButtons();
+});
+
+
+document.getElementById("stop-btn").addEventListener("click", function () {
+    setTimeout(function () {
+        var statusCells = document.querySelectorAll('.status_cell');
+        var partStatusInput = document.getElementById("part_status");
+        var attributeStatuses = document.querySelectorAll("[id^='attributeStatus']"); // Select all attribute status elements
+        var saveButton = document.getElementById("save-btn");
+        var confirmYesBtn = document.getElementById("confirm-yes");
+        var confirmNoBtn = document.getElementById("confirm-no");
+
+        var hasRed = false, hasYellow = false, hasGreen = false;
+
+        // Check status cells
+        statusCells.forEach(function (statusCell) {
+            var color = statusCell.style.backgroundColor;
+            if (color === 'red') hasRed = true;
+            else if (color === 'yellow') hasYellow = true;
+            else if (color === 'rgb(0, 255, 0)' || color === '#00ff00') hasGreen = true;
+        });
+
+        // Check all attribute statuses
+        attributeStatuses.forEach(function (attributeStatus) {
+            var attributeColor = attributeStatus.style.backgroundColor;
+            if (attributeColor === 'red') hasRed = true;
+            else if (attributeColor === 'yellow') hasYellow = true;
+            else if (attributeColor === 'rgb(0, 255, 0)' || attributeColor === '#00ff00') hasGreen = true;
+        });
+
+        console.log("hasRed:", hasRed, "hasYellow:", hasYellow, "hasGreen:", hasGreen);
+
+        let socket = new WebSocket('ws://localhost:8000/ws/measurement/');
+
+        socket.onopen = function () {
+            console.log("✅ WebSocket Connected!");
+
+            if (hasGreen) {
+                // Green condition: Send response 0 every second to enable buttons
+                partStatusInput.style.backgroundColor = '#00ff00';
+                partStatusInput.value = "ACCEPT";
+                setInterval(() => {
+                    socket.send(JSON.stringify({ "action": "write", "address": 40002, "value": 1 }));
+                }, 1000);
+            } else if (hasYellow) {
+                // Yellow condition: Wait for response 1 before enabling save button
+                partStatusInput.style.backgroundColor = 'yellow';
+                partStatusInput.value = "REWORK";
+                socket.send(JSON.stringify({ "action": "write", "address": 40004, "value": 1 }));
+            } else if (hasRed) {
+                // Red condition: Wait for response 1 before enabling save button
+                partStatusInput.style.backgroundColor = 'red';
+                partStatusInput.value = "REJECT";
+                socket.send(JSON.stringify({ "action": "write", "address": 40003, "value": 1 }));
+            }
+
+            // Read from PLC
+            setTimeout(() => {
+                socket.send(JSON.stringify({ "action": "read", "address": 40023 }));
+            }, 1000);
+        };
+
+        socket.onmessage = function (event) {
+            let response = JSON.parse(event.data);
+
+            if (response.status === "success") {
+                console.log("✅ PLC Response:", response);
+                
+                if (response.address === 40023) {
+                    console.log("📡 Value from 40023:", response.value);
+
+                    if (response.value === 0 && hasGreen) {
+                        // Enable save button if response is 0 for green
+                        saveButton.disabled = false;
+                        saveButton.style.filter = "none";
+                        confirmYesBtn.disabled = false;
+                        confirmNoBtn.disabled = false;
+                        showCustomConfirmationModal();
+                    } else if (response.value === 1 && (hasRed || hasYellow)) {
+                        // Enable save button if response is 1 for red/yellow
+                        saveButton.disabled = false;
+                        saveButton.style.filter = "none";
+                        confirmYesBtn.disabled = false;
+                        confirmNoBtn.disabled = false;
+                        showCustomConfirmationModal();
+                    } else {
+                        // Keep it disabled otherwise
+                        saveButton.disabled = true;
+                        saveButton.style.filter = "blur(2px)";
+                        confirmYesBtn.disabled = true;
+                        confirmNoBtn.disabled = true;
+                    }
+                }
+            } else {
+                console.error("⚠️ Error:", response.message);
+            }
+        };
+
+        socket.onerror = function (error) {
+            console.error("❌ WebSocket Error:", error);
+        };
+
+        socket.onclose = function () {
+            console.log("🔴 WebSocket Closed");
+        };
+
+        // Display notification to the client
+        showNotification("You have completed the measurement for this job. Do Next Job");
+
+        partStatusInput.style.fontWeight = "bold";
+        partStatusInput.style.textAlign = "center";
+
+        stopContinuousUpdate();
+
+        // Move to the next step
+        moveToNextStep();
+    }, 100);
+});
+
+
+
+// Function to show custom confirmation modal
+function showCustomConfirmationModal() {
+    const modal = document.getElementById("confirmation-modal");
+    const yesButton = document.getElementById("confirm-yes");
+    
+    modal.style.display = "flex"; // Show modal
+
+    // Highlight and focus Yes button
+    yesButton.focus();
+    yesButton.style.outline = "3px solid yellow"; // Highlight button
+
+    // Handle Yes button click
+    yesButton.onclick = function () {
+        document.getElementById("confirmation-modal").style.display = "none";
+        document.getElementById("save-btn").click();
+
+        
+        
+    };
+
+    // Handle No button click
+    document.getElementById("confirm-no").onclick = function () {
+        document.getElementById("confirmation-modal").style.display = "none";
+    };
+
+    // Handle Enter key press
+    document.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" && modal.style.display === "flex") {
+            yesButton.click(); // Click Yes button when Enter is pressed
+        }
+    });
+}
+
+
+
+
+document.getElementById("save-btn").addEventListener("click", function() {
+            function clearValues() {
+            var partStatusInput = document.getElementById("part_status");
+            var partStatus = partStatusInput.value;
+            var acceptInput = document.getElementById("accept");
+            var rejectInput = document.getElementById("reject");
+            var reworkInput = document.getElementById("rework");
+            var attributeStatuses = document.querySelectorAll("[id^='attributeStatus']"); // Select all attribute status elements
+           
+           
+
+
+            if (partStatus === "ACCEPT") {
+                acceptInput.value = parseInt(acceptInput.value) + 1;
+            } else if (partStatus === "REJECT") {
+                rejectInput.value = parseInt(rejectInput.value) + 1;
+            } else if (partStatus === "REWORK") {
+                reworkInput.value = parseInt(reworkInput.value) + 1;
+            }
+            var statusCells = document.querySelectorAll('.status_cell');
+            statusCells.forEach(function(statusCell) {
+                statusCell.textContent = ""; // Clear text content
+                statusCell.style.backgroundColor = ""; // Clear text content
+            });
+
+            var readingInputs = document.querySelectorAll('.readingInputs');
+            readingInputs.forEach(function(readingInput) {
+                readingInput.value = ""; // Clear the value of the input
+                readingInput.color = "";
+            });
+
+            partStatusInput.value = "";
+            partStatusInput.style.backgroundColor = "";
+
+            
+             // Clear attribute statuses
+        attributeStatuses.forEach(function(attributeStatus) {
+            attributeStatus.value = ""; // Clear input value
+            attributeStatus.style.backgroundColor = ""; // Clear background color
+        });
+
+            var compSrNo = document.getElementById("comp_srno");
+            compSrNo.value = "";
+
+            var punchTextarea = document.getElementById("punch_textarea");
+            punchTextarea.value = "";
+
+            var indicatorBoxes = document.querySelectorAll('.indicator-box, .indicator-box1');
+            indicatorBoxes.forEach(function(indicatorBox) {
+                indicatorBox.style.background = "";
+            });
+        }
+
+        setTimeout(clearValues, 1000); // Execute clearValues function after 1 second (1000 milliseconds)
+         
+        var buttons = document.querySelectorAll('#master-btn, #start-btn, #stop-btn, #save-btn, #back-btn');
+        if (hide === 'True') {
+            document.getElementById('notification-container').style.display = 'block';
+            document.getElementById('punch_textarea').style.display = 'block';
+            document.getElementById('punch_textarea').focus();
+            buttons.forEach(function(button) {
+                button.disabled = true;
+            
+            });
+        }
+        currentStep = 1;
+
+        const saveButton = document.getElementById("save-btn");
+            saveButton.disabled = true;        // Enable the button
+            saveButton.style.filter = "blur(2px)";   // Remove the blur effect
+        
+        });
+
+
+   
+
+        
+        document.getElementById("back-btn").addEventListener("click", goBackStep);
+
+document.addEventListener("keydown", function(event) {
+    if (event.key === "F7") {
+        goBackStep(); // Call the same function when F7 is pressed
+    }
+});
+
+function goBackStep() {
+    if (currentStep > 1) {
+        currentStep--; // Decrement current step
+
+        var indices = [];
+
+        for (var i = 0; i < step_no_values.length; i++) {
+            if (step_no_values[i] === currentStep) {
+                indices.push(i);
+            }
+        }
+
+        // Clear the text content of the status cells
+        indices.forEach(function(index) {
+            var readingInput = document.getElementById('readings-input-' + index);
+            if (readingInput) {
+                readingInput.value = "";
+            }
+
+            var statusCell = document.getElementById('status_cell-' + index);
+            if (statusCell) {
+                statusCell.textContent = "";
+                statusCell.style.backgroundColor = "";
+            }
+        });
+
+        if (currentStep === totalSteps) {
+            var partStatusInput = document.getElementById("part_status");
+            if (partStatusInput) {
+                partStatusInput.value = "";
+                partStatusInput.style.backgroundColor = "";
+            }
+        }
+
+        // Show notification for going back
+        showNotification(`Going back to step ${currentStep}.`);
+
+        // Start calculation for the current step
+        startContinuousUpdate();
+    } else {
+        showNotification("Already at the first step.");
+    }
+}
+
+
+
+
+
+
+// Function to move to the next step
+function moveToNextStep() {
+    currentStep++;
+    if (currentStep > totalSteps) {
+        console.log("All steps completed.");
+        
+        return;
+    }
+    
+    console.log("Moving to step:", currentStep);
+    var statusCells = document.querySelectorAll(".status_cell");
+    statusCells.forEach(function(cell) {
+        console.log(cell.textContent);
+    });
+    if (currentStep < step_no_values.length + 1) {
+        showNotification(`Step ${currentStep - 1} completed. Please proceed to step ${currentStep}.`);
+    }   // Start calculation for the next step
+    // startContinuousUpdate();
+
+}
+
+
+function displaySerialData(parameterNameValues, probe_value, e_value, d_value, o1_value, readingsInput, measurementMode, step_no, lsl, 
+usl, ltl, utl, indicatorBox, indicatorBox1, statusCell, parameterFactorValues, parameter_name_single, b_value, b1_value) {
+    console.log("parameterNameValues:", parameterNameValues);
+    console.log("parameter_name_single:", parameter_name_single);
+    console.log("parameterFactorValues:", parameterFactorValues);
+    console.log("step_no:", step_no);
+    console.log("indicatorBox, indicatorBox1:", indicatorBox, indicatorBox1, readingsInput);
+
+    // Retrieve textarea ID based on probeValue
+    const textareaId = mapProbeToTextareaId(probe_value);
+    const textarea = document.getElementById(textareaId);
+
+    // Check if textarea exists
+    if (textarea) {
+        // Function to calculate and update the displayOutput
+        function updateDisplayOutput() {
+            const newSerialData = parseFloat(textarea.value);
+
+            // Base calculation for displayOutput
+            let displayOutput = e_value + (newSerialData * d_value + o1_value);
+
+            if (isNaN(displayOutput)) {
+                displayOutput = 0;
+            }
+
+            // Modify displayOutput based on parameterFactorValues
+            for (let i = 0; i < parameterFactorValues.length; i++) {
+                const factor = parameterFactorValues[i]; // {parameter_name, method, value}
+                const parameterName = factor.parameter_name;
+                const method = factor.method; // '+' or '-'
+                const value = parseFloat(factor.value);
+
+                if (parameterName === parameterNameValues) {
+                    if (method === '+') {
+                        displayOutput += value;
+                    } else if (method === '-') {
+                        displayOutput -= value;
+                    }
+                }
+            }
+
+            // Handle case where parameter_name_single is an array
+            let matchFound = false;
+            if (Array.isArray(parameter_name_single)) {
+                matchFound = parameter_name_single.some(
+                    (name) => String(name).trim().toLowerCase() === String(parameterNameValues).trim().toLowerCase()
+                );
+            } else {
+                matchFound =
+                    String(parameter_name_single).trim().toLowerCase() ===
+                    String(parameterNameValues).trim().toLowerCase();
+            }
+
+            // Update displayOutput based on match
+            if (matchFound) {
+                console.log("Matched parameterNameValues with parameter_name_single. Using alternative formula.");
+                const displayOutput1 = (newSerialData - b1_value) * d_value;
+                displayOutput = displayOutput1 + e_value + b_value;
+            } else {
+                console.log("No match. Keeping original formula.");
+            }
+
+            // console.log("Updated displayOutput:", displayOutput);
+
+            // Update the readings input only when the continuous update is active and step_no matches
+            if (continuousUpdateInterval && step_no === currentStep) {
+                // Update the readings input based on measurement mode
+                if (measurementMode === "MAX" || measurementMode === "MIN" || measurementMode === "CUR" || measurementMode === "TIR") {
+                    // Update only if the new value is greater than or less than the current value
+                    var currentValue = parseFloat(readingsInput.value);
+                    if (isNaN(currentValue) || (measurementMode === "MAX" && displayOutput > currentValue) ||
+                        (measurementMode === "MIN" && displayOutput < currentValue) ||
+                        (measurementMode === "CUR" || measurementMode === "TIR")) {
+                        readingsInput.value = displayOutput.toFixed(4);
+                        if (measurementMode === "TIR") {
+                            readingsInput.value = tirValue.toFixed(4);
+                        }
+
+                        // Calculate total length and colored portion length
+                        var totalLength, coloredPortionLength, coloredPortion, uncoloredPortion;
+                        var coloredWidth, defaultWidth, color;
+
+                        if (displayOutput > e_value) {
+                            totalLength = usl - e_value;
+                            coloredPortionLength = displayOutput - e_value;
+                        } else if (displayOutput < e_value){
+                            totalLength = e_value - lsl;
+                            coloredPortionLength = e_value - displayOutput;
+                        }
+
+                        coloredPortion = coloredPortionLength / totalLength;
+                        uncoloredPortion = 1 - coloredPortion;
+                        coloredWidth = coloredPortion * 100;
+                        defaultWidth = uncoloredPortion * 100;
+
+                        // Set background color based on measurement mode and displayOutput ranges
+                        if ((measurementMode === "MAX" && displayOutput >= lsl && displayOutput <= usl) ||
+                            (measurementMode === "MIN" && displayOutput >= lsl && displayOutput <= usl) ||
+                            (measurementMode === "CUR" && displayOutput >= lsl && displayOutput <= usl) ||
+                            (measurementMode === "TIR" && tirValue >= lsl && tirValue <= usl)) {
+                            color = '#00ff00'; // Green
+                            if (color === '#00ff00') {
+                                readingsInput.style.backgroundColor = 'black';
+                                readingsInput.style.fontWeight = 'bold';
+                                readingsInput.style.fontSize = '22px'; // Adjust the size as needed
+
+                            } 
+                        } else if ((measurementMode === "MAX" &&((displayOutput > usl && displayOutput <= utl) || 
+                                                                    (displayOutput >= ltl && displayOutput < lsl))) || 
+                                    (measurementMode === "MIN" &&((displayOutput > usl && displayOutput <= utl) || 
+                                                                    (displayOutput >= ltl && displayOutput < lsl))) || 
+                                    (measurementMode === "CUR" && ((displayOutput > usl && displayOutput <= utl) || 
+                                                                    (displayOutput >= ltl && displayOutput < lsl))) ||
+                                    (measurementMode === "TIR" && ((tirValue > usl && tirValue <= utl) || 
+                                                                  (tirValue >= ltl && tirValue < lsl)))) 
+                                    {
+                            color = 'yellow';
+                            if (color === 'yellow') {
+                                readingsInput.style.backgroundColor = 'black';
+                                readingsInput.style.fontWeight = 'bold';
+                                readingsInput.style.fontSize = '22px'; // Adjust the size as needed
+                            }
+                        } else if ((measurementMode === "MAX" && displayOutput > utl || displayOutput <ltl) ||
+                            (measurementMode === "MIN" && displayOutput > utl || displayOutput <ltl) ||
+                            (measurementMode === "CUR" && displayOutput > utl || displayOutput <ltl) ||
+                            (measurementMode === "TIR" && tirValue > utl || tirValue <ltl)) {
+                            color = 'red'; // Green
+                            if (color === 'red') {
+                                readingsInput.style.backgroundColor = 'black';
+                                readingsInput.style.fontWeight = 'bold';
+                                readingsInput.style.fontSize = '22px'; // Adjust the size as needed
+                            }
+                            
+                        }
+                        
+                        readingsInput.style.color = color;
+                        // readingsInput.style.textShadow = (color === 'red') ? '0 0 2px white' : '0 0 2px black';
+
+
+
+document.getElementById('stop-btn').addEventListener('click', function() {
+    var indices = [];
+    // Assuming step_no_values and currentStep are defined somewhere
+    for (var i = 0; i < step_no_values.length; i++) {
+        if (step_no_values[i] === currentStep) {
+            indices.push(i);
+        }
+    }
+
+    indices.forEach(function(index) {
+        var readingsInput = document.getElementById('readings-input-' + index);
+        var color = readingsInput.style.color;
+        var statusCell = document.getElementById('status_cell-' + index); // Assuming 'status-cell' is the class of your status cells
+        statusCell.style.backgroundColor = color;
+        if (color === "rgb(0, 255, 0)" || color === "#00ff00") { // Different browsers might return color in different formats
+            statusCell.textContent = "ACCEPT";
+            statusCell.style.fontWeight = "bold";
+        } else if (color === "red" || color === "#ff0000") {
+            statusCell.textContent = "REJECT";
+            statusCell.style.fontWeight = "bold";
+        } else if (color === "yellow" || color === "#ffff00") {
+            statusCell.textContent = "REWORK";
+            statusCell.style.fontWeight = "bold";
+        }
+    });
+});
+
+
+
+
+
+
+if (displayOutput > e_value) {
+    var indicatorBoxElement = document.getElementById(indicatorBox.id);
+    var indicatorBox1Element = document.getElementById(indicatorBox1.id);
+    
+    // Set indicatorBoxElement to default color
+    indicatorBoxElement.style.background = 'white';
+
+    // Set indicatorBox1Element to colored gradient
+    indicatorBox1Element.style.background = `linear-gradient(to right, ${color} ${coloredWidth}%, white ${coloredWidth}% ${defaultWidth}%, white 100%)`;
+} else if (displayOutput < e_value) {
+    var indicatorBoxElement = document.getElementById(indicatorBox.id);
+    var indicatorBox1Element = document.getElementById(indicatorBox1.id);
+    
+    // Set indicatorBox1Element to default color
+    indicatorBox1Element.style.background = 'white';
+
+    // Set indicatorBoxElement to colored gradient
+    indicatorBoxElement.style.background = `linear-gradient(to left, ${color} ${coloredWidth}%, white ${coloredWidth}% ${defaultWidth}%, white 100%)`;
+}
+
+            }
+        }
+    }
+}
+
+        // Attach an event listener to the textarea for changes
+        textarea.addEventListener('input', updateDisplayOutput);
+
+        // Function to start continuous update
+        function startContinuousUpdate() {
+            continuousUpdateInterval = setInterval(updateDisplayOutput, 100); // Update every half a second
+        }
+
+        // Function to stop continuous update
+        function stopContinuousUpdate() {
+            clearInterval(continuousUpdateInterval);
+            continuousUpdateInterval = null; // Reset continuousUpdateInterval
+        }
+
+        // Event listener for start-btn
+        document.getElementById('start-btn').addEventListener('click', startContinuousUpdate);
+
+        // Event listener for stop-btn
+        document.getElementById('stop-btn').addEventListener('click', stopContinuousUpdate);
+
+        // Call the function once to initially display the value
+        updateDisplayOutput();
+    } else {
+        console.log("Textarea not found for Probe Value:", probe_value);
+    }
+}
+
+function showNotification(message) {
+    // Get the input element
+    var inputBox = document.getElementById('pre');
+
+    // Set the value of the input box with the notification message
+    inputBox.value = message;
+
+    // Apply styling to the input box
+    inputBox.style.fontWeight = 'bold';
+    inputBox.style.textAlign = 'center';
+    inputBox.style.color = 'white';
+
+    // Apply highlighting to the input box
+    inputBox.style.backgroundColor = 'maroon'; // Or any other background color
+    inputBox.style.border = '2px solid white'; // Or any other border style
+}
+
+
+
+
+
+
+
+// Function to retrieve CSRF token from cookie
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+///////////////////////////////////////////
+
+
+
+
+
+
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('punch_textarea').focus();
+    
+});
+
+function handleEnterKeyPress(event) {
+    var buttons = document.querySelectorAll('#master-btn, #start-btn, #stop-btn, #save-btn, #back-btn');
+
+    if (event.key === 'Enter') {
+        var punchValue = $('#punch_textarea').val();
+        var partModelValue = $('#partModel').val();
+
+        // Get `char_lmt` and `part_no` from Django template context directly into JavaScript variables
+        var charLmt = parseInt("{{ char_lmt }}");  // Assuming char_lmt is passed from your Django view
+        var partNo = "{{ part_no }}";  // Assuming part_no is passed from your Django view
+
+
+         // If charLmt is not a valid number or is less than 0, default to 0
+         if (isNaN(charLmt) || charLmt < 0) {
+            charLmt = 0;
+        }
+
+        // Check if punchValue starts with partNo
+        if (!punchValue.startsWith(partNo)) {
+            alert('This partNo doesn\'t match for this Part Model.');
+            window.location.reload();  // Reload the current page
+            return;  // Stop further execution if partNo doesn't match
+        }
+
+        
+        // Check if the punch value matches the required length, unless charLmt is 0
+        if (charLmt > 0 && punchValue.length !== charLmt) {
+            alert('The value must contain exactly ' + charLmt + ' characters.');
+            window.location.reload();  // Reload the current page
+            return;  // Stop further execution if length doesn't match
+        }
+
+        $('#comp_srno').val(punchValue);
+        $('#notification-container').hide();
+        buttons.forEach(function(button) {
+            button.disabled = false;
+        
+        });
+
+        // Get CSRF token from cookies (assuming you have `{% csrf_token %}` in your template)
+        var csrftoken = getCookie('csrftoken');
+
+        const data = {
+            id: "punch_value",
+            punch_value: punchValue,
+            part_model_value: partModelValue
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/measurement/',  // Replace with your actual backend endpoint
+            headers: {
+                'X-CSRFToken': csrftoken,  // Include CSRF token in headers
+            },
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(response) {
+                var punchOverwrite = $('#punch_overwrite');
+                var errorMessage = $('#error_message');
+                var okButton = $('#overwrite_ok_button');
+
+                if (response.status === 'error') {
+                    // Display error message in the container
+                    errorMessage.text(response.message);
+                    punchOverwrite.show();
+                    okButton.show(); // Show the OK button
+                } else {
+                    console.log('Settings saved successfully!');
+                    // Hide the error container if the request was successful
+                    punchOverwrite.hide();
+                    okButton.hide(); // Hide the OK button
+                }
+            },
+            error: function(error) {
+                alert('An error occurred while saving settings.');
+                console.log(error);
+            }
+        });
+
+        // let socket = new WebSocket('ws://localhost:8000/ws/measurement/');
+        // let startBtn = document.getElementById("start-btn");
+        // let stopBtn = document.getElementById("stop-btn");
+        // let cycleModeInput = document.getElementById("cycle_mode");
+        
+        // // Disable button initially
+        // startBtn.disabled = true;
+        // stopBtn.disabled = true;
+
+        // let lastReceivedTime = null;
+        // socket.onopen = function() {
+        //     console.log("✅ WebSocket Connected!");
+
+        //     // Write to address 40005 first
+        //     socket.send(JSON.stringify({ "action": "write", "address": 40002, "value": 0 }));
+
+        //     socket.send(JSON.stringify({ "action": "write", "address": 40003, "value": 0 }));
+
+        //     socket.send(JSON.stringify({ "action": "write", "address": 40004, "value": 0 }));
+
+        //     // Introduce a slight delay before writing to 40001 to ensure proper sequencing
+        //     setTimeout(() => {
+        //         socket.send(JSON.stringify({ "action": "write", "address": 40001, "value": 1 }));
+        //     }, 500); // 500ms delay (adjust if necessary)
+
+        //     // Read from PLC at address 40022
+        //     setTimeout(() => {
+        //         socket.send(JSON.stringify({ "action": "read", "address": 40022 }));
+        //     }, 500); // Ensure reading happens after writes
+        // };
+
+        // socket.onmessage = function(event) {
+        //     let response = JSON.parse(event.data);
+
+        //     if (response.status === "success") {
+        //         console.log("✅ PLC Response:", response);
+        //         lastReceivedTime = Date.now();
+        //     } else {
+        //         console.error("⚠️ Error:", response.message);
+        //     }
+
+        //     // Handle Read Response - Enable button only if 40022 value is 1
+        //     if (response.address === 40022) {
+        //         console.log("📡 Value from 40022:", response.value);
+
+        //         if (response.value === 1) {
+        //             startBtn.disabled = false; // Enable button
+        //             stoptBtn.disabled = false; // Enable button
+        //         } else {
+        //             startBtn.disabled = true;  // Keep it disabled
+        //             stoptBtn.disabled = true;
+        //         }
+
+        //         updateCycleMode(true);
+        //     }
+        // };
+
+        // socket.onerror = function(error) {
+        //     console.error("❌ WebSocket Error:", error);
+        // };
+
+        // socket.onclose = function() {
+        //     console.log("🔴 WebSocket Closed");
+        //     updateCycleMode(false);
+        // };
+
+        // Function to update input box color and text
+    // function updateCycleMode(isConnected) {
+    //     if (isConnected) {
+    //         cycleModeInput.value = "Connected";
+    //         cycleModeInput.style.backgroundColor = "green";
+    //         cycleModeInput.style.color = "white";
+    //         cycleModeInput.style.fontWeight = 'bold'
+    //     } else {
+    //         cycleModeInput.value = "Disconnected";
+    //         cycleModeInput.style.backgroundColor = "red";
+    //         cycleModeInput.style.color = "white";
+    //         cycleModeInput.style.fontWeight = 'bold'
+    //     }
+    // }
+
+    // // Check connection every second
+    // setInterval(() => {
+    //     if (lastReceivedTime && (Date.now() - lastReceivedTime > 500)) {
+    //         updateCycleMode(false); // No response within 2 sec, mark as disconnected
+    //     }
+    // }, 500);
+
+    }
+}
+
+
+// Function to get CSRF cookie value
+function getCookie(name) {
+    var cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+            var cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+function punchOverwrite() {
+    // Hide the punch_overwrite_container
+    document.getElementById('punch_overwrite_container').style.display = 'none';
+
+    // Show the punch_overwrite_credentials
+    document.getElementById('punch_overwrite_credentials').style.display = 'block';
+}
+
+function punchOverwriteLogin() {
+    var userId = document.getElementById('userid_punch').value;
+    var password = document.getElementById('password_punch').value;
+
+    if (userId === 'admin' && password === 'admin') {
+        var punchValue = $('#punch_textarea').val();
+        var partModelValue = $('#partModel').val();
+        console.log(punchValue, partModelValue);
+
+        // Store punchValue in localStorage before reload
+        localStorage.setItem('punchValue', punchValue);
+
+        // Get CSRF token from cookies
+        var csrftoken = getCookie('csrftoken');
+
+        const data = {
+            punch_value: punchValue,
+            part_model_value: partModelValue
+        };
+        console.log("data for the punch overwrite:", data);
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/measurement/',  // Replace with your actual backend endpoint for deletion
+            headers: {
+                'X-CSRFToken': csrftoken  // Include CSRF token in headers
+            },
+            data: JSON.stringify(data),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            success: function(response) {
+                if (response.status === 'success') {
+                    alert('Punch value deleted successfully.');
+                    $('#punch_overwrite').hide();
+                    location.reload(); 
+                } else {
+                    alert('Failed to delete punch value.');
+                }
+            },
+            error: function(error) {
+                alert('An error occurred while deleting the punch value.');
+                console.log(error);
+            }
+        });
+    } 
+    else {
+        alert('Invalid USER ID or PASSWORD');
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Retrieve the punch value from localStorage
+    var savedPunchValue = localStorage.getItem('punchValue');
+    
+    if (savedPunchValue) {
+        // Set the punch value in the textarea
+        document.getElementById('punch_textarea').value = savedPunchValue;
+        
+        // Clear the localStorage value to avoid persisting it across multiple reloads
+        localStorage.removeItem('punchValue');
+    }
+
+    // Set focus on the punch_textarea
+    document.getElementById('punch_textarea').focus();
+});
+
+
+function punchOverwriteCancel() {
+    location.reload();  // Refresh the page
+}
+
+
+
+///////////////////////////////////////////
+
+                
+        function closeNotification() {
+            // Disable the notification container
+            document.getElementById('notification-container').style.display = 'none';
+            document.getElementById('punch_overwrite').style.display = 'none';
+        }
+    
+            // Function to update the date and time in the input box
+        //     
+    
+    
+        // Log the is_selected_values to the console
+        var hide = "{{ hide }}"; // Assuming this is how you pass the value from Django template
+        console.log("hide:", hide);
+         // Initially disable buttons and set box-2 to a stable state
+        var buttons = document.querySelectorAll('#master-btn, #start-btn, #stop-btn, #save-btn, #back-btn');
+        console.log("buttons from the html page",buttons)
+    
+    
+        // Conditionally display the notification container and textarea based on is_selected_values
+        if (hide === 'True') {
+            document.getElementById('notification-container').style.display = 'block';
+            document.getElementById('punch_textarea').style.display = 'block';
+             // Disable all buttons initially
+            buttons.forEach(function(button) {
+                button.disabled = true;
+            
+            });
+        } else {
+            document.getElementById('notification-container').style.display = 'none';
+            document.getElementById('punch_textarea').style.display = 'none';
+        }
+    
+    
+ 
+var step_no_values_str = "{{ step_no_values|safe }}";
+var step_no_values_cleaned = step_no_values_str.replace(/[\[\]']+/g, '');
+var step_no_values = step_no_values_cleaned.split(',');
+
+// Convert string array elements to numbers and replace NaN with 0
+step_no_values = step_no_values.map(value => {
+    var num = Number(value);  // Convert to number
+    return isNaN(num) ? 0 : num;  // Replace NaN with 0
+});
+
+// Find the maximum value among the step_no_values
+var totalSteps = Math.max(...step_no_values);
+
+console.log("Total Steps:", totalSteps);
+
+var probe_values_str = "{{ probe_values|safe }}";
+var probe_values_cleaned = probe_values_str.replace(/[\[\]']+/g, '');
+var probe_values = probe_values_cleaned.split(',');
+
+
+var measurement_mode_str = "{{ measurement_mode|safe }}";
+var measurement_mode_cleaned = measurement_mode_str.replace(/[\[\]']+/g, '');
+var measurement_mode = measurement_mode_cleaned.split(',');
+console.log('your measurement mode valeus are:',measurement_mode);
+
+var usl_values_str = "{{ usl_values|safe }}";
+var usl_values_cleaned = usl_values_str.replace(/[\[\]']+/g, '');
+var usl_values = usl_values_cleaned.split(',');
+console.log('your measurement mode valeus are:',usl_values);
+
+var lsl_values_str = "{{ lsl_values|safe }}";
+var lsl_values_cleaned = lsl_values_str.replace(/[\[\]']+/g, '');
+var lsl_values = lsl_values_cleaned.split(',');
+console.log('your measurement mode valeus are:',lsl_values);
+
+var utl_values_str = "{{ utl_values|safe }}";
+var utl_values_cleaned = utl_values_str.replace(/[\[\]']+/g, '');
+var utl_values = utl_values_cleaned.split(',');
+console.log('your measurement mode valeus are:',utl_values);
+
+var ltl_values_str = "{{ usl_values|safe }}";
+var ltl_values_cleaned = ltl_values_str.replace(/[\[\]']+/g, '');
+var ltl_values = ltl_values_cleaned.split(',');
+console.log('your measurement mode valeus are:',ltl_values);
+
+
+/////////////////////////////////////////////
+let currentIndex = -1; // Start with an invalid index to track the current index
+
+// Function to find the first valid index where the value starts with 'p' and contains '-'
+function findFirstValidIndex() {
+    for (let i = 0; i < probe_values.length; i++) {
+        let value = probe_values[i].trim();
+        if (value.startsWith('P') && value.includes('-')) {
+            return i; // Return the first valid index
+        }
+    }
+    return -1; // Return -1 if no valid index is found
+}
+
+// Find the first index before any button click
+currentIndex = findFirstValidIndex();
+
+
+
+
+document.getElementById('stop-btn').addEventListener('click', function() {
+    console.clear();
+
+    // Parse e_values from your Django template
+    var e_values_str = "{{ e_values|safe }}";
+    var e_values_cleaned = e_values_str.replace(/[\[\]']+/g, '');
+    var e_values = e_values_cleaned.split(',').map(Number); // Convert to numbers
+
+    // Iterate over all probe values
+    for (let i = 0; i < probe_values.length; i++) {
+        let value = probe_values[i];
+
+        // Check if the value is a string before using trim
+        if (typeof value === 'string') {
+            value = value.trim(); // Get and trim the value for the current index
+
+            // Check if the current value is a probe calculation (starts with 'p' and contains '-')
+            if (value.startsWith('P') && value.includes('-')) {
+                var step_no = step_no_values[i];
+
+                // Log the current step and step number
+                console.log(`Index: ${i}, Value: ${value}, Step No: ${step_no}, Measurement Mode: ${measurement_mode[i]}`);
+
+                // Check if the current step matches the step number for this index
+                if (currentStep === step_no) {
+                    // Extract the two probe numbers (e.g., 'p1', 'p2') for calculation
+                    var [probe1, probe2] = value.split('-').map(v => v.trim());
+
+                    // Map probes to their respective reading input indices
+                    var readingIndex1 = mapProbeToReadingInput(probe1);
+                    var readingIndex2 = mapProbeToReadingInput(probe2);
+
+                    if (readingIndex1 !== undefined && readingIndex2 !== undefined) {
+                        // Get the input values directly from the page for the respective indices
+                        var readingInput1 = document.getElementById(`readings-input-${readingIndex1}`).value;
+                        var readingInput2 = document.getElementById(`readings-input-${readingIndex2}`).value;
+
+                         // Check if the input values are not empty
+                         if (readingInput1.trim() === "" || readingInput2.trim() === "") {
+                            console.log(`Error: Empty input for probe ${probe1} or ${probe2}. Skipping calculation.`);
+                            return; // Stop execution if any input is empty
+                        }
+
+                        // Convert the input values to numbers
+                        var value1 = parseFloat(readingInput1) || 0;
+                        var value2 = parseFloat(readingInput2) || 0;
+
+                        // Check if the parsed values are valid numbers
+                        if (isNaN(value1) || isNaN(value2)) {
+                            console.log(`Error: Invalid number for probe ${probe1} or ${probe2}. Skipping calculation.`);
+                            return; // Stop execution if any value is NaN
+                        }
+
+                        // Perform the calculation (probe1 - probe2)
+                        var result = value1 - value2;
+
+                        // Log the calculation
+                        console.log(`Calculation for ${probe1} - ${probe2}: ${value1} - ${value2} = ${result}`);
+
+                        // Now, display the calculated result in the correct index (i.e., the received index) without modifying probe_values
+                        var resultElement = document.getElementById(`readings-input-${i}`);
+                        if (resultElement) {
+                            resultElement.value = result.toFixed(4); // Display the result in the input field at the same index
+                            resultElement.style.textShadow ='0 0 2px black';
+                            resultElement.style.backgroundColor = 'black';
+                            resultElement.style.fontWeight = 'bold';
+                        } else {
+                            console.log(`Error: No element found for index ${i} to display the result.`);
+                        }
+
+                        // Get the USL, LSL, UTL, and LTL for the current index
+                        var usl = parseFloat(usl_values[i]) || 0;
+                        var lsl = parseFloat(lsl_values[i]) || 0;
+                        var utl = parseFloat(utl_values[i]) || 0;
+                        var ltl = parseFloat(ltl_values[i]) || 0;
+
+                        // Determine the color based on the result and limits
+                        var statusCell = document.getElementById(`status_cell-${i}`); // Assuming 'status_cell' is the ID pattern for your status cells
+                        let color;
+                        if (result >= lsl && result <= usl) {
+                            color = '#00ff00'; // Green
+                            
+                        } else if ((result > usl && result <= utl) || (result >= ltl && result < lsl)) {
+                            color = 'yellow'; // Yellow
+                        } else {
+                            color = 'red'; // Red
+                        }
+
+                        // Apply the color to the status cell
+                        statusCell.style.backgroundColor = color;
+
+                        // Update the status text based on the color
+                        if (color === '#00ff00') {
+                            statusCell.textContent = "ACCEPT";
+                        } else if (color === 'red') {
+                            statusCell.textContent = "REJECT";
+                        } else if (color === 'yellow') {
+                            statusCell.textContent = "REWORK";
+                        }
+
+                        // Optional: Apply color to the readings input as well
+                        resultElement.style.color = color;
+
+                        // Add indicator color coding
+                        var e_value = e_values[i] || 0; // Get the e_value for the current index
+                        var indicatorBoxElement = document.getElementById(`indicator-box-${i}`); // Adjust ID as necessary
+                        var indicatorBox1Element = document.getElementById(`indicator-box1-${i}`); // Adjust ID as necessary
+                        var coloredWidth = 50; // Example value for colored width
+                        var defaultWidth = 100 - coloredWidth; // Calculate default width
+
+                        if (result > e_value) {
+                            // Set indicatorBoxElement to default color
+                            indicatorBoxElement.style.background = 'white';
+
+                            // Set indicatorBox1Element to colored gradient
+                            indicatorBox1Element.style.background = `linear-gradient(to right, ${color} ${coloredWidth}%, white ${coloredWidth}% ${defaultWidth}%, white 100%)`;
+                        } else {
+                            // Set indicatorBox1Element to default color
+                            indicatorBox1Element.style.background = 'white';
+
+                            // Set indicatorBoxElement to colored gradient
+                            indicatorBoxElement.style.background = `linear-gradient(to left, ${color} ${coloredWidth}%, white ${coloredWidth}% ${defaultWidth}%, white 100%)`;
+                        }
+
+                    } else {
+                        console.log(`Error: Could not find one or both of the probes (${probe1}, ${probe2}) in the map.`);
+                    }
+                } else {
+                    console.log(`Skipping calculation for Index: ${i}. Current Step: ${currentStep}, Step No: ${step_no}`);
+                }
+            }
+        } else {
+            console.log(`Skipping index ${i} due to invalid value type: ${value}`);
+        }
+    }
+
+    // Log the updated probe_values array after calculations
+    console.log('Updated probe_values:', probe_values); // probe_values remain unchanged
+    
+    // Check if we've processed all calculations
+    if (currentStep > Math.max(...step_no_values)) {
+        console.log("All calculations are complete.");
+        // Optionally reset currentStep to 1 to start over
+        // currentStep = 1;
+    }
+});
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+function mapProbeToReadingInput(probeNumber) {
+    const probeMap = {};
+
+    // Loop to automatically map 'p1' to 'p40' with corresponding indices 0 to 39
+    for (let i = 1; i <= 100; i++) {
+        probeMap[`P${i}`] = i - 1;
+    }
+
+    return probeMap[probeNumber];
+}
+
+
+
+
+var operator_values_str = "{{ operator_values|safe }}";
+    var operator_values_cleaned = operator_values_str.match(/'([^']*)'/)[1];
+    var operator_values = operator_values_cleaned.split(',');
+    var operatorInput = document.getElementById("operator");
+    // Set its value to the values from machine_values array
+    operatorInput.value = operator_values.join(', ');
+
+
+    var shift_values_str = "{{ shift_values|safe }}";
+    console.log("shift_values_str",shift_values_str)
+    var shift_values_cleaned = shift_values_str.match(/'([^']*)'/)[1];
+    var shift_values = shift_values_cleaned.split(',');
+    var shiftInput = document.getElementById("shift");
+    // Set its value to the values from machine_values array
+    shiftInput.value = shift_values.join(', ');
+
+
+    var machine_values_str = "{{ machine_values|safe }}";
+    console.log("machine_values_str",machine_values_str)
+    // Extract the value between single quotes
+    var machine_value = machine_values_str.match(/'([^']*)'/)[1];
+    console.log('your machine value is:', machine_value);
+    var machineInput = document.getElementById("machine");
+    // Set its value to the extracted value
+    machineInput.value = machine_value;
+
+console.log("step_no_values:",step_no_values);
+
+
+//  // Function to set values from Django context
+//  function setOverallCounts(overallCounts) {
+//             document.getElementById('accept').value = overallCounts.overall_accept_count;
+//             document.getElementById('reject').value = overallCounts.overall_reject_count;
+//             document.getElementById('rework').value = overallCounts.overall_rework_count;
+//         }
+
+//         // Call setOverallCounts with the Django context values
+//         const overallCounts = {
+//             overall_accept_count: "{{ overall_accept_count }}",
+//             overall_reject_count: "{{ overall_reject_count }}",
+//             overall_rework_count: "{{ overall_rework_count }}",
+           
+//         };
+        
+//         // Set values when the page loads
+//         window.onload = function() {
+//             setOverallCounts(overallCounts);
+//         };
+
+      
+
+        document.addEventListener("DOMContentLoaded", function() {
+    var master_date = "{{last_stored_dates}}";
+    console.log("master_date", master_date);
+
+    // Parse the master_date string to get the starting timestamp
+    const startDate = new Date(master_date);
+    console.log("Parsed Start Date:", startDate);
+
+    // Access the interval settings JSON
+    const intervalSettings = JSON.parse('{{ interval_settings_json|escapejs }}');
+
+    intervalSettings.forEach(setting => {
+        console.log("Timewise:", setting.timewise);
+        console.log("Componentwise:", setting.componentwise);
+        console.log("Hour:", setting.hour);
+        console.log("Minute:", setting.minute);
+        console.log("Component No:", setting.component_no);
+
+        if (setting.timewise) {
+            const hours = setting.hour;
+            const minutes = setting.minute;
+
+            // Calculate the interval in milliseconds
+            const interval = (hours * 60 + minutes) * 60 * 1000;
+            
+            // Calculate the first alert time
+            const firstAlertTime = new Date(startDate.getTime() + interval);
+            const now = new Date();
+            const timeUntilFirstAlert = firstAlertTime - now;
+
+            console.log("First Alert Time:", firstAlertTime);
+            console.log("Time Until First Alert (ms):", timeUntilFirstAlert);
+
+            // Set a timeout for the first alert
+            setTimeout(() => {
+                alert("Timewise alert: It's time for mastering! Click OK to go to the master page."); {
+                    // Redirect to the master page if OK is clicked
+                    window.location.href = '/master/'; // Replace '/master-page' with the actual URL of your master page
+                }
+
+                // Set intervals for subsequent alerts
+                setInterval(() => {
+                    alert("Timewise alert: It's time for mastering! Click OK to go to the master page."); {
+                        // Redirect to the master page if OK is clicked
+                        window.location.href = '/master/'; // Replace '/master-page' with the actual URL of your master page
+                    }
+                }, interval);
+
+            }, timeUntilFirstAlert);
+        }
+
+        if (setting.componentwise) {
+            const componentNo = setting.component_no;
+            let clickCount = 0;
+
+            const saveButton = document.getElementById('save-btn');
+            saveButton.addEventListener('click', () => {
+                clickCount++;
+                if (clickCount === componentNo) {
+                    alert("Timewise alert: It's time for mastering! Click OK to go to the master page."); {
+                        // Redirect to the master page if OK is clicked
+                        window.location.href = '/master/'; // Replace '/master/' with the actual URL of your master page
+                    }
+                    clickCount = 0; // Reset the count after the alert
+                }
+            });
+        }
+    });
+});
+
+    
+
+
+
+
+function mapProbeToTextareaId(probeNumber) {
+    const probeMap = {
+        '1': 'probe-A',
+        '2': 'probe-B',
+        '3': 'probe-C',
+        '4': 'probe-D',
+        '5': 'probe-E',
+        '6': 'probe-F',
+        '7': 'probe-G',
+        '8': 'probe-H',
+        '9': 'probe-I',
+        '10': 'probe-J',
+        '11': 'probe-K',
+        
+
+    };
+   
+
+    return probeMap[probeNumber];
+}
+
+
+///////////////////////////////////////////////////////////////////////////////
+
+
+var shiftValues = JSON.parse('{{ shift_time|escapejs }}');
+console.log('Shift values are this ::::::::::::', shiftValues);
+
+// Function to convert 12-hour time to 24-hour format
+function convertTo24Hour(timeString) {
+    let [time, modifier] = timeString.trim().split(' ');
+    let [hours, minutes, seconds] = time.split(':');
+    hours = parseInt(hours, 10);
+
+    if (modifier === 'PM' && hours !== 12) {
+        hours += 12;
+    }
+    if (modifier === 'AM' && hours === 12) {
+        hours = 0;
+    }
+
+    return `${hours.toString().padStart(2, '0')}:${minutes}:${seconds}`;
+}
+
+// Function to determine and update the shift name based on the current time
+function setDateTimes() {
+    let now = new Date();
+    let currentTime = now.toTimeString().split(' ')[0]; // 'HH:MM:SS'
+
+    let shiftName = shiftValues[0].shift; // Default to the first shift
+
+    for (let i = shiftValues.length - 1; i >= 0; i--) {
+        let shift = shiftValues[i];
+        let shift24HourTime = convertTo24Hour(shift.shift_time);
+
+        if (currentTime >= shift24HourTime) {
+            shiftName = shift.shift;
+            break;
+        }
+    }
+
+    document.querySelectorAll('.shift-name').forEach(element => {
+        element.value = shiftName;
+    });
+}
+
+// Function to update current date and time in the input box
+function updateClock() {
+    let now = new Date();
+    let hours = now.getHours();
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+    let ampm = hours >= 12 ? 'PM' : 'AM';
+
+    let displayHours = hours % 12 || 12; // Convert to 12-hour format
+    let currentTime = `${displayHours}:${minutes}:${seconds} ${ampm}`;
+
+    let day = now.getDate().toString().padStart(2, '0');
+    let month = (now.getMonth() + 1).toString().padStart(2, '0');
+    let year = now.getFullYear();
+    let currentDateFormatted = `${day}/${month}/${year}`;
+
+    document.getElementById("date").value = `${currentDateFormatted} ${currentTime}`;
+
+    checkShiftNotification(currentTime);
+
+    setTimeout(updateClock, 1000);
+}
+
+// Function to check if the current time matches any shift time
+function checkShiftNotification(currentTime) {
+    let currentTime24Hour = convertTo24Hour(currentTime);
+
+    shiftValues.forEach(shift => {
+        let shiftTime24Hour = convertTo24Hour(shift.shift_time);
+        if (currentTime24Hour === shiftTime24Hour) {
+            showShiftNotification();
+        }
+    });
+}
+
+// Function to get the shift time for a given shift name
+function getShiftTimeForShift(shiftName) {
+    let shift = shiftValues.find(s => s.shift === shiftName);
+    return shift ? shift.shift_time : null;
+}
+
+// Function to format shift time with the current date
+function combineShiftTimeWithCurrentDate(shiftName) {
+    let shiftTime = getShiftTimeForShift(shiftName);
+    if (!shiftTime) {
+        console.error('Shift time not found for shift:', shiftName);
+        return null;
+    }
+
+    let shift24HourTime = convertTo24Hour(shiftTime);
+    let shiftDateTime = new Date();
+    let [hours, minutes, seconds] = shift24HourTime.split(':');
+    
+    shiftDateTime.setHours(parseInt(hours));
+    shiftDateTime.setMinutes(parseInt(minutes));
+    shiftDateTime.setSeconds(parseInt(seconds));
+
+    let day = shiftDateTime.getDate().toString().padStart(2, '0');
+    let month = (shiftDateTime.getMonth() + 1).toString().padStart(2, '0');
+    let year = shiftDateTime.getFullYear();
+
+    let displayHours = shiftDateTime.getHours() % 12 || 12;
+    let ampm = shiftDateTime.getHours() >= 12 ? 'PM' : 'AM';
+    
+    let formattedDateTime = `${year}-${month}-${day} ${displayHours}:${minutes}:${seconds} ${ampm}`;
+    
+    return formattedDateTime;
+}
+
+// Function to send shift data via AJAX
+// Function to send shift data via AJAX with from_date and end_date
+function postShiftData(shiftName) {
+    let fromDate = combineShiftTimeWithCurrentDate(shiftName); // Shift start time (current date + shift time)
+    let now = new Date();
+
+    let day = now.getDate().toString().padStart(2, '0');
+    let month = (now.getMonth() + 1).toString().padStart(2, '0');
+    let year = now.getFullYear();
+    let hours = now.getHours() % 12 || 12;
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+    let ampm = now.getHours() >= 12 ? 'PM' : 'AM';
+
+    let endDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds} ${ampm}`;
+
+    setTimeout(() => {
+        window.location.href = `/report/?from_date=${encodeURIComponent(fromDate)}&to_date=${encodeURIComponent(endDate)}`;
+    }, 1000);
+
+}
+
+
+
+function getCSRFToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        let cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            let cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+
+
+
+// Function to check shift change 5 seconds early
+function checkShiftChange() {
+    let now = new Date();
+    let currentTime = now.toTimeString().split(' ')[0]; // 'HH:MM:SS'
+    let currentShift = null;
+    let nextShiftTime = null;
+
+    for (let i = 0; i < shiftValues.length; i++) {
+        let shift = shiftValues[i];
+        let shiftTime24Hour = convertTo24Hour(shift.shift_time);
+
+        if (currentTime >= shiftTime24Hour) {
+            currentShift = shift.shift;
+        } else {
+            nextShiftTime = shiftTime24Hour;
+            break;
+        }
+    }
+
+    if (nextShiftTime) {
+        let shiftDateTime = new Date();
+        let [hours, minutes, seconds] = nextShiftTime.split(':');
+        shiftDateTime.setHours(parseInt(hours));
+        shiftDateTime.setMinutes(parseInt(minutes));
+        shiftDateTime.setSeconds(parseInt(seconds) - 5); // 5 seconds before shift change
+
+        let shiftMinusFiveSec = shiftDateTime.toTimeString().split(' ')[0];
+
+        if (currentTime === shiftMinusFiveSec) {
+            console.log(`Posting before shift change: ${currentShift}`);
+            postShiftData(currentShift);
+        }
+    }
+}
+
+// Function to display shift change notification
+function showShiftNotification() {
+    let notification = document.createElement('div');
+    notification.id = 'shift-notification';
+    notification.innerText = 'It\'s time to switch to the next shift!';
+    Object.assign(notification.style, {
+        position: 'fixed', top: '10px', right: '10px',
+        backgroundColor: 'green', color: 'white',
+        padding: '10px', borderRadius: '5px'
+    });
+
+    document.body.appendChild(notification);
+
+    // setTimeout(() => {
+    //     notification.remove();
+    //     window.location.href = '/report/';
+    // }, 3000);
+}
+
+// Start the clock and shift checking processes
+updateClock();
+setInterval(setDateTimes, 1000);
+setInterval(checkShiftChange, 500);
+
+
+
+
+
+
+$(document).ready(function () {
+    // Function to get CSRF token from the cookies
+    function getCSRFToken() {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            let cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                let cookie = cookies[i].trim();
+                // Check if the cookie name is "csrftoken"
+                if (cookie.startsWith('csrftoken=')) {
+                    cookieValue = cookie.substring('csrftoken='.length, cookie.length);
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Delay execution by 2 seconds
+    setTimeout(function () {
+        // Get input values
+        var dateTime = $("#date").val(); // Example: 21/12/2024 6:53:57 PM
+        console.log('Original value:', dateTime);
+
+        // Convert the original format to Date object
+        var dateParts = dateTime.split(' ');
+        var date = dateParts[0].split('/');
+        var time = dateParts[1].split(':');
+        var ampm = dateParts[2];
+
+        // Convert to 12-hour format
+        var hours = parseInt(time[0]);
+        if (ampm === 'PM' && hours < 12) {
+            hours += 12; // Convert PM hours to 24-hour format
+        }
+        if (ampm === 'AM' && hours === 12) {
+            hours = 0; // Convert 12 AM to 0 (midnight)
+        }
+
+        // Construct Date object
+        var formattedDate = new Date(date[2], date[1] - 1, date[0], hours, time[1], time[2]);
+
+        // Format the date to "yyyy/mm/dd hh:mm:ss AM/PM"
+        var year = formattedDate.getFullYear();
+        var month = (formattedDate.getMonth() + 1).toString().padStart(2, '0');
+        var day = formattedDate.getDate().toString().padStart(2, '0');
+        var hours12 = formattedDate.getHours() % 12 || 12; // 12-hour format
+        var minutes = formattedDate.getMinutes().toString().padStart(2, '0');
+        var seconds = formattedDate.getSeconds().toString().padStart(2, '0');
+        var period = (formattedDate.getHours() >= 12) ? 'PM' : 'AM';
+
+        var formattedDateTime = `${year}/${month}/${day} ${hours12}:${minutes}:${seconds} ${period}`;
+        console.log('Formatted value to send:', formattedDateTime);
+
+        var shift = $("#shift").val(); // Example: SHIFT-2
+        console.log('your shift value is this:',shift);
+        var partModel = $("#partModel").val(); // Get the value of the part model input
+        console.log('your partmodel value is this:',partModel);
+
+        // Get CSRF token
+        var csrftoken = getCSRFToken();
+
+        // Send AJAX POST request with CSRF token
+        $.ajax({
+            url: '/measurement_count/', // Replace with your actual endpoint
+            type: 'POST',
+            headers: { "X-CSRFToken": csrftoken }, // Include CSRF token
+            data: { 
+                date: formattedDateTime, 
+                shift: shift,
+                part_model: partModel,
+            },
+            success: function (response) {
+                console.log("Data received successfully:");
+                console.log("Accept Last Occurrence:", response.accept_occurrence);
+                console.log("Reject Last Occurrence:", response.reject_occurrence);
+                console.log("Rework Last Occurrence:", response.rework_occurrence);
+                console.log("Total Occurrence:", response.total_occurrence);
+
+                // Display the values in the input fields
+                $('#accept').val(response.accept_occurrence);
+                $('#reject').val(response.reject_occurrence);
+                $('#rework').val(response.rework_occurrence);
+                $('#total').val(response.total_occurrence);
+            },
+            error: function (xhr, status, error) {
+                console.log("Error:", xhr.responseText);
+            },
+        });
+    }, 2000); // Delay of 2 seconds
+});
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////
+
+$(document).ready(function () {
+    // Parse the settings JSON into a JavaScript object
+    const settings = JSON.parse('{{ settings_json|safe }}');
+
+    // Log settings to the console
+    console.log("Settings:", settings);
+
+    // Create a dynamic priority array based on the card names
+    const portPriority = settings
+        .sort((a, b) => {
+            // Sorting the ports so that PIEZO_4CH comes before LVDT_4CH
+            if (a.card === 'PIEZO_4CH') return -1;
+            if (b.card === 'PIEZO_4CH') return 1;
+            return 0;
+        })
+        .map(setting => setting.com_port); // Get the sorted COM ports based on card priority
+
+    console.log("Sorted COM Port Priority:", portPriority);
+
+    const ws = new WebSocket('ws://localhost:8000/ws/comport/');
+
+    let mergedChannels = {}; // Store channel data from all COM ports
+
+    ws.onmessage = function (event) {
+        const data = JSON.parse(event.data);
+
+        if (data.message) {
+            let comPort = data.com_port; // Get COM port dynamically
+            console.log("comPort:", comPort);
+
+            let message = data.message;
+            console.log("Message:", message);
+
+            // Extract channels (A-K with + or - followed by a number)
+            let matches = message.match(/[A-K][\+\-]\d+/g) || [];
+
+            // Store data for the corresponding COM port
+            if (!mergedChannels[comPort]) {
+                mergedChannels[comPort] = [];
+            }
+            mergedChannels[comPort] = matches; // Update channel data for this COM
+
+            // Merge all channels based on the priority order
+            let allChannels = [];
+            portPriority.forEach(priorityComPort => {
+                if (mergedChannels[priorityComPort] && mergedChannels[priorityComPort].length > 0) {
+                    allChannels = allChannels.concat(mergedChannels[priorityComPort]);
+                } else {
+                    // If the COM port is disconnected or has no data, fill with "0"
+                    let emptyChannels = Array(4).fill().map((_, i) => `${i + 1}0000000`);
+                    allChannels = allChannels.concat(emptyChannels);
+                }
+            });
+
+            console.log(`Merged COM Data: ${allChannels.join(", ")}`);
+
+            // Reset text areas before assigning new values
+            $("textarea[id^='probe-']").val("");
+
+            // Get available textareas dynamically (equal to merged channel length)
+            let availableTextareas = $("textarea[id^='probe-']").toArray().slice(0, allChannels.length);
+
+            // Process allChannels and display in textareas
+            allChannels.forEach((channelData, index) => {
+                if (index < availableTextareas.length) {
+                    // Check if the value is negative or positive
+                    let value;
+                    if (channelData.includes('-')) {
+                        value = channelData.substring(1); // Include the negative sign with the value
+                    } else {
+                        value = channelData.substring(2); // Ignore '+' and get only the value
+                    }
+
+                    // Assign to the corresponding textarea
+                    let textarea = availableTextareas[index];
+                    $(textarea).val(value);
+                }
+            });
+        }
+    };
+});
+</script>
+        
+
+
+
+
+{% endblock content %}
