@@ -1,389 +1,513 @@
 {% extends 'app/layouts/main.html' %}
 {% block title %}
-Mastering Page
+Tracability
 {% endblock title %}
 {% block content %}
 <style>
-    .full-page-box {
-         display: flex;
-         flex-direction: column;
-         background-color: lightgrey;
-         padding: 20px; 
-         box-sizing: border-box;
-         
-     }
-     .wrapper {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .input-box-container{
-            background-color:rgb(178, 178, 226);
-            padding: 10px;
-             width: 180px;
-             height: 140px;
-             margin: 20px;
-             box-sizing: border-box;
-             border: 2px solid black;
-        }
-        
-        .input-box-container input[type="radio"] {
-            margin-left: 70px;
-            margin-top: 0px;
-        }
-        .input-box-container label {
-            margin-left: 0px;
-            width: 10px;
-        }
-
-        .input-box-container input[type="text"] {
-            margin-top: 5px;
-            width: 70px; /* Ensure inputs fit within container */
-            margin-top: 5px; /* Spacing between input boxes */
-           
-        }
-      
- 
-     .left-box {
-         width: 350px;
-         height: 100px;
-         background-color: white; 
-         margin-right: 10px;
-         border: 2px solid black; 
-     }
-     label {
-             display: inline-block;
-             width: 150px; 
-             margin-top: 15px;
-             text-align: center;
-             font-weight: bold;
-         }
- 
-         select {
-             margin-top: 10px;
-             box-sizing: border-box;
-             width: 50%; 
-             height: 30px;
-         } 
-         #cancel-btn{
-             background-color: orange;
-             color:black;
-             height: 40px;
-             width: 130px;
-             margin-left: 10px;
-             margin-top: 10px;
-               
-         }
-         #select-btn{
-             background-color: green;
-             color:black;           
-             height: 40px;
-             width: 130px; 
-             margin-left: 65px; 
-             margin-top: 10px;
-         }
-         #lowMasterBtn,#highMasterBtn{
-             width: 250px;
-             height: 40px;
-             margin-left: 950px;
-             margin-top: -60px;
-             background-color: blue;
-             color: white;
-         }
-
-         #measureBtn{
-            width: 120px;
-             height: 70px;
-             margin-left: 800px;
-             margin-top: -50px;
-             background-color: rgb(255, 0, 76);
-             color: white;
-         }
-         #highMasterBtn{    
-             margin-top: 10px;   
-         }
-         
-         
-        
- 
-       
- 
-         #probe-A,
-         #probe-B,
-         #probe-C,
-         #probe-D,
-         #probe-E,
-         #probe-F,
-         #probe-G,
-         #probe-H,
-         #probe-I,
-         #probe-J,
-         #probe-K {
-             display: inline-block;
-             max-height: 100px;
-             width: 100px;
-             margin-right: 10px; 
-            
-             
-         }
- 
-        
- #pre{
-         margin-top: 10px;
-         color:white;
-         font-size: 20px;
-         font-weight: bold;
-         text-align: center;
-         background-color: rgb(250, 106, 54)
- 
-        }
-        #clock-box{
-         background-color:white;
-         border-radius: 5px;
-         height: 40px;
-         border: 1px solid black;
-         padding-top: 5px;
-         font-weight: bold;
-         max-width: 180px;
-         margin-left: 1000px;
- 
-        }
-
-
-.reset-button {
-  position: relative;
-  background-color: #007bff;
-  border: none;
-  border-radius: 30%;
-  width: 40px;
-  height: 40px;
-  margin-top: -40px;
-  margin-left: 1200px;
-  padding: 0;
-  cursor: pointer;
-  overflow: hidden;
-}
-
-.reset-symbol {
-  font-size: 20px;
-  color: white;
-  position: relative;
-  z-index: 1;
-}
-
-.reset-button:before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 120%;
-  height: 120%;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-  transform: translate(-50%, -50%) rotateX(55deg) rotateY(30deg);
-  transition: transform 0.5s ease;
-}
-
-.reset-button:hover:before {
-  transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg);
-}
-.input2-box {
-    margin-left: 5px;
-    height: 60px; /* Adjust the height as needed */
-    width: 75px;
-}
-
-#customAlert{
-    display: none;
-    position: fixed; 
-    top: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-color: #f8d7da; 
-    color: #721c24; 
-    border: 1px solid #f5c6cb; 
-    padding: 10px;
-    z-index: 1000;
-}
-   
-.probe-container {
-    display: flex;
-    align-items: center;
-    gap: 5px; /* Add space between the elements */
-}
-        
- </style>
- 
-
-<div class="full-page-box" style="overflow-x: auto;overflow-y:auto;">
-    <div id="clock">
-        <div class="box" id="clock-box"></div>
-    </div>
-    
-    <button class="reset-button" id="reset-button">
-        <span class="reset-symbol">&#8634;</span>
-    </button>
-
-    <div class="left-box">
-        <label for="partModel">PART MODEL:</label>
-        <select id="partModel" name="partModel">
-            {% for value in part_model_values %}
-                <option value="{{ value }}">{{ value }}</option>
-            {% endfor %}
-        </select>
-        <a href="{% url 'measurebox' %}" >
-            <button type="button" id="cancel-btn"><b>Cancel</b></button>
-            </a>
-        <button type="button" id="select-btn"><b>Select</b></button>
-    </div>
-    <label for="all_parameter" style="margin-left: 370px; margin-top: -80px;">
-        All Parameter
-        <input type="radio" name="radio_selection" style="margin-left: 10px;" id="all_parameter" onclick="handleRadioClick(this)">
-    </label>
-    
-    <label for="parameterwise" style="margin-left: 370px;">
-        Parameterwise
-        <input type="radio" name="radio_selection" style="margin-left: 7px;" id="parameterwise" onclick="handleRadioClick(this)">
-    </label><br>
-    
-    <label for="mastering" style="margin-left: 500px;margin-top: -80px;">MASTERING GROUP:</label>
-    <select id="mastering" style="width: 7%;margin-left: 650px;margin-top: -40px;" name="mastering" onchange="updateMastering()">
-        <script>
-            for (var i = 1; i <= 30; i++) {
-                document.write('<option value="' + i + '">' + i + '</option>');
-            }
-        </script>
-    </select>
-    
-    <button id="measureBtn" type="button" onclick="MeasureBtnClick()"><b>Measurement<br>F1</b></button>
-    <button id="lowMasterBtn" type="button" onclick="lowMasteringClick()"><b>Low Mastering</b></button>
-    <button id="highMasterBtn" type="button" onclick="highMasteringClick()"><b>High Mastering</b></button>
-    
-
-
-
-    <pre id="pre" style="border: 2px solid black;"></pre>
-    
   
-    <div>
-        <h5>RAW COUNT:</h5>
-        <div class="probe-container">
-            <p>P1:</p><textarea id="probe-A"></textarea>
-            <p>P2:</p><textarea id="probe-B"></textarea>
-            <p>P3:</p><textarea id="probe-C"></textarea>
-            <p>P4:</p><textarea id="probe-D"></textarea>
-            <p>P5:</p><textarea id="probe-E"></textarea>
-            <p>P6:</p><textarea id="probe-F"></textarea>
-            <p>P7:</p><textarea id="probe-G"></textarea>
-            <p>P8:</p><textarea id="probe-H"></textarea>
-            <p>P9:</p><textarea id="probe-I"></textarea>
-            <p>P10:</p><textarea id="probe-J"></textarea>
-            <p>P11:</p><textarea id="probe-K"></textarea>
-        </div>
-    </div>
+  html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    border: 2px solid white double;
     
-    
-    <div id="wrapper" class="wrapper"></div>
-    <div id="container-wrapper"></div>
-    <div id="customAlert" ></div>
+}
 
 
+.box-0{
+    width: 70vw;
+    height:8vh;
+    margin-left:20%;
+    margin-top: 5%;
+    background-color: orange;
+    border: 2px solid black;
+    font-family:Arial, Helvetica, sans-serif
+}
+
+.box {
+    width: 70vw;
+    height: 60vh;
+    margin-left:20% ;
+    margin-top: -30%;
+    background-color: white;
+    border: 2px solid black;
+}
+
+.box-1 {
+    width: 15vw;
+    height: 60vh;
+    margin-top:3%;
+    margin-left: 1%;
+    background-color: white;
+    border: 2px solid black;
+    padding-top: 50px;
+    padding-left: 5px;
+  }
+
+.inner-box-1, .inner-box-2, .inner-box-3, .inner-box-4, .inner-box-5{
+    width: 13vw; 
+    height: 8vh;
+    background-color:lightblue; 
+    border: 2px solid black; 
+    margin: 3%;
+    padding-top: 10%;
+    cursor: pointer;
+    text-align: center;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+
+.item-1, .item-2, .item-3, .item-4, .item-5{
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s; 
+  }
+
+#save-btn{
+    background-color: green;
+    color: white;
+    height: 7vh;
+    width: 15vw;
+    margin-left: 80%;
+    margin-top: -10%;
+}
+
+#delete-btn{
+    background-color: red;
+    color: white;
+    height: 7vh;
+    width: 15vw;
+    margin-top: -10%;
+    margin-left: 30%;
+}
+
+#cancel-btn{
+    background-color: orange;
+    color:black;
+    height: 7vh;
+    width: 15vw;  
+    margin-top: 1%;
+    margin-left: 2%;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+#notification {
+    display: none;
+    position: fixed;    
+    top: 50%;
+    left: 60%;
+    height: 120px;
+    width: 350px;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: black;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+    border: 2px solid black;
+}
+
+.selected {
+        background-color:red;
+    }
+    .no-outline{
+        border: none;
+        outline: none;
+    }    /* CSS styles for selected column */
+        .selected-column {
+            background-color: yellow;
+        }
+</style>
+<div class="box-0">
+    <center style="color:black;text-shadow: 2px 2px 4px white;">
+        <h1><b>Tracability</b></h1></center>
 </div>
 
+<div id="notification" style="display: none;"></div>
+
+<div class="box-1">
+    <div id="part" class="inner-box-1" onclick="enlargeItem(1),showItem('item-1')"><h4><b>Part</b></h4></div>
+    <div id="batchNumber" class="inner-box-2" onclick="enlargeItem(2),showItem('item-2')"><h4><b>Batch Number</b></h4></div>
+    <div id="machine" class="inner-box-3" onclick="enlargeItem(3),showItem('item-3')"><h4><b>Machine</b></h4></div>
+    <div id="operator" class="inner-box-4" onclick="enlargeItem(4),showItem('item-4')"><h4><b>Operator</b></h4></div>
+    <div id="vendorCode" class="inner-box-5" onclick="enlargeItem(5),showItem('item-5')"><h4><b>Vendor Code</b></h4></div>
+</div>
+
+<div class="box" id="boxContent"style="overflow-x: auto;overflow-y:auto;">
+    <div class="item item-1" id="item1">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sr.No</th>
+                    <th style="width: 20%;" id="partmodel">Part Model</th>
+                    <th style="width: 20%;" id="customername">Customer Name</th>
+                    <th style="width: 20%;" id="partname">Part Name</th>
+                    <th style="width: 20%;" id="partno">Part No</th>
+                    <th style="width: 20%;" id="char_lmt">Char Lmt</th>
+                    <th style="width: 20%;" id="hide">Punch no</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody-1">
+                {% for data in table_body_1_data %}
+                <tr data-id="{{ data.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td><input type="text" value="{{ data.part_model }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.customer_name }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.part_name }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.part_no }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.char_lmt }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="checkbox" {% if data.hide %}checked{% endif %}></td>
+                </tr>
+                {% endfor %}
+        
+            </tbody>
+        </table><br>
+        <button onclick="addRow('item-1', 6)">Add New</button>
+    </div>
+
+    <div class="item item-2" id="item2">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sr.No</th>
+                    <th id="batchno" style="width: 20%;">Batch No</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody-2">
+                {% for data in table_body_2_data %}
+                <tr data-id="{{ data.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td><input type="text" value="{{ data.batch_no }}" class="no-outline" style="width: 100%;"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+        <button onclick="addRow('item-2', 2)">Add New</button>
+    </div>
+
+    <div class="item item-3" id="item3">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sr.No</th>
+                    <th id="machineno" style="width: 20%;">Machine No</th>
+                    <th id="machinename" style="width: 20%;">Machine Name</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody-3">
+                {% for data in table_body_3_data %}
+                <tr data-id="{{ data.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td><input type="text" value="{{ data.machine_no }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.machine_name }}" class="no-outline" style="width: 100%;"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+        <button onclick="addRow('item-3', 3)">Add New</button>
+    </div>
+
+    <div class="item item-4" id="item-4">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sr.No</th>
+                    <th id="operatorno" style="width: 20%;">Operator No</th>
+                    <th id="operatorname" style="width: 20%;">Operator Name</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody-4">
+                {% for data in table_body_4_data%}
+                <tr data-id="{{ data.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td><input type="text" value="{{ data.operator_no }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.operator_name }}" class="no-outline" style="width: 100%;"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+        <button onclick="addRow('item-4', 3)">Add New</button>
+    </div>
+
+    <div class="item item-5" id="item-5">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th style="width: 5%;">Sr.No</th>
+                    <th id="vendorcode" style="width: 25%;">Vendor Code</th>
+                    <th id="email" style="width: 25%;">Email</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody-5">
+                {% for data in table_body_5_data %}
+                <tr data-id="{{ data.id }}">
+                    <td>{{ forloop.counter }}</td>
+                    <td><input type="text" value="{{ data.vendor_code }}" class="no-outline" style="width: 100%;"></td>
+                    <td><input type="text" value="{{ data.email }}" class="no-outline" style="width: 100%;"></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+        <button onclick="addRow('item-5', 3)">Add New</button>
+    </div>
+</div>
+
+<a href="{% url 'index' %}" >
+    <button type="button" id="cancel-btn"><b>Cancel</b></button>
+</a>
+
+
+<button type="button" id="delete-btn" onclick="deleteSelectedRows()"><b>Delete Selected</b></button>
+
+<div class="redButton-1" style=" margin-top: -2.5%; width: 10vw; margin-left: 70%;">
+<button type="button" id="save-btn" onclick="saveData()" ><b>Save</b></button>
+</div>
 
 <script>
-    const operatorValues = "{{ operator_values|safe }}";
-    const shiftValues = "{{ shift_values|safe }}";
-    const machineValues = "{{ machine_values|safe }}";
+
+
+    // Function to handle row selection
+    function handleRowSelection(event) {
+        var selectedRow = event.currentTarget;
+        var allRows = document.querySelectorAll('table tbody tr');
+    
+        // Remove 'selected' class and background color for all rows
+        allRows.forEach(row => {
+            row.classList.remove('selected');
+        });
+    
+        // Toggle 'selected' class for the clicked row and set its background color
+        selectedRow.classList.add('selected');
+    }
     
     
-     document.getElementById('reset-button').addEventListener('click', function() {
-        location.reload();
-        const preTag = document.getElementById('pre');
-        preTag.innerText = "New Mastering is Started";
+    
+    
+    // Function to handle clicking based on session storage
+function clickBasedOnSessionStorage() {
+    // Get the session storage value
+    var selectedTableBodyId = sessionStorage.getItem('selectedTableBodyId');
+    //console.log("Selected Table Body ID:", selectedTableBodyId);
+
+    // Determine which inner box to click based on the tableBodyId value
+    if (selectedTableBodyId === 'tableBody-1') {
+        enlargeItem(1);  // Simulate clicking inner-box-1
+        showItem('item-1');
+    } else if (selectedTableBodyId === 'tableBody-2') {
+        enlargeItem(2);  // Simulate clicking inner-box-2
+        showItem('item-2');
+    } else if (selectedTableBodyId === 'tableBody-3') {
+        enlargeItem(3);  // Simulate clicking inner-box-3
+        showItem('item-3');
+    } else if (selectedTableBodyId === 'tableBody-4') {
+        enlargeItem(4);  // Simulate clicking inner-box-4
+        showItem('item-4');
+    } else if (selectedTableBodyId === 'tableBody-5') {
+        enlargeItem(5);  // Simulate clicking inner-box-5
+        showItem('item-5');
+    } else {
+            console.log('Invalid session storage value. Defaulting to item-1.');
+            enlargeItem(1);  // Default to inner-box-1
+            showItem('item-1');  // Default to item-1
+        }
+}
+
+// Function to highlight and enlarge an item
+function enlargeItem(index) {
+    document.querySelectorAll('.box-1 > div').forEach(function (el) {
+        el.style.backgroundColor = '';  // Reset background color for all boxes
+    });
+    var clickedInnerBox = document.querySelector(`.box-1 .inner-box-${index}`);
+    if (clickedInnerBox) {
+        clickedInnerBox.style.backgroundColor = 'red';  // Highlight the clicked box
+    } else {
+        console.log('No inner-box found with index:', index);
+    }
+}
+
+// Function to display the selected item
+function showItem(itemClassName) {
+    var itemClasses = document.querySelectorAll('.item');
+    itemClasses.forEach(function (item) {
+        item.style.display = 'none';  // Hide all items
     });
 
-    document.getElementById("lowMasterBtn").disabled = false;
-    document.getElementById("lowMasterBtn").style.opacity = '1';
-    document.getElementById("highMasterBtn").disabled = true;
-    document.getElementById("highMasterBtn").style.opacity = '0.6';
-
-
-
-    function MeasureBtnClick() {
-        window.location.href = '/measurement/'; // Replace '/measurement' with the actual URL of the measurement page
+    var selectedItem = document.querySelector('.' + itemClassName);
+    if (selectedItem) {
+        selectedItem.style.display = 'block';  // Show the selected item
+    } else {
+        console.log('No item found with class:', itemClassName);
     }
-    function redirectToMasterPage() {
-        if (event.key === 'F1') {
-            window.location.href = '/measurement/';
-            event.preventDefault();
+}
+
+        
+        var rowData = {};
+        
+        window.onload = function () {
+            showItem('item-1');
+            document.querySelector('.box-1 .inner-box-1').style.backgroundColor='red';
+        };
+        
+ 
+    
+    // Define an object to hold row data
+    var rowData = {};
+    
+    function addRow(itemClassName, numColumns) {
+        var tableBodyId = 'tableBody-' + itemClassName.charAt(itemClassName.length - 1);
+        var tableBody = document.querySelector('#' + tableBodyId);
+        var newRow = tableBody.insertRow(tableBody.rows.length);
+        var rowIndex = tableBody.rows.length;
+    
+        newRow.addEventListener('click', function(event) {
+            var rows = tableBody.querySelectorAll('tr');
+            rows.forEach(function(row) {
+                row.style.backgroundColor = ''; // Reset background color for all rows
+            });
+    
+            event.currentTarget.style.backgroundColor = 'lightblue'; // Set background color for the clicked row
+        });
+    
+        for (var i = 0; i < numColumns; i++) {
+            var cell = newRow.insertCell(i);
+            var input = document.createElement('input');
+            input.type = 'text';
+            input.style.width = '100%';
+            input.style.padding = '0';
+            input.style.border = 'none';
+            input.style.outline = 'none';
+            cell.appendChild(input);
         }
+
+// Conditionally add a checkbox in the last column for tableBody-1
+if (tableBodyId === 'tableBody-1') {
+        var checkboxCell = newRow.insertCell(numColumns);
+        var checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkboxCell.appendChild(checkbox);
     }
-    document.addEventListener('keydown', redirectToMasterPage);
 
- 
-
-function updateClock() {
-    var currentDate = new Date();
-            var hours = currentDate.getHours();
-            var minutes = currentDate.getMinutes();
-            var seconds = currentDate.getSeconds();
-            var ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12; // Handle midnight (0 hours)
-            minutes = minutes < 10 ? '0' + minutes : minutes;
-            seconds = seconds < 10 ? '0' + seconds : seconds;
-            var currentTime = hours + ':' + minutes + ':' + seconds + ' ' + ampm;
-            var day = currentDate.getDate();
-            var month = currentDate.getMonth() + 1; // Month is zero-based
-            var year = currentDate.getFullYear();
-            var currentDateFormatted = day + '/' + month + '/' + year;
-    document.getElementById("clock-box").innerHTML = currentDateFormatted + ' ' + currentTime;
-    // Call this function again after 1 second
-    setTimeout(updateClock, 1000);
-}
-// Call the function to initially display the clock
-updateClock();
-
-
-
-// Trigger click event on page load
-window.addEventListener('load', function() {
-    setTimeout(function() {
-        document.getElementById('all_parameter').click();
-        if (element.id === 'all_parameter') {
-        radioButtons.forEach(function(radio) {
-            radio.style.display = 'none'; // Hide the radio buttons
-        });
-    }}, 100);
-});
-
- 
-  // Global variable to store the selected radio button
-var selectedRadioOption = 'All Parameter';
-
-// Function to handle radio button click
-function handleRadioClick(element) {
-    selectedRadioOption = element.id === 'all_parameter' ? 'All Parameters' : 'Parameterwise';
-    document.getElementById('pre').textContent = selectedRadioOption + " selected for mastering";
-
-    // Show or hide the dynamically created radio buttons
-    var radioButtons = document.querySelectorAll('.container_radio');
-    if (element.id === 'all_parameter') {
-        radioButtons.forEach(function(radio) {
-            radio.style.display = 'none'; // Hide the radio buttons
-        });
-    } else if (element.id === 'parameterwise') {
-        radioButtons.forEach(function(radio) {
-            radio.style.display = 'inline'; // Show the radio buttons
-        });
+    // Add the new row data to the rowData object
+    if (!rowData[tableBodyId]) {
+        rowData[tableBodyId] = [];
     }
+
+    var checkboxValue = tableBodyId === 'tableBody-1' ? checkbox.checked : null;
+
+    rowData[tableBodyId].push({
+        rowIndex: rowIndex,
+        values: Array.from(newRow.cells).map(cell => cell.querySelector('input').value),
+        checkboxValue: checkboxValue
+    });
 }
 
+    
+function saveData() {
+    var tableData = {};
 
+    // Loop through each table body
+    Object.keys(rowData).forEach(function(key) {
+        var rowsData = rowData[key];
+        var rows = [];
+        rowsData.forEach(function(rowData) {
+            var row = {
+                rowIndex: rowData.rowIndex,
+                values: []
+            };
+            var tableBody = document.getElementById(key);
+            var cells = tableBody.rows[rowData.rowIndex - 1].cells;
+            for (var i = 1; i < cells.length; i++) {
+                if (key === 'tableBody-1' && i === cells.length - 1) {
+                    row.values.push(cells[i].querySelector('input').checked);
+                } else {
+                    row.values.push(cells[i].querySelector('input').value);
+                }
+            }
+            rows.push(row);
+        });
+        tableData[key] = rows;
+    });
 
+    sendDataToServer(tableData);
 
+    // Get selected row data
+    var selectedRow = document.querySelector('.selected');
+    if (!selectedRow) {
+        console.error('No row selected.');
+        return;
+    }
 
-//////////////////////////////
+    var selectedTableBodyId = selectedRow.closest('tbody').id;
+    var selectedRowId = selectedRow.getAttribute('data-id');
+    var selectedRowCells = selectedRow.querySelectorAll('td');
+    var values = [];
+    selectedRowCells.forEach(function(cell, index) {
+        if (cell.querySelector('input')) {
+            if (selectedTableBodyId === 'tableBody-1' && index === selectedRowCells.length - 1) {
+                values.push(cell.querySelector('input').checked);
+            } else {
+                values.push(cell.querySelector('input').value);
+            }
+        }
+    });
+
+    var dataToSend = {
+        tableBodyId: selectedTableBodyId,
+        rowId: selectedRowId,
+        values: values
+    };
+
+    //console.log('Data to send:', dataToSend);
+
+    // Store the tableBodyId in session storage
+    sessionStorage.setItem('selectedTableBodyId', selectedTableBodyId);
+    //console.log("sessionStorage",sessionStorage);
+
+    // Send the selected row's data to the server
+    sendDataToServer(dataToSend);
+}
+
+function sendDataToServer(data) {
+    const csrftoken = getCookie('csrftoken');
+    
+    $.ajax({
+        url: '/trace/',
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        headers: {
+            'X-CSRFToken': csrftoken  // Ensure CSRF token is included or disable CSRF for testing
+        },
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        success: function(response) {
+            //console.log(response);  // Log successful response
+            showNotification('Data saved successfully', true);
+        },
+        error: function(xhr, status, error) {
+            //console.log('Error:', error);  // Log the error for debugging
+            //console.log('Status:', status);  // Log status for debugging
+            //console.log('Response:', xhr.responseText);  // Log server response for further inspection
+            showNotification('Error: Failed to save the data', false);
+        }
+    });
+}
+  
+ 
 function getCookie(name) {
     let cookieValue = null;
     if (document.cookie && document.cookie !== '') {
@@ -399,545 +523,174 @@ function getCookie(name) {
     return cookieValue;
 }
 
-function displayContainerValues(container) {
-    console.log('Container values:', container);
-}
+////////////////////////////////
 
 
-var lowMasteringIntervalIds = []; // Separate array for low mastering intervals
 
-function lowMasteringClick(response) {
-    console.log('Low Mastering button clicked');
-    document.getElementById("lowMasterBtn").disabled = true;
-    document.getElementById("lowMasterBtn").style.opacity = '0.6';
-    document.getElementById("highMasterBtn").disabled = false;
-    document.getElementById("highMasterBtn").style.opacity = '1';
-    const preTag = document.getElementById('pre');
-    preTag.innerText = `Low Mastering is Started for ${selectedRadioOption}`;
-    
-    // Clear all low mastering intervals (do not touch open reading intervals)
-    lowMasteringIntervalIds.forEach(function(intervalId) {
-        clearInterval(intervalId);
-    });
-    lowMasteringIntervalIds = []; // Reset low mastering array
 
-    processContainers('low', response);
-}
 
-function showCustomAlert(message) {
-    const customAlert = document.getElementById('customAlert');
-    customAlert.innerText = message;
-    customAlert.style.display = 'block';
-    
-    setTimeout(function() {
-        customAlert.style.display = 'none';
-    }, 3000); // Hide after 3 seconds
-}
 
-function highMasteringClick(response) {
-    console.log('High Mastering button clicked');
-    document.getElementById("lowMasterBtn").disabled = true;
-    document.getElementById("lowMasterBtn").style.opacity = '0.6';
-    document.getElementById("highMasterBtn").disabled = true;
-    document.getElementById("highMasterBtn").style.opacity = '0.6';
-    const preTag = document.getElementById('pre');
-    preTag.innerText = `High Mastering is Started for ${selectedRadioOption}`;
+    ///////////////////////
+// Initialize variable to keep track of the currently selected row
+   var selectedRow = null;
 
-    // Process the containers (your existing logic)
-    const result = processContainers('high', response);
-    console.log("the data which is sent from the front end:", result);
+// Function to handle row and column selection
+function handleRowAndColumnSelection(event) {
+    var clickedElement = event.target;
 
-    // Clear all open reading intervals
-    openReadingIntervalIds.forEach(function(intervalId) {
-        clearInterval(intervalId); // Stop the open reading intervals
-    });
-    openReadingIntervalIds = []; // Reset the open reading interval array
-
-    // Clear all inputBox2 values after processing
-    clearInputValues();
-
-    if (result && result.data) {
-        var csrfToken = "{{ csrf_token }}";
-
-        $.ajax({
-            type: "POST",
-            url: "/master/",
-            data: JSON.stringify({ data: result.data }),
-            contentType: "application/json",
-            headers: {
-                'X-CSRFToken': csrfToken
-            },
-            success: function(response) {
-                console.log('Data sent successfully', response);
-                showCustomAlert('Data sent successfully: ' + response.message); // Show success alert
-            },
-            error: function(xhr, status, error) {
-                console.error('Error sending data', error);
-                console.log('Response text:', xhr.responseText); // Log the response text
-                showCustomAlert('Error sending data: ' + xhr.responseText); // Show error alert
-            }
-        });
+    // Check if clicked element is an input element
+    if (clickedElement.tagName === 'INPUT') {
+        // If it's an input element, get the corresponding td element
+        clickedElement = clickedElement.closest('td');
     }
-}
-
-// Function to clear the values in inputBox2 elements
-function clearInputValues() {
-    var containers = document.querySelectorAll('.input-box-container');
     
-    containers.forEach(function(container) {
-        var inputBox2 = container.querySelector('.input2-box');
-        if (inputBox2) {
-            inputBox2.value = ''; // Or set to '0' if needed: inputBox2.value = '0';
-            inputBox2.style.backgroundColor = ''; // Reset the background color if needed
+    var currentRow = clickedElement.parentElement;
+
+    // If a new row is selected, clear the selection from the previous row
+    if (selectedRow !== currentRow) {
+        // Remove 'selected' class and background color for all rows
+        if (selectedRow) {
+            selectedRow.classList.remove('selected');
+            selectedRow.querySelectorAll('td').forEach(cell => {
+                cell.classList.remove('selected-column');
+            });
         }
-    });
-}
 
-
-function processContainers(type, response) {
-    var selectedMastering = parseInt(document.getElementById('mastering').value); // Get the selected mastering group
-
-    if (!response || !response.probe_no || !response.nominal) {
-        console.error('Response or required properties are undefined');
-        return;
+        // Update the selectedRow variable to the currently selected row
+        selectedRow = currentRow;
     }
 
-    var dataArray = [];
-    var containers = document.querySelectorAll('.input-box-container');
+    // Toggle 'selected' class for the clicked row and set its background color
+    currentRow.classList.add('selected');
 
-    containers.forEach(function (container, index) {
-        var containerMastering = parseInt(container.getAttribute('data-mastering')); // Get mastering group for each container
+    // Retrieve the ID from the 'data-id' attribute of the selected row
+    var rowId = currentRow.getAttribute('data-id');
+    //console.log('Selected Row ID:', rowId);
 
-        // Only process the container if its mastering group matches the selected one
-        if (containerMastering === selectedMastering) {
-            console.log('Processing container:', container.id);
+    // Get index of selected column
+    var selectedColumnIndex = Array.from(currentRow.children).indexOf(clickedElement);
+    //console.log("column :",selectedColumnIndex);
 
-            var parameterName = response.parameter_names[index];
-            var probeNumber = response.probe_no[index];
-            var e = response.nominal[index];
-            var lsl = response.lsl[index];
-            var ltl = response.ltl[index];
-            var usl = response.usl[index];
-            var utl = response.utl[index];
-            var digits = response.digits[index];
-
-            var inputBoxValue;
-            var a, a1, b, b1;
-
-            if (type === 'low') {
-                inputBoxValue = container.querySelector('.input1-box').value;
-            } else if (type === 'high') {
-                inputBoxValue = container.querySelector('.input3-box').value;
-            }
-
-            var textareaId = mapProbeToTextareaId(probeNumber);
-
-            if (textareaId) {
-                var textarea = document.getElementById(textareaId);
-                if (textarea) {
-                    var textareaValue = parseFloat(textarea.value);
-                    console.log('Container ID:', container.id);
-                    console.log('Input Box Value:', inputBoxValue);
-                    console.log('Textarea ID:', textareaId);
-                    console.log('Textarea Value:', textareaValue);
-
-                    if (type === 'low') {
-                        // Initialize 'a' and 'a1'
-                        a = parseFloat(inputBoxValue);
-                        a1 = textareaValue;
-                        console.log('a:', a);
-                        console.log('a1:', a1);
-                        console.log('e:', e); // Log 'e' for low mastering
-
-                        // Store a and a1 in the container for later use
-                        container.dataset.a = a;
-                        container.dataset.a1 = a1;
-                    } else if (type === 'high') {
-                        // Retrieve 'a' and 'a1' from the container's dataset
-                        a = parseFloat(container.dataset.a);
-                        a1 = parseFloat(container.dataset.a1);
-
-                        // Ensure 'a' and 'a1' are retrieved correctly
-                        if (isNaN(a) || isNaN(a1)) {
-                            console.error('Cannot calculate high mastering values. Ensure "low" type process is completed first.');
-                            return;
-                        }
-
-                        b = parseFloat(inputBoxValue);
-                        b1 = textareaValue;
-                        console.log('b:', b);
-                        console.log('b1:', b1);
-                        console.log('a:', a);
-                        console.log('a1:', a1);
-                        console.log('e:', e); // Log 'e' for high mastering
-
-                        // Perform calculations
-                        const c = b - a;
-                        const c1 = b1 - a1;
-                        const d = c / c1;
-                        const o = e + (a1 * d);
-                        const o1 = a - o;
-
-                        console.log('Calculated values:');
-                        console.log('c:', c);
-                        console.log('c1:', c1);
-                        console.log('d:', d);
-                        console.log('o:', o);
-                        console.log('o1:', o1);
-
-                        // Ensure inputBox2 exists and update its value periodically
-                        var inputBox2 = container.querySelector('.input2-box');
-                        if (inputBox2) {
-                            function updateDisplayOutput() {
-                                var newSerialData = parseFloat(textarea.value);
-                                if (!isNaN(newSerialData)) {
-                                    const displayOutput = e + (newSerialData * d + o1);
-                                    console.log("displayOutput value is:", displayOutput);
-                                    inputBox2.value = displayOutput.toFixed(digits); // Update inputBox2 with the displayOutput value
-                                    
-                                    // Update background color based on 'k' value (displayOutput)
-                                    var k = displayOutput;
-                                    if (k >= lsl && k <= usl) {
-                                        inputBox2.style.backgroundColor = '#00ff00'; // Green
-                                    } else if ((k > usl && k <= utl) || (k >= ltl && k < lsl)) {
-                                        inputBox2.style.backgroundColor = 'yellow';
-                                    } else if (k > utl || k < ltl) {
-                                        inputBox2.style.backgroundColor = 'red';
-                                    }
-                                }
-                            }
-
-                            // Set an interval to update displayOutput every 500 ms
-                            setInterval(updateDisplayOutput, 500);
-                        }
-
-                        // Collect data for backend
-                        var rowData = {
-                            parameterName: parameterName,
-                            probeNumber: probeNumber,
-                            a: a,
-                            a1: a1,
-                            b: b,
-                            b1: b1,
-                            e: e,
-                            d: d,
-                            o1: o1,
-                            operatorValues: "{{ operator_values|safe }}",
-                            shiftValues: "{{ shift_values|safe }}",
-                            machineValues: "{{ machine_values|safe }}",
-                            dateTime: document.getElementById("clock-box").innerText,
-                            selectedValue: document.getElementById('partModel').value,
-                            selectedMastering: document.getElementById('mastering').value,
-                        };
-
-                        dataArray.push(rowData);
-                    }
-                }
-            }
-        }
+    // Remove 'selected-column' class for all cells in the selected row
+    currentRow.querySelectorAll('td').forEach(cell => {
+        cell.classList.remove('selected-column');
     });
 
-    return { data: dataArray };
+    // Add 'selected-column' class to the selected column cells in the row
+    currentRow.cells[selectedColumnIndex].classList.add('selected-column');
 }
 
-
-
-
-
-
-function updateMastering() {
-    var selectedMastering = parseInt(document.getElementById('mastering').value);
-    
-    // Get all container divs
-    var containers = document.querySelectorAll('.input-box-container');
-
-    // Clear console before logging new results
-    console.clear();
-
-    // Variable to track if a matching container is found
-    var matchingContainers = [];
-
-    containers.forEach(function(container, index) {
-        // Get the mastering value for this container (assuming it's stored in a data attribute)
-        var containerMastering = parseInt(container.getAttribute('data-mastering'));
-
-        if (containerMastering === selectedMastering) {
-            container.style.backgroundColor = 'pink'; // Highlight the container with pink background
-            // Log container details to the console
-            matchingContainers.push({
-                id: container.id,
-                masteringGroup: containerMastering,
-                low_mv: document.getElementById('input1-' + index).value,
-                high_mv: document.getElementById('input3-' + index).value,
-                parameterName: document.getElementById('pre-tag-' + index).textContent
-            });
-        } else {
-            container.style.backgroundColor = ''; // Reset the background color
-        }
-    });
-
-    // Display all matching containers in the console
-    if (matchingContainers.length > 0) {
-        console.log('Matching Containers for Mastering Group ' + selectedMastering + ':');
-        matchingContainers.forEach(function(container) {
-            console.log('Container ID:', container.id);
-            console.log('Mastering Group:', container.masteringGroup);
-            console.log('Low MV:', container.low_mv);
-            console.log('High MV:', container.high_mv);
-            console.log('Parameter Name:', container.parameterName);
-            console.log('---------------------');
-        });
-    } else {
-        console.log('No containers found for Mastering Group ' + selectedMastering);
-    }
-}
-
-function updateValues() {
-    var selectedValue = document.getElementById('partModel').value;
-    console.log('Selected Value: ' + selectedValue);
-
-    var data = {
-        selectedValue: selectedValue,
-    };
-
-    $.ajax({
-        url: '{% url "master" %}', // Replace with your server URL if necessary
-        type: 'POST',
-        headers: {
-            'X-CSRFToken': getCookie('csrftoken') // Include CSRF token in the request headers
-        },
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        success: function(response) {
-            console.log('Response received:', response); // Log the response for debugging
-
-            // Clear any existing containers
-            var wrapperDiv = document.getElementById('wrapper');
-            wrapperDiv.innerHTML = '';
-
-            // Create containers based on the length of parameter_names
-            var parameterNames = response.parameter_names;
-            for (var i = 0; i < parameterNames.length; i++) {
-                // Create a new container div
-                var container = document.createElement('div');
-                container.className = 'input-box-container';
-                container.id = 'container-' + i;
-
-                // Set the mastering value as a data attribute
-                container.setAttribute('data-mastering', response.mastering[i]);
-
-                // Create radio button
-                var radioButton = document.createElement('input');
-                radioButton.type = 'radio';
-                radioButton.name = 'radio-container';
-                radioButton.id = 'container-' + i + '_radioButton';
-                radioButton.className = 'container_radio';
-                
-                // Create label and input boxes
-                var label1 = document.createElement('label');
-                label1.textContent = 'L';
-                label1.style.marginTop = '-20px'; // Adjust this value as needed
-                label1.style.position = 'relative'; // Ensure relative positioning if needed
-                label1.style.top = '-20px'; // Use top if margin-top does not work
-                label1.setAttribute('for', 'input1-' + i);
-
-                // Create two input boxes
-                var inputBox1 = document.createElement('input');
-                inputBox1.style.marginTop = '-20px'; // Adjust this value as needed
-                inputBox1.type = 'text';
-                inputBox1.style.position = 'relative'; // Ensure relative positioning if needed
-                inputBox1.style.top = '-15px'; // Use top if margin-top does not work
-                inputBox1.id = 'input1-' + i;
-                inputBox1.className = 'input1-box'; 
-                inputBox1.value = response.low_mv[i];
-
-                var inputBox2 = document.createElement('input');
-                inputBox2.type = 'text';
-                inputBox2.id = 'input2-' + i;
-                inputBox2.className = 'input2-box'; // Add this class
-
-                // Create label and input boxes
-                var label3 = document.createElement('label');
-                label3.textContent = 'H';
-                label3.style.marginTop = '-20px'; // Adjust this value as needed
-                label3.style.position = 'relative'; // Ensure relative positioning if needed
-                label3.style.top = '-20px'; 
-                label3.setAttribute('for', 'input3-' + i);
-
-                // Create two input boxes
-                var inputBox3 = document.createElement('input');
-                inputBox3.type = 'text';
-                inputBox3.style.marginTop = '-20px';
-                inputBox3.style.position = 'relative'; // Ensure relative positioning if needed
-                inputBox3.style.top = '-20px'; // Use top if margin-top does not work
-                inputBox3.id = 'input3-' + i;
-                inputBox3.className = 'input3-box'; 
-                inputBox3.value = response.high_mv[i];
-
-                // Create <pre> tag and set its content to parameter_names[i]
-                var preTag = document.createElement('pre');
-                preTag.id = 'pre-tag-' + i; // Assign a unique id, for example, 'pre-tag-0'
-                preTag.style.marginTop = '-5px';
-                preTag.style.position = 'relative'; // Ensure relative positioning if needed
-                preTag.style.top = '-5px'; 
-                preTag.style.textAlign = 'center'; 
-                preTag.style.fontWeight = 'bold'; 
-                preTag.style.color = 'red'; 
-                preTag.textContent = parameterNames[i]; // Set the content of the <pre> tag
-
-                // Append radio button and input boxes to the container
-                container.appendChild(radioButton);
-                container.appendChild(document.createElement('br'));
-                container.appendChild(label1);
-                container.appendChild(inputBox1);
-                container.appendChild(inputBox2);
-                container.appendChild(label3);
-                container.appendChild(inputBox3);
-                container.appendChild(preTag);
-
-                // Append container to the main wrapper div
-                wrapperDiv.appendChild(container);
-
-                console.log('Parameter Name:', response.parameter_names[i]);
-                console.log('Digit:', response.digits[i]);
-                console.log('High MV:', response.high_mv[i]);
-                console.log('Low MV:', response.low_mv[i]);
-                console.log('LSL:', response.lsl[i]);
-                console.log('LTL:', response.ltl[i]);
-                console.log('Mastering:', response.mastering[i]);
-                console.log('Nominal:', response.nominal[i]);
-                console.log('Probe No:', response.probe_no[i]);
-                console.log('USL:', response.usl[i]);
-                console.log('UTL:', response.utl[i]);
-                console.log('e_values:', response.e_values[i]);
-                console.log('d_values:', response.d_values[i]);
-                console.log('o1_values:', response.o1_values[i]);
-                
-
-
-                var probeNumber = response.probe_no[i];
-                var textareaId = mapProbeToTextareaId(probeNumber);
-                console.log('Probe No:', probeNumber);
-                console.log('Mapped Textarea ID:', textareaId);
-            }
-
-            calculateMastering(response);
-            // Trigger background color update based on default mastering value
-            updateMastering();
-
-            // Attach event listeners for buttons
-            document.getElementById('lowMasterBtn').addEventListener('click', function() {
-                lowMasteringClick(response);
-            });
-            document.getElementById('highMasterBtn').addEventListener('click', function() {
-                highMasteringClick(response);
-            });
-        },
-        error: function(error) {
-            console.error('Error:', error);
-        }
-    });
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    updateValues();
+// Add event listener to each cell in the table body
+var tableCells = document.querySelectorAll('table tbody td');
+tableCells.forEach(cell => {
+    cell.addEventListener('click', handleRowAndColumnSelection);
 });
 
-var openReadingIntervalIds = []; // Array to store interval IDs for open reading
 
-function calculateMastering(response) {
-    var containers = document.querySelectorAll('.input-box-container');
 
-    if (containers.length !== response.parameter_names.length) {
-        console.error('The number of containers does not match the number of parameters.');
-        return;
-    }
 
-    containers.forEach(function(container, index) {
-        var inputBox2 = container.querySelector('.input2-box');
-        if (inputBox2) {
-            var e = response.e_values[index];
-            var d = response.d_values[index];
-            var o1 = response.o1_values[index];
-            var lsl = response.lsl[index];
-            var ltl = response.ltl[index];
-            var usl = response.usl[index];
-            var utl = response.utl[index];
-            var digits = response.digits[index];
-            var probeNumber = response.probe_no[index];
-            var textareaId = mapProbeToTextareaId(probeNumber);
 
-            if (textareaId) {
-                var textarea = document.getElementById(textareaId);
-                if (textarea) {
-                    function updateDisplayOutput() {
-                        var newSerialData = textarea.value === null || textarea.value === '' ? 0 : parseFloat(textarea.value);
-                        if (!isNaN(newSerialData)) {
-                            const displayOutput = e + (newSerialData * d + o1);
-                            inputBox2.value = displayOutput.toFixed(digits);
 
-                            var k = displayOutput;
-                            if (k >= lsl && k <= usl) {
-                                inputBox2.style.backgroundColor = '#00ff00'; // Green
-                            } else if ((k > usl && k <= utl) || (k >= ltl && k < lsl)) {
-                                inputBox2.style.backgroundColor = 'yellow';
-                            } else if (k > utl || k < ltl) {
-                                inputBox2.style.backgroundColor = 'red';
-                            }
-                        }
-                    }
+function deleteSelectedRows() {
+    var selectedRow = document.querySelector('.selected');
+    if (selectedRow) {
+        // Call the handleRowSelection to retrieve the ID from the console
+        handleRowSelection({ currentTarget: selectedRow });
 
-                    // Set an interval for open reading and store the interval ID
-                    var intervalId = setInterval(updateDisplayOutput, 500);
-                    openReadingIntervalIds.push(intervalId); // Store the open reading interval ID
-                }
+        // Now you can proceed with deleting the row using AJAX
+        var tableBodyId = selectedRow.closest('tbody').id;
+        var rowId = selectedRow.getAttribute('data-id');
+
+        var dataToDelete = {};
+        dataToDelete[tableBodyId] = [parseInt(rowId)];
+
+        $.ajax({
+            type: 'DELETE',
+            url: '/trace/',
+            data: JSON.stringify(dataToDelete),
+            contentType: 'application/json',
+            success: function(response) {
+                // Handle successful response from the server
+                // Update the UI or perform any additional actions
+                //console.log(response);
+                selectedRow.remove();
+                showNotification('Data deleted successfully', true); 
+            },
+            error: function(error) {
+                // Handle error from the server
+                //console.error('Error:', error);
+                showNotification('Error: Failed to delete data', false); 
             }
-        }
-    });
-}
-
-function mapProbeToTextareaId(probeNumber) {
-    const probeMap = {
-        '1': 'probe-A',
-        '2': 'probe-B',
-        '3': 'probe-C',
-        '4': 'probe-D',
-        '5': 'probe-E',
-        '6': 'probe-F',
-        '7': 'probe-G',
-        '8': 'probe-H',
-        '9': 'probe-I',
-        '10': 'probe-J',
-        '11': 'probe-K',
-    };
-
-    return probeMap[probeNumber];
+        });
+    } else {
+        // Inform the user that no row is selected
+        //console.log('No row selected');
+        showNotification('No row selected', false); 
+    }
 }
 
     
-
-$(document).ready(function () {
-            const ws = new WebSocket('ws://localhost:8000/ws/comport/');
-            
-            ws.onmessage = function(event) {
-                const data = JSON.parse(event.data);
-                if (data.message) {
-                    const channels = data.message.match(/[A-K]\+[^A-K]*/g);
-                    if (channels) {
-                        channels.forEach(channel => {
-                            const channelId = channel.charAt(0);
-                            const channelData = channel.substr(2); // Get the data after '+'
-                            $(`#probe-${channelId}`).val(channelData);
-                        });
-                    }
-                }
-            };
+    document.addEventListener('DOMContentLoaded', function () {
+        var rows = document.querySelectorAll('table tbody tr');
+        rows.forEach(function (row) {
+            row.addEventListener('click', handleRowSelection);
         });
- 
-///////////////////////////////////
+    });
 
+  // Function to show a notification with an OK button
+function showNotification(message, isSuccess) {
+    var notificationElement = document.getElementById('notification');
+    notificationElement.textContent = message;
 
+    if (isSuccess) {
+        notificationElement.style.backgroundColor = 'lightgreen';
+    } else {
+        notificationElement.style.backgroundColor = 'coral';
+    }
 
-</script>
+    // Add an "OK" button to the notification
+    var okButton = document.createElement('button');
+    okButton.textContent = 'OK';
+    okButton.style.display = 'block';   // Make the button a block element
+    okButton.style.margin = 'auto';     // Center the button horizontally
+    okButton.style.marginTop = '10px';  // Add some top margin for spacing
+    okButton.style.padding = '10px';
+    okButton.style.height = '40px';     // Set the button height
+    okButton.style.width = '80px';      // Set the button width
+    okButton.style.border = 'none';     // Remove the default button border
+    okButton.style.backgroundColor = 'orangered'; // Red background color
+    okButton.style.color = 'white';     // White text color
 
-{% endblock content %}
+    // Add event listener to the OK button
+    okButton.addEventListener('click', function() {
+        // Redirect to the desired page (adjust the URL if needed)
+        window.location.href = '{% url "trace" %}';
+
+        // Call clickBasedOnSessionStorage to simulate clicking the right box
+        clickBasedOnSessionStorage();
+    });
+
+    notificationElement.appendChild(okButton);
+
+    // Center the notification vertically and horizontally
+    notificationElement.style.display = 'flex';
+    notificationElement.style.flexDirection = 'column';
+    notificationElement.style.alignItems = 'center';
+    notificationElement.style.textAlign = 'center';
+    notificationElement.style.justifyContent = 'center';
+    notificationElement.style.top = '50%';
+    notificationElement.style.left = '50%';
+    notificationElement.style.transform = 'translate(-50%, -50%)';
+    notificationElement.style.zIndex = '1000';
+
+    // Display the notification
+    notificationElement.style.display = 'block';
+}
+
+// Ensure the session storage based logic runs after page load
+window.onload = function() {
+    clickBasedOnSessionStorage();
+};
+
+         </script>
+    {% endblock %}

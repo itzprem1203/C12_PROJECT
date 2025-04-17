@@ -3,15 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Part Selection</title>
+  <title>PART SELECTION</title>
   <style>
-    body {
+
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 96vh;
+    width: 98vw;  
+}
+
+
+body {  
+   background-color: black;
+   border: 10px double white;
+   padding: 5px;
+}
+
+   
+    .box_container{
       display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #1a7d9e;
+   
+      height: 70%;
+      width: 100%;
     }
 
     .container {
@@ -20,16 +35,24 @@
       border: 2px solid black;
       border-radius: 8px;
       background-color: #f8f8f8;
-      height: 280px;
-      width: 500px;
-      margin-left: -250px;
-      margin-top: -50px;
+      height: 60%;
+      width: 35%;
+      margin-left: 25%;
+      margin-top: 1%;
+    }
+
+    .button_id{
+      margin-top: 2%;
+     
+      height: 70%;
+      width: 15%;
+     
     }
 
     label {
       display: inline-block;
       width: 150px;
-      margin-top: 10px;
+      margin-top:5%;
       margin-left: 0%;
       text-align: center;
       font-size: 20px;
@@ -50,7 +73,8 @@
       height: 40px;
       background-color: rgb(48, 236, 48);
       margin-left: 20px;
-      font-size: 20px;
+      font-size: 1.3vw;
+     
     }
 
     #cancel-btn {
@@ -58,15 +82,18 @@
       height: 40px;
       margin-top: 30px;
       background-color: red;
-      font-size: 20px;
+      font-size: 1.3vw;
+    
     }
 
     .centered-content {
       color: white;
       text-shadow: 2px 2px 4px #000000;
       text-align: center;
-      margin-top: -450px;
-      margin-left: -500px;
+    height: 10%;
+    width: 25%;
+    margin-left: 30%;
+  margin-top: 5%;
       font-weight: bold;
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
@@ -89,14 +116,14 @@
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       z-index: 1000;
     }
-
+   
     #master-btn,
     #measure-btn {
-      width: 150px;
-      height: 100px;
+      width: 70%;
+      height: 40%;
       margin-left: 20px;
-      margin-top: 10px;
-      font-size: 15px;
+      margin-top: 3%;
+      font-size: 1.2vw;
       background-color: orangered;
       color: white;
       border: 2px solid white;
@@ -112,27 +139,31 @@
   </style>
 </head>
 <body>
+  <center style="color: white; text-shadow: 2px 2px 4px #000000;text-align: center; margin-top: 10%;">
+    <h1><b>PART SELECTION</b></h1></center>
+
+  <div class="box_container">
   <div class="container">
     <label for="partModel">PART MODEL:</label>
     <select id="partModel" name="partModel">
       {% for value in part_model_values %}
         <option value="{{ value }}" {% if current_selection and current_selection.part_model == value %}selected{% endif %}>{{ value }}</option>
       {% endfor %}
-    </select>
+    </select><br>
 
     <label for="operator">OPERATOR:</label>
     <select id="operator" name="operator">
       {% for value in operator_values %}
         <option value="{{ value }}" {% if current_selection and current_selection.operator == value %}selected{% endif %}>{{ value }}</option>
       {% endfor %}
-    </select>
+    </select><br>
 
     <label for="machine">MACHINE:</label>
     <select id="machine" name="machine">
       {% for value in machine_name_values %}
         <option value="{{ value }}" {% if current_selection and current_selection.machine == value %}selected{% endif %}>{{ value }}</option>
       {% endfor %}
-    </select>
+    </select><br>
 
     <!-- <label for="shift">SHIFT:</label>
     <select id="shift" name="shift">
@@ -143,21 +174,18 @@
 
     <div>
       <a href="{% url 'index' %}">
-        <button type="button" id="cancel-btn"><b>Cancel</b></button>
+        <button type="button" id="cancel-btn"><b>BACK</b></button>
       </a>
-      <button type="button" id="select-btn"><b>Select</b></button>
+      <button type="button" id="select-btn"><b>SELECT</b></button>
     </div>
     <br>
   </div>
-  <div>
+  <div class="button_id">
     <button type="button" id="master-btn"><b>MASTER</b></button><br>
     <button type="button" id="measure-btn"><b>MEASUREMENT</b></button>
   </div>
-
-  <div class="centered-content">
-    <h1><b>Part Selection</b></h1>
-  </div>
-
+</div>
+ 
   <div id="notification"></div>
 
   <script>

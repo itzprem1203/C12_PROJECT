@@ -7,21 +7,47 @@ Utility
 
 <style>
   
+ 
+  html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    
+    
+}
 
+
+body {
+   
+   background-color: black;
+   border: 10px double white;
+   padding: 5px;
+}
+
+.box_main{
+        width: 100%;
+        height: 70%;
+        margin-top: 2%;
+        display: flex;
+        
+    }
 .box {
-    width: 850px;
-    height: 550px;
-    margin-left:340px ;
-    margin-top: -550px;
+    width: 60vw;
+    height: 75vh;
+    margin-left:5% ;
+    margin-top:3%;
     background-color: lightgrey;
     border: 2px solid black;
+    text-align: center;
 }
 
 .box-1 {
-    width: 250px;
-    height: 550px;
-    margin-top:20px;
-    margin-left: 50px;
+    width: 20vw;
+    height: 75vh;
+    margin-top:3%;
+    margin-left: 5%;
     background-color: white;
     border: 2px solid black;
     padding-top: 50px;
@@ -29,8 +55,8 @@ Utility
   }
 
 .inner-box-1, .inner-box-2, .inner-box-3, .inner-box-4 ,.inner-box-5{
-    width: 230px; 
-    height: 65px;
+    width: 18vw; 
+    height: 10vh;
     background-color:rgb(245, 188, 83);
     border: 2px solid black; 
     margin: 5px;
@@ -39,7 +65,7 @@ Utility
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.5vw;
     font-family: Arial, Helvetica, sans-serif;
     
   }
@@ -72,28 +98,34 @@ Utility
   #cancel-btn{
              background-color: red;
              color:black;
-             height: 50px;
-             width: 150px;
+             height: 7vh;
+             width: 12vw;
              margin-left: 10px;
              margin-top: 30px;
+             
+             font-size: 1.2vw;
                
          }
 
          #clear-btn, #clear-btn-3{
             background-color: orange;
              color:black;
-             height: 50px;
-             width: 150px;
+             height: 7vh;
+             width: 12vw;
              margin-left: 65px;
              margin-top: 30px;
+          
+             font-size: 1.2vw;
          }
   #save-btn-1,#save-btn-2,#save-btn-3,#save-btn-4,#save-btn-5{
       background-color: green;
       color:black;           
-      height: 50px;
-      width: 150px; 
+      height: 7vh;
+      width: 12vw;
       margin-left: 65px; 
       margin-top: 30px;
+    
+      font-size: 1.2vw;
   }
   
   .item-1 input[type="radio"] {
@@ -215,7 +247,7 @@ Utility
 }
 
 </style>
-
+<div class="box_main">
 
 <div class="box-1">
     <div id="set_master_interval" class="inner-box-1" onclick="enlargeItem(1),showItem('item-1')">Set Master Interval</div>
@@ -227,8 +259,9 @@ Utility
 
 <div class="box" id="boxContent"style="overflow-x: auto;overflow-y:auto;">
     <div class="item item-1" id="master_interval">
-        <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-            <h2><b>Mastering Interval Settings</b></h2></center>
+        <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+            MASTER INTERVAL SETTINGS
+           </center>
             {% for data in master_interval_settings %}
             <div class="custom-border" style="margin-top: 30px;">
                 <input type="radio" id="TimeWise" name="radiogroup" value="option1" {% if data.timewise == 1 %} checked {% endif %}>
@@ -258,10 +291,10 @@ Utility
             {% endfor %}
             
         <a href="{% url 'index' %}" >
-            <button type="button" id="cancel-btn"><b>Cancel</b></button>
+            <button type="button" id="cancel-btn"><b>CANCEL</b></button>
             </a>
-        <button type="button" id="clear-btn"><b>Clear values</b></button>  
-          <button type="button" id="save-btn-1"><b>Save</b></button>  
+        <button type="button" id="clear-btn"><b>CLEAR VALUES</b></button>  
+          <button type="button" id="save-btn-1"><b>SAVE</b></button>  
 
           <script>
             document.addEventListener('DOMContentLoaded', function() {
@@ -347,8 +380,8 @@ Utility
     </div>
     
     <div class="item item-2" id="shift_settings">
-        <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-            <h2><b>Shift Settings</b></h2>
+        <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+            SHIFT SETTINGS
         </center>
         <div class="custom-border" style="margin-top: 30px;">
             <label for="shift" style="margin-top: 30px;">SHIFT:</label>
@@ -368,9 +401,9 @@ Utility
             </textarea>
         </div><br>
         <a href="{% url 'index' %}">
-            <button type="button" id="cancel-btn"><b>Cancel</b></button>
+            <button type="button" id="cancel-btn"><b>CANCEL</b></button>
         </a>
-        <button type="button" id="save-btn-2"><b>Save</b></button>  
+        <button type="button" id="save-btn-2"><b>SAVE</b></button>  
     
         <script>
             // Set the default placeholder-like value in 12-hour format
@@ -442,8 +475,8 @@ $(document).ready(function() {
 
     
 <div class="item item-3" id="customer_details">
-    <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Customer Details</b></h2>
+    <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+       CUSTOMER DETAILS
     </center>
 
     <form id="customer-form" onsubmit="return validateForm()">
@@ -558,10 +591,10 @@ $(document).ready(function() {
         {% endfor %}
 
         <a href="{% url 'index' %}">
-            <button type="button" id="cancel-btn"><b>Cancel</b></button>
+            <button type="button" id="cancel-btn"><b>CANCEL</b></button>
         </a>
-        <button type="button" id="clear-btn-3"><b>Clear values</b></button>
-        <button type="submit" id="save-btn-3"><b>Save</b></button>
+        <button type="button" id="clear-btn-3"><b>CLEAR VALUES</b></button>
+        <button type="submit" id="save-btn-3"><b>SAVE</b></button>
     </form>
 
     <script>
@@ -692,8 +725,8 @@ $(document).ready(function() {
 
 
 <div class="item item-4" id="backup_date">
-    <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Backup Date</b></h2>
+    <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+        BACKUP DATE
     </center>
     <div class="custom-border" style="margin-top: 30px;"> 
         <label for="backup" style="margin-top: 30px;">BACKUPDATE:</label>
@@ -709,9 +742,9 @@ $(document).ready(function() {
         </textarea>
     </div><br>
     <a href="{% url 'index' %}">
-        <button type="button" id="cancel-btn"><b>Cancel</b></button>
+        <button type="button" id="cancel-btn"><b>CANCEL</b></button>
     </a>
-    <button type="button" id="save-btn-4"><b>Save</b></button>  
+    <button type="button" id="save-btn-4"><b>SAVE</b></button>  
 
     <script>
 // this is the code to display the checkbox to display the aert message
@@ -813,8 +846,8 @@ document.getElementById('save-btn-4').addEventListener('click', function() {
 
 
 <div class="item item-5" id="parameter_factor">
-    <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Parameter Factor</b></h2>
+    <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+        PARAMETER FACTOR
     </center>
 
     <label for="part_model">PART MODEL:</label>
@@ -849,9 +882,9 @@ document.getElementById('save-btn-4').addEventListener('click', function() {
     
 
     <a href="{% url 'index' %}">
-        <button type="button" id="cancel-btn"><b>Cancel</b></button>
+        <button type="button" id="cancel-btn"><b>CANCEL</b></button>
     </a>
-    <button type="submit" id="save-btn-5"><b>Save</b></button>
+    <button type="submit" id="save-btn-5"><b>SAVE</b></button>
 
     </div>
 
@@ -1053,6 +1086,7 @@ document.getElementById('save-btn-5').addEventListener('click', handleSaveButton
     </script>
 
 
+</div>
 </div>
 
    

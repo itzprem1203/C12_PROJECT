@@ -8,29 +8,61 @@ Report
 <style>
   
 
-.box {
-    width: 850px;
-    height: 550px;
-    margin-left:340px ;
-    margin-top: -550px;
+  html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    
+    
+}
+
+
+body {
+   
+   background-color: black;
+   border: 10px double white;
+   padding: 5px;
+}
+
+.box_main{
+        width: 100%;
+        height: 70%;
+        margin-top: 2%;
+        display: flex;
+        
+    }
+
+
+
+
+    .box {
+    width: 60vw;
+    height: 80vh;
+    margin-left:5% ;
+    margin-top:2%;
     background-color: lightgrey;
     border: 2px solid black;
+    text-align: center;
 }
 
 .box-1 {
-    width: 250px;
-    height: 550px;
-    margin-top:20px;
-    margin-left: 50px;
+    width: 20vw;
+    height: 80vh;
+    margin-top:2%;
+    margin-left: 5%;
     background-color: white;
     border: 2px solid black;
     padding-top: 50px;
     padding-left: 5px;
   }
 
+
+
 .inner-box-1, .inner-box-2, .inner-box-3, .inner-box-4, .inner-box-6{
-    width: 230px; 
-    height: 65px;
+    width: 18vw; 
+    height: 12vh;
     background-color:rgb(245, 188, 83);
     border: 2px solid black; 
     margin: 5px;
@@ -39,7 +71,8 @@ Report
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    font-size: 18px;
+    font-size: 1.3vw;
+    margin-top: 1%;
     font-family: Arial, Helvetica, sans-serif;
     
   }
@@ -71,25 +104,31 @@ Report
   #cancel-btn{
              background-color: orange;
              color:black;
-             height: 50px;
-             width: 150px;
+             height: 7vh;
+             width: 15vw;
              margin-left: 10px;
              margin-top: 30px;
+            
+             font-size: 1.2vw;
                
          }
   
   .report-btn{
-      background-color: green;
+      background-color: rgb(4, 240, 4);
       color:black;           
-      height: 50px;
-      width: 150px; 
+      height: 7vh;
+             width: 15vw; 
       margin-left: 65px; 
       margin-top: 30px;
+      
+      font-size: 1.2vw;
   }
   
 
 #clock-box{
          font-weight: bold;
+         font-size: 1.3vw;
+         text-align: left;
         }
       
       
@@ -110,21 +149,22 @@ Report
 
 </style>
 
-
+<div class="box_main">
 <div class="box-1">
-    <div id="consolidated_srno_reports" class="inner-box-1" onclick="enlargeItem(1),showItem('item-1')">Consolidated Report <br>(with sr.no)</div>
-    <div id="consolidated_without_reports" class="inner-box-2" onclick="enlargeItem(2),showItem('item-2')">Consolidated Report <br>(without sr.no)</div>
-    <div id="parameter_wise_reports" class="inner-box-3" onclick="enlargeItem(3),showItem('item-3')">Parameterwise Report</div>
-    <div id="job_wise_reports" class="inner-box-4" onclick="enlargeItem(4),showItem('item-4'),focusJobNoInput()">Jobwise Report</div>
-    <div id="master_reports" class="inner-box-6" onclick="enlargeItem(6),showItem('item-6')">Master Report</div>
+    <div id="consolidated_srno_reports" class="inner-box-1" onclick="enlargeItem(1),showItem('item-1')">CONSOLIDATE REPORT <br>(with sr.no)</div>
+    <div id="consolidated_without_reports" class="inner-box-2" onclick="enlargeItem(2),showItem('item-2')">CONSOLIDATE REPORT <br>(without sr.no)</div>
+    <div id="parameter_wise_reports" class="inner-box-3" onclick="enlargeItem(3),showItem('item-3')">PARAMETERWISE REPORT</div>
+    <div id="job_wise_reports" class="inner-box-4" onclick="enlargeItem(4),showItem('item-4'),focusJobNoInput()">JOBWISE REPORT</div>
+    <div id="master_reports" class="inner-box-6" onclick="enlargeItem(6),showItem('item-6')">MASTER REPORT</div>
     
 </div>
 
 <div class="box" id="boxContent"style="overflow-x: auto;overflow-y:auto;">
+    <div  id="clock-box"></div>
     <div class="item item-1" id="consolidate_with_srno">
 
-      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Consolidated Report </b></h2><h4><b>(with sr.no)</b></h4></center>
+      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+        CONSOLIDATE REPORT (with sr.no)</center>
 
        
 
@@ -191,15 +231,15 @@ Report
         </select><br>
 
         <a href="{% url 'index' %}" >
-          <button type="button" id="cancel-btn"><b>Cancel</b></button>
+          <button type="button" id="cancel-btn"><b>CANCEL</b></button>
           </a>
-        <button type="submit" class="report-btn" id="report_btn_1"><b>View Report</b></button>
+        <button type="submit" class="report-btn" id="report_btn_1"><b>VIEW REPORT</b></button>
     </form> 
     </div>
 
     <div class="item item-2" id="consolidate_without_srno">
-      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Consolidated Report </b></h2><h4><b>(without sr.no)</b></h4></center>
+      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+        CONSOLIDATE REPORT (without sr.no)</center>
 
         <form method="GET" action="{% url 'withoutsrno' %}">
         <label for="sr.no" >PART.NO:</label>
@@ -262,15 +302,15 @@ Report
         </select><br>
 
         <a href="{% url 'index' %}" >
-          <button type="button" id="cancel-btn"><b>Cancel</b></button>
+          <button type="button" id="cancel-btn"><b>CANCEL</b></button>
           </a>
-        <button type="submit" class="report-btn" id="report_btn_2"><b>View Report</b></button>  
+        <button type="submit" class="report-btn" id="report_btn_2"><b>VIEW REPORT</b></button>  
         </form>  
     </div>
 
     <div class="item item-3" id="parameterwise_report">
-      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Parameterwise Report</b></h2></center>
+      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+        PARAMETERWISE REPORT</center>
 
         <form method="GET" action="{% url 'paraReport' %}">
         <label for="sr.no" >PART.NO:</label>
@@ -335,15 +375,15 @@ Report
         </select><br>
 
         <a href="{% url 'index' %}" >
-          <button type="button" id="cancel-btn"><b>Cancel</b></button>
+          <button type="button" id="cancel-btn"><b>CANCEL</b></button>
           </a>
-        <button type="submit" class="report-btn" id="report_btn_3"><b>View Report</b></button>  
+        <button type="submit" class="report-btn" id="report_btn_3"><b>VIEW REPORT</b></button>  
     </form>
     </div>
 
     <div class="item item-4" id="jobwise_report">
-      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Jobwise Report </b></h2></center>
+      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+       JOBWISE REPORT</center>
 
 
         <form method="GET" action="{% url 'jobReport' %}">
@@ -367,15 +407,15 @@ Report
        
 
         <a href="{% url 'index' %}" >
-          <button type="button" id="cancel-btn"><b>Cancel</b></button>
+          <button type="button" id="cancel-btn"><b>CANCEL</b></button>
           </a>
-        <button type="submit" class="report-btn" id="report_btn_4"><b>View Report</b></button>  
+        <button type="submit" class="report-btn" id="report_btn_4"><b>VIEW REPORT</b></button>  
           </form>
     </div>
 
     <div class="item item-6" id="master_report">
-      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240);">
-        <h2><b>Master Report </b></h2></center>
+      <center style="color: purple; text-shadow: 2px 2px 4px rgb(240, 118, 240); font-weight: bold;font-size: 2vw; margin-bottom: 2%;">
+       MASTER REPORT</center>
 
 
         <label for="sr.no" >PART.NO:</label>
@@ -441,12 +481,13 @@ Report
         </select><br>
 
         <a href="{% url 'index' %}" >
-          <button type="button" id="cancel-btn"><b>Cancel</b></button>
+          <button type="button" id="cancel-btn"><b>CANCEL</b></button>
           </a>
-        <button type="button" class="report-btn" id="report_btn_6"><b>View Report</b></button>    
+        <button type="button" class="report-btn" id="report_btn_6"><b>VIEW REPORT</b></button>    
     </div>
 
     
+</div>
 </div>
 
 <div id="popup-message" style="display: none; position: fixed; top: 20%; left: 50%; transform: translate(-50%, -50%); background-color: #4CAF50; color: white; padding: 15px; border-radius: 5px; z-index: 9999;">
@@ -461,7 +502,7 @@ Report
     </div>
 </div>
 
-    <div class="box" id="clock-box"></div>
+   
 
 
 <script>

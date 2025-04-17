@@ -1,32 +1,116 @@
 {% extends 'app/layouts/main.html' %}
-
 {% block title %}
 Measurement Page
 {% endblock title %}
-
 {% block content %}
 <style>
-    .box-1{
-        height: 200px;
-        width: 100%;
+
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+
+}
+
+body {
+   
+    background-color: black;
+    border: 10px double white;
+    padding: 5px;
+}
+
+.container-main{
+    margin: 0;
+    padding: 0;
+    height: 97vh;
+    width: 98vw;
+    
+}
+
+.container-2{
+    margin: 0;
+    padding: 0;
+    height: 35vh;
+    width: 98vw;
+    margin-bottom: 0;
+}
+
+.three_containers{
+    display: flex;
+    height: 65vh;
+    margin-top: 0;
+    margin-top: -1%;
+}
+
+
+.box-1{
+        height: 33vh;
+        width: 98vw;
         padding: 10px;
         background-color:rgb(245, 196, 106);
         border: 2px solid black;    
     }
+
+    .container-1{
+        height: 30vh;
+        width: 96vw;
+    }
+
     .box-2{
-        height: 500px;
-        width: 1000px;
+        height: 60vh;
+        width: 70vw;
         background-color:lightgrey;
         border: 1px solid black; 
-        margin-top: -440px;   
+        margin-top: 0;   
     }
+
+    .table-container{
+        height: 60vh;
+        width: 70vw;
+        background-color: violet;
+        display: flex;
+       
+        margin-left: 1%;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #my-table th,
+    #my-table td{
+    border: 1px solid black;
+    /* padding: 8px; */
+    height: 5vh;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1vw;
+
+}
+
+#my-table th{
+    background-color:darkmagenta;
+    color: white;
+}
+
+.readingInputs{
+        margin-top: 0px;
+        border: none;
+        outline: none;
+        background-color: lightgrey;
+    }
+
+
     label {
             display: inline-block;
-            width: 100px; 
+            width: 10vw; 
             margin-top: 10px;
             margin-left: 0%;
             text-align: center;
-            font-size: 15px;
+           
             font-weight: bold;
         }
 
@@ -41,84 +125,7 @@ Measurement Page
             width: 10%;
             font-family: 'Courier New', Courier, monospace;
         }
-        .center-image{
-            margin-left: 1130px;
-            margin-top: -120px;
-            
-        }
-       .center-image-1{
-        margin-top: -130px;
-       }
-      
-    
-       table {
-        border-collapse: collapse;
-        width: 100%;
-    }
 
-    #my-table th,
-    #my-table td{
-    border: 1px solid black;
-    /* padding: 8px; */
-    height: 30px;
-    text-align: center;
-    font-weight: bold;
-    font-size: 16px;
-
-}
-
-#my-table th{
-    background-color:darkmagenta;
-    color: white;
-}
-
-.readingInputs{
-        margin-top: 0px;
-        border: none;
-        outline: none;
-        background-color: lightgrey;
-    }   
-
-
-
-#save-btn{
-    margin-top: 10px;
-            width: 100px;
-            height: 80px;
-            margin-left: 1210px;
-            background-color: pink;
-            
-        }
-        #master-btn{
-            width: 100px;
-            height: 80px;
-            margin-left: 1210px;
-            background-color: rgb(240, 96, 240);
-            
-        }
-
-        #start-btn{
-            width: 100px;
-            height:80px ;
-            margin-left: 1210px;
-            margin-top: 10px;
-            background-color: lightgreen;
-        }
-        
-        #stop-btn{
-            width: 100px;
-            height:80px ;
-            margin-left: 1210px;
-            margin-top: 10px;
-            background-color: coral;
-        }
-        #back-btn{
-            width: 100px;
-            height:80px ;
-            margin-left: 1210px;
-            margin-top: 10px;
-            background-color: rgb(233, 177, 73);
-        }
 
         .notification-container {
         position: absolute;
@@ -171,19 +178,20 @@ Measurement Page
   background-color: #007bff;
   border: none;
   border-radius: 30%;
-  width: 40px;
-  height: 40px;
-  margin-left: 10px;
+  width: 3vw;
+  height: 6vh;
+  margin-left: 1%;
   padding: 0;
   cursor: pointer;
   overflow: hidden;
 }
 
 .reset-symbol {
-  font-size: 20px;
+  font-size: 1.5vw;
   color: white;
   position: relative;
   z-index: 1;
+  font-weight: bold;
 }
 
 .reset-button:before {
@@ -224,16 +232,17 @@ input[type=checkbox] {
     .arrow-button {
             display: inline-flex;
             align-items: center;
-            padding: 8px 16px;
+            padding: 0.5%;
             border: none;
             background-color: #FF0000; /* Red background */
             color: white; /* White text */
-            font-size: 14px;
+            font-size: 1vw;
             cursor: pointer;
             border-radius: 5px;
             transition: background-color 0.3s ease;
-            margin-left: 25px;
-           
+          
+           width: 5vw;
+           text-align: center;
         }
 
         .arrow-button:hover {
@@ -243,7 +252,7 @@ input[type=checkbox] {
 
         .arrow-tail{
             text-align: center;
-            font-size: 17px;
+            font-size: 1.2vw;
             font-weight: bold;
             
         }
@@ -316,19 +325,83 @@ input[type=checkbox] {
     z-index: 1000;
 }
 
-#box3{
-    height: 440px;
-    width: 200px;
-    background-color:lightgray;
-    margin-left:1005px;
-    margin-top:-440px;
-    border: 1px solid black;
-}
-#attribute{
-    background-color: red;
-    height: 40px;
+
+
+
+
+#save-btn{
+    margin-top: 10px;
+    width: 8vw;
+            height: 10vh;
+            margin-left: 1%;
+            font-size: 1.5vw;
+            font-weight: bold;
+            background-color: pink;
+            
+        }
+        #master-btn{
+            margin-top: 5%;
+            width: 8vw;
+            height: 10vh;
+            margin-left: 1%;
+            font-size: 1.5vw;
+            font-weight: bold;
+            background-color: rgb(240, 96, 240);
+            
+        }
+
+        #start-btn{
+            width: 8vw;
+            height: 10vh;
+            margin-left: 1%;
+            margin-top: 10px;
+            font-size: 1.5vw;
+            font-weight: bold;
+            background-color: lightgreen;
+        }
+        
+        #stop-btn{
+            width: 8vw;
+            height: 10vh;
+            margin-left: 1%;
+            margin-top: 10px;
+            font-size: 1.5vw;
+            font-weight: bold;
+            background-color: coral;
+        }
+        #back-btn{
+            width: 8vw;
+            height: 10vh;
+            margin-left: 1%;
+            font-size: 1.5vw;
+            font-weight: bold;
+            margin-top: 10px;
+            background-color: rgb(233, 177, 73);
+        }
+
+        .btn-container{
+            height: 55vh;
+            width: 8vw;
+          margin-top: 1%;
+            margin-left: 1%;
+        }
+
+        .container-3{
+    height: 53vh;
+    width: 15vw;
+   
+    margin-left: 1%;
+   
 }
 
+#box3{
+    height: 60vh;
+    width: 15vw;
+    background-color:lightgray;
+    margin-left:0;
+    margin-top:0;
+    border: 1px solid black;
+}
 
 /* Modal Styling */
 .modal {
@@ -374,126 +447,164 @@ input[type=checkbox] {
     outline: 3px solid yellow; /* Yellow border for highlight */
 }
 
+.container-1 label{
+    font-size: 1.2vw;
+    font-weight: bold;
+}   
 
-
+.container-1 input{
+    font-size: 1.2vw;
+    font-weight: bold;
+    text-align: center;
+}   
+.btn_outline{
+    border: 2px solid white;
+}
 
 
 
 </style>
 
-
-<!-- Notification Overlay -->
 <div id="notification-box" style="display: none;">
     <div class="notification-content">
         <p>⚠️ PLEASE INSERT THE JOB IN REJECTION BIN ⚠️</p>
     </div>
 </div>
 
-    
-
-<div class="box-1" id="box1">
-
-    
-
-    <label for="date" style="width: 50px; margin-left:10px;">DATE:</label>
-    <input type="text" id="date" style="width: 210px;background-color:#1a7d9e ;color: white;">
-
-    <label for="operator">OPERATOR:</label>
-    <input type="text" id="operator" readonly >
-
-    <label for="shift" style="width: 70px;">SHIFT:</label>
-    <input type="text" id="shift" class="shift-name" style="width: 8%;" readonly >
-    
-    
-    <label for="accept" style="width: 70px;">ACCEPT:</label>
-    <input type="text" id="accept" value="0" style="background-color: green;width: 5%;" readonly>
-
-    <label for="reject" style="width: 70px;">REJECT:</label>
-    <input type="text" id="reject" value="0" style="background-color: red;width: 5%;" readonly>
-
-    <label for="rework" style="width: 70px;">REWORK:</label>
-    <input type="text" id="rework" value="0" style="background-color: yellow;width: 5%;" readonly>
-    
-    <button class="reset-button" id="reset-button">
-        <span class="reset-symbol">&#8634;</span>
-    </button>
-      
-    <button class="arrow-button"  onclick="redirectToMeasurebox()">
-        <div class="arrow-icon">
-            <div class="arrow-tail"> BACK </div>
-        </div> 
-       </button><br>
 
 
-    
-    <label for="machine" style="margin-left: 120px;" >MACHINE:</label>
-    <input type="text" id="machine" style="width: 8%;" readonly>
-
-    <label for="partModel" style="width: 110px;" >PART MODEL:</label>
-    <select id="partModel" name="partModel" style="width: 150px;" >
-        {% for value in part_model_values %}
-            <option value="{{ value }}"><b>{{ value }}</b></option>
-        {% endfor %}
-    </select>
-
-    <label for="comp_srno" style="width: 80px;">COMP NO:</label>
-    <input type="text" id="comp_srno" style="width: 400px; font-weight: bold; font-size: 18px;"><br>
-
-    <label for="part_status" style="font-size: 15px; width: 120px;margin-left: 130px;" >PART STATUS</label>
-    <input type="text" id="part_status" style="width: 170px;height: 40px;" readonly>
-    
-    <input type="text" id="customer_name" style="width: 300px;height: 40px; margin-left: 20px;text-align: center;font-weight: bold;" readonly>
-    
-    <label for="cycle_mode" style="margin-left: 50px;">PLC_STATUS:</label>
-    <input type="text" id="cycle_mode" readonly ><br>
-
-    <input type="text" id="pre" style="width: 950px;height: 30px;margin-left: 140px;">
-
-    {% load static %}
-    <div class="center-image">
-            <img src="{% static 'images/Gauge.jpg' %}" style="height: 130px;width: 120px; margin-left: 20px; border: 4px solid white;">
-        </div>
-    
-        {% load static %}
-        <div class="center-image-1">
-                <img src="{% static 'images/Gauge.jpg' %}" style="height: 130px;width: 120px;  border: 4px solid black;">
-            </div>    
-</div>
-
-    
-  <div><button type="button" id="master-btn"><b>Master<br>[F1]</b></button></div>
-  <div><button type="button" id="start-btn"><b> Start<br>[F4]</b></button></div>
-  <div><button type="button" id="stop-btn"><b>Stop<br>[F5]</b></button></div>
-  <div><button type="button" id="save-btn" disabled style="filter: blur(2px);"><b> Save<br></b></button></div>
-  <div><button type="button" id="back-btn"><b>Back<br>[F7]</b></button></div>
-  
-
-
-<div class="box-2" id="box2" style="overflow-y: auto;">
-    
-      <table border="1" style="width: 100%;" id="my-table">
-        <thead>
-          <tr>
-            <th style="width: 5%;height: 30px; ">Sr.No</th>
-            <th style="width: 15%;" id="parameter_name">Parameter Name</th>
-            <th style="width: 10%;" id="nominal">Nominal</th>
-            <th style="width: 10%;" id="readings">Readings</th>
-            <th style="width: 10%;" id="lsl">LSL</th>
-            <th style="width: 25%;" id="indicator">Indicator</th>
-            <th style="width: 10%;" id="usl">USL</th>
-            <th style="width: 15%;" id="status">Status</th>
-            <th style="display: none;" id="utl">utl</th>
-            <th style="display: none;" id="ltl">ltl</th>
-          </tr>
-        </thead>
-        <tbody id="table-body" >
+<div class="container-main">
+    <div class="container-2">
+        
+        <div class="box-1" id="box1">
+            <div class="container-1">
+                <label for="date" style="width: 5vw; margin-left:10px;">DATE:</label>
+                <input type="text" id="date" style="width: 16vw;background-color:#1a7d9e ;color: white;" readonly>
             
-        </tbody>
-      </table>
+                <label for="operator" style="margin-left: -10px;">OPERATOR:</label>
+                <input type="text" id="operator" readonly style="margin-left: -10px;" >
+            
+                <label for="shift" style="width: 5vw; ">SHIFT:</label>
+                <input type="text" id="shift" class="shift-name" style="width: 8%;" readonly >
+                
+                
+                <label for="accept" style="width: 5vw; ">ACCEPT:</label>
+                <input type="text" id="accept" value="0" style="background-color: green;width: 5%;" readonly>
+            
+                <label for="reject" style="width: 5vw;">REJECT:</label>
+                <input type="text" id="reject" value="0" style="background-color: red;width: 5%;" readonly>
+            
+                <label for="rework" style="width: 5vw;">REWORK:</label>
+                <input type="text" id="rework" value="0" style="background-color: yellow;width: 5%; margin-left: 5px;" readonly>
+                
+                <button class="reset-button" id="reset-button">
+                    <span class="reset-symbol">&#8634;</span>
+                </button>
+                
+                <button class="arrow-button"  onclick="redirectToMeasurebox()">
+                    <div class="arrow-icon">
+                        <div class="arrow-tail"> BACK </div>
+                    </div> 
+                </button><br>
+            
+            
+                
+                <label for="machine" style="margin-left: 8%;">MACHINE:</label>
+                <input type="text" id="machine" style="width: 8%;" readonly>
+            
+                <label for="partModel" style="width: 10vw;" >PART MODEL:</label>
+                <select id="partModel" name="partModel" style="width: 15vw" >
+                    {% for value in part_model_values %}
+                        <option value="{{ value }}"><b>{{ value }}</b></option>
+                    {% endfor %}
+                </select>
+            
+                <label for="comp_srno" style="width: 10vw; ">COMP NO:</label>
+                <input type="text" id="comp_srno" style="width: 25vw; font-weight: bold;" readonly><br>
+            
+                <label for="part_status" style=" width: 10vw;margin-left: 11%;" >PART STATUS</label>
+                <input type="text" id="part_status" style="width: 15vw;height: 5vh;" readonly>
+                
+                <input type="text" id="customer_name" style="width: 20vw;height: 5vh; margin-left: 2%;text-align: center;font-weight: bold;" readonly>
+                
+                <label for="cycle_mode" style="margin-left: 1%;">PLC_STATUS:</label>
+                <input type="text" id="cycle_mode" readonly ><br>
+            
+                <input type="text" id="pre" style="width: 60vw;height: 6vh;margin-left: 20%; margin-top: 1%; " readonly>
+            
+                {% load static %}
+                <div class="center-image">
+                        <img src="{% static 'images/Gauge.jpg' %}" style="height: 16vh;width: 10vw; margin-left: 89%; margin-top: -7%; border: 4px solid white;">
+                    </div>
+                
+                    {% load static %}
+                    <div class="center-image-1">
+                            <img src="{% static 'images/Gauge.jpg' %}" style="height: 16vh;width: 10vw; margin-left: 1%; margin-top: -10%; border: 4px solid white;">
+                        </div>    
+            
+            </div>
+        
+        </div>
+
+        
+    </div>
     
+    <div class="three_containers">
+
+    <div class="table-container">
+        <div class="box-2" id="box2" style="overflow-y: auto;">
+    
+            <table border="1" style="width: 100%;" id="my-table">
+              <thead>
+                <tr>
+                  <th style="width: 5%;height: 30px; ">Sr.No</th>
+                  <th style="width: 15%;" id="parameter_name">Parameter Name</th>
+                  <th style="width: 10%;" id="nominal">Nominal</th>
+                  <th style="width: 10%;" id="readings">Readings</th>
+                  <th style="width: 10%;" id="lsl">LSL</th>
+                  <th style="width: 25%;" id="indicator">Indicator</th>
+                  <th style="width: 10%;" id="usl">USL</th>
+                  <th style="width: 15%;" id="status">Status</th>
+                  <th style="display: none;" id="utl">utl</th>
+                  <th style="display: none;" id="ltl">ltl</th>
+                </tr>
+              </thead>
+              <tbody id="table-body" >
+                  
+              </tbody>
+            </table>
+          
+      </div>
+    </div>
+
+    <div class="container-3" >
+        <div class="box-3" id="box3" style="overflow-y: auto;filter: blur(5px); pointer-events: none; opacity: 0.5;">
+            <center id="attribute"><b>ATTRIBUTE PARAMETER</b></center>
+            <label for="attributeParameter" style="width: 200px;margin-top: 0px;">Parameter Name:</label><br>
+        
+            <div class="attribute_input_box" style="display: none;">
+            <input type="text" id="attributeParameter" style="font-weight: bold; margin-top: 0px;" readonly><br>
+        
+            <div class="buttonAR" style="margin-top: 5px;">
+            <button type="button" id="attributeReject">REJECT</button>
+            <button type="button" id="attributeAccept">ACCEPT</button>
+            </div>
+        
+            <input type="text" id="attributeStatus"><br>
+            </div>
+          </div><br>
+
+    </div>
+
+<div class="btn-container">
+<div><button type="button" class="btn_outline" id="master-btn">Master<br>[F1]</button></div>
+<div><button type="button" class="btn_outline" id="start-btn"> Start<br>[F4]</button></div>
+<div><button type="button" class="btn_outline" id="stop-btn">Stop<br>[F5]</button></div>
+<div><button type="button" class="btn_outline" id="save-btn" disabled style="filter: blur(2px);"> Save</button></div>
+<div><button type="button" class="btn_outline" id="back-btn">Back<br>[F7]</button></div>
 </div>
-
-
+</div>
+</div>
 <div class="notification-container" id="notification-container">
     <pre style="margin-top: 10px; font-size: large; font-weight: bold;">Enter Your Punch Number here:</pre>
     <textarea id="punch_textarea" onkeydown="handleEnterKeyPress(event)"></textarea>
@@ -539,52 +650,34 @@ input[type=checkbox] {
 <div id="customAlert" ></div>
 
 
-<!-- <div class="box-3" id="box3" style="filter: blur(5px); pointer-events: none; opacity: 0.5;"> -->
-    <div class="box-3" id="box3" style="overflow-y: auto;filter: blur(5px); pointer-events: none; opacity: 0.5;">
-        <center id="attribute"><b>ATTRIBUTE PARAMETER</b></center>
-        <label for="attributeParameter" style="width: 200px;margin-top: 0px;">Parameter Name:</label><br>
-    
-        <div class="attribute_input_box" style="display: none;">
-        <input type="text" id="attributeParameter" style="font-weight: bold; margin-top: 0px;" readonly><br>
-    
-        <div class="buttonAR" style="margin-top: 5px;">
-        <button type="button" id="attributeReject">REJECT</button>
-        <button type="button" id="attributeAccept">ACCEPT</button>
-        </div>
-    
-        <input type="text" id="attributeStatus"><br>
-        </div>
-      </div><br>
-  
-
-    <textarea id="probe-A" style="display: none;" ></textarea>
-    <textarea id="probe-B" style="display: none;" ></textarea>
-    <textarea id="probe-C" style="display: none;" ></textarea>
-    <textarea id="probe-D" style="display: none;" ></textarea>
-    <textarea id="probe-E" style="display: none;" ></textarea>
-    <textarea id="probe-F" style="display: none;" ></textarea>
-    <textarea id="probe-G" style="display: none;" ></textarea>
-    <textarea id="probe-H" style="display: none;" ></textarea>
-    <textarea id="probe-I" style="display: none;" ></textarea>
-    <textarea id="probe-J" style="display: none;" ></textarea>
-    <textarea id="probe-K" style="display: none;" ></textarea>
+<textarea id="probe-A" style="display: none;" ></textarea>
+<textarea id="probe-B" style="display: none;" ></textarea>
+<textarea id="probe-C" style="display: none;" ></textarea>
+<textarea id="probe-D" style="display: none;" ></textarea>
+<textarea id="probe-E" style="display: none;" ></textarea>
+<textarea id="probe-F" style="display: none;" ></textarea>
+<textarea id="probe-G" style="display: none;" ></textarea>
+<textarea id="probe-H" style="display: none;" ></textarea>
+<textarea id="probe-I" style="display: none;" ></textarea>
+<textarea id="probe-J" style="display: none;" ></textarea>
+<textarea id="probe-K" style="display: none;" ></textarea>
 
 
 
 <!-- Custom Confirmation Modal -->
 <div id="confirmation-modal" class="modal">
-    <div class="modal-content">
-        <p>Do you want to store this data?</p>
-        <button id="confirm-yes" class="modal-btn">Yes</button>
-        <button id="confirm-no" class="modal-btn">No</button>
-    </div>
+<div class="modal-content">
+    <p>Do you want to store this data?</p>
+    <button id="confirm-yes" class="modal-btn">Yes</button>
+    <button id="confirm-no" class="modal-btn">No</button>
+</div>
 </div>
 
 
 
 
 <div id="rejectnotify" style="display: none;">
-    <input type="text" style="height: 40px; width: 60px; margin-top: 20px;">
+<input type="text" style="height: 40px; width: 60px; margin-top: 20px;">
 </div>
 
 <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
@@ -594,12 +687,11 @@ input[type=checkbox] {
 
 
 <input type="text" id="db_port" value="{{ comport_com_port }}" style="display: none;">
-    <input type="text" id="com_ports" value="{{ ports_string }}" style="display: none;">
-    <input type="text" id="baud_rate" value="{{ comport_baud_rate }}" style="display: none;">
-    <input type="text" id="parity" value="{{ comport_parity }}" style="display: none;">
-    <input type="text" id="stopbit" value="{{ comport_stopbit }}" style="display: none;">
-    <input type="text" id="databit" value="{{ comport_databit }}" style="display: none;">
-
+<input type="text" id="com_ports" value="{{ ports_string }}" style="display: none;">
+<input type="text" id="baud_rate" value="{{ comport_baud_rate }}" style="display: none;">
+<input type="text" id="parity" value="{{ comport_parity }}" style="display: none;">
+<input type="text" id="stopbit" value="{{ comport_stopbit }}" style="display: none;">
+<input type="text" id="databit" value="{{ comport_databit }}" style="display: none;">
 
 <script>
   

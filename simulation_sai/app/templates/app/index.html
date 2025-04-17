@@ -9,185 +9,267 @@
     <link rel="stylesheet" href="{% static 'Font-Awesome-4.7.0/css/font-awesome.min.css' %}">
     <style>
         body {
-            background-color: #1a7d9e;
-            margin: 0;
+            background-color: black;
             display: flex;
             align-items: center;
             justify-content: center;
             height: 100vh;
+            width: 100vw;
             color: white;
             text-shadow: 4px 4px 8px black;
+            border: 10px double white;
+    padding: 5px;
         }
 
-        .gallery {
-            margin-top: 220px;
-            margin-left: 300px;
-            position: relative;
-            width: 400px; /* Adjust this value based on your preference */
-            height: 400px; /* Adjust this value based on your preference */
+        .container-1{
+            height: 99vh;
+            width: 30vw;
+            margin-left: 1%;
         }
 
-        .image-container {
-            position: absolute;
-            text-align: center;
-            transform-origin: center;
+        .container-2{
+            height: 99vh;
+            width: 30vw;
+            margin-left: 1%;
         }
 
-        .image-container img {
-            height: 100px; /* Adjust this value based on your preference */
-            width: 100px; /* Adjust this value based on your preference */
-            background-color:white;
-            box-shadow: 5px 5px 15px 1px black;
-            border-radius: 50%;
-            margin: 15px; /* Adjust this value for spacing */
-           
+        .container-3{
+            height: 99vh;
+            width: 30vw;
+            margin-left: 1%;
         }
 
-        .image-container p {
-            margin: 5px 0 0;
-            font-size: 16px; /* Adjust this value for increased font size */
-            font-weight: bold; /* Make the font bold */
+        .centerImage1{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 5%;
+            margin-left: 50%;   
         }
 
-        .center-image {
-            position: absolute;
-            text-align: center;
-            transform: translate(-50%, -50%);
-            top: 23%;
-            left: 20%; 
+        .centerImage2{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 20%;
+            margin-left: 50%;   
         }
 
-        .center-image img {
-            height: 150px; /* Adjust this value based on your preference */
-            width: 150px; /* Adjust this value based on your preference */
+        .centerImage3{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 20%;
+            margin-left: 50%;   
+        }
+
+        .centerImage4{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 20%;
+            margin-left: 2%;   
+        }
+
+        .centerImage5{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 20%;
+            margin-left: 2%;   
+        }
+
+        .centerImage6{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 20%;
+            margin-left: 2%;   
+        }
+
+        .centerImage7{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 30%;
+            margin-left: 30%;   
+        }
+
+        .centerImage8{
+            height: 15vh;
+            width: 10vw;
+            margin-top: 40%;
+            margin-left: 30%;   
+        }
+
+        #probe{
+            height: 15vh;
+            width: 10vw;
             background-color: white;
-            box-shadow: 5px 5px 15px 1px black;
-            border-radius: 50%;
+           
+            border: 8px double blue; 
+            box-shadow: 0 0 15px 5px rgb(52, 52, 236); 
+           
+            
         }
 
-        .center-image p {
-            margin: 5px 0 0;
-            font-size: 16px; /* Adjust this value for increased font size */
-            font-weight: bold; /* Make the font bold */
+        #parameter{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+           
+            border: 8px double orange; 
+            box-shadow: 0 0 15px 5px orange;
         }
 
-        @keyframes rotateImages{
-            from{transform: rotate(0deg);}
-            to{transform: rotate(360deg);}
+        #partselect{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+           
+            border: 8px double blue; 
+            box-shadow: 0 0 15px 5px rgb(52, 52, 236); 
         }
 
-        .image-1 { transform: rotate(0deg) translate(210px) rotate(0deg); }
-        .image-2 { transform: rotate(45deg) translate(210px) rotate(-45deg); }
-        .image-3 { transform: rotate(90deg) translate(210px) rotate(-90deg); }
-        .image-4 { transform: rotate(135deg) translate(210px) rotate(-135deg); }
-        .image-5 { transform: rotate(180deg) translate(210px) rotate(-180deg); }
-        .image-6 { transform: rotate(225deg) translate(210px) rotate(-225deg); }
-        .image-7 { transform: rotate(270deg) translate(210px) rotate(-270deg); }
-        .image-8 { transform: rotate(315deg) translate(210px) rotate(-315deg); }
-
-        .notify{
-            margin-top: -500px;
-            margin-left: -200px;
+        #utility{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+            border: 8px double blue; 
+            box-shadow: 0 0 15px 5px rgb(52, 52, 236); 
+            
         }
 
-        #notification{
-            height: 50px;
-            width: 280px;
-            background-color: red;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            border: 2px solid black;
-            font-size: 16px;
+        #report{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+            border: 8px double orange; 
+            box-shadow: 0 0 15px 5px orange;
+            
+        }
+
+        #spc{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+           
+           border: 8px double blue; 
+            box-shadow: 0 0 15px 5px rgb(52, 52, 236); 
+            
+        }
+
+        #general{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+           
+            border: 8px double orange; 
+            box-shadow: 0 0 15px 5px orange;
+        }
+
+        #comport{
+            height: 15vh;
+            width: 10vw;
+            background-color: white;
+            border: 8px double orange; 
+            box-shadow: 0 0 15px 5px orange;
+            
+        }
+
+        .container-1 p{
             font-weight: bold;
-            text-align: center;
-        }
-       
-        #logout-btn {
-            height: 50px;
-            width: 150px;
-            margin-top: -500px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: red;
+            font-size: 1.2vw;
             color: white;
-            padding: 15px 30px;
-            border: none;
-            border-radius: 8px;
-            border: 2px solid black;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
+            margin-top: 3%;
+            margin-left: 15%;
         }
 
-        #logout-btn:hover{
-            background-color: orangered;
+        .container-2 p{
+            font-weight: bold;
+            font-size: 1.2vw;
+            color: white;
+            margin-top: 3%;
+            margin-left: 15%;
         }
+
+        .container-3 p{
+            font-weight: bold;
+            font-size: 1.2vw;
+            color: white;
+            margin-top: 3%;
+            margin-left: 40%;
+        }
+
+        .logout{
+            margin-top: -100%;
+        }
+        #logout-btn{
+            background-color: red;
+            font-weight: bold;
+            font-size: 1.2vw;
+            height: 5vh;
+            width: 12vw;
+            margin-left: 60%;
+            margin-top: -100%;
+            color: white;
+            border-radius: 5px;
+            border: 2px solid white;
+        }
+
     </style>
 </head>
 <body>
+
+<div class="container-1">
     <div class="notify">
         <input type="text" id="notification1" readonly style="display: none;" ><br>
         <input type="text" id="notification2" readonly style="display: none;" ><br>
         <input type="text" id="notification3" readonly style="display: none;" >
     </div>
-    <div class="gallery">
-        <div class="center-image">
-            <img src="{% static 'images/Gauge.jpg' %}">
-        </div>
-
-        <div class="image-container image-1">
-            <a href="/probe/">
-                <img src="{% static 'images/calibration.jpg' %}"></a>
-                <p>Probe Calibration</p>
-        </div>
-
-        <div class="image-container image-2">
-            <a href="/parameter/">
-                <img src="{% static 'images/para.jpg' %}"></a>
-                <p>Parameter Settings</p>
-            
-        </div>
-
-        <div class="image-container image-3">
-            <a href="/measurebox/">
-                <img src="{% static 'images/measure.jpg' %}"></a>
-                <p>Part Selection</p>
-         
-        </div>
-
-        <div class="image-container image-4">
-            <a href="/utility/">
-            <img src="{% static 'images/master.jpg' %}"></a>
-            <p>Utility</p>
-        </div>
-
-        <div class="image-container image-5">
-            <a href="/report/">
-            <img src="{% static 'images/report.jpg' %}"></a>
-            <p>Report</p>
-        </div>
-
-        <div class="image-container image-6">
-            <a href="/spc/">
-            <img src="{% static 'images/spc.jpg' %}"></a>
-            <p>SPC</p>
-        </div>
-
-        <div class="image-container image-7">
-            <a href="/trace/">
-            <img src="{% static 'images/general_settings.png' %}"></a>
-            <p>General Settings</p>
-        </div>
-
-        <div class="image-container image-8">
-            <a href="/comport/">
-            <img src="{% static 'images/comport_settings.png' %}"></a>
-            <p>Comport Settings</p>
-        </div>
+    <div class="centerImage1">
+        <a href="/probe/">
+            <img src="{% static 'images/calibration.jpg' %}" id="probe"></a>
+            <p>PROBE CALIBRATION</p>
+    </div>
+    <div class="centerImage2">
+        <a href="/parameter/">
+            <img src="{% static 'images/para.jpg' %}" id="parameter"></a>
+            <p>PARAMETER SETTINGS</p>
     </div>
 
+    <div class="centerImage3">
+        <a href="/measurebox/">
+            <img src="{% static 'images/measure.jpg' %}" id="partselect"></a>
+            <p>PART SELECTION</p>
+    </div>
+</div>
+<div class="container-2">
+
+    <div class="centerImage7">
+        <a href="/trace/">
+            <img src="{% static 'images/general_settings.png' %}" id="general"></a>
+            <p>GENERAL SETTINGS</p>
+    </div>
+
+    <div class="centerImage8">
+        <a href="/comport/">
+            <img src="{% static 'images/comport_settings.png' %}" id="comport"></a>
+            <p>COMPORT SETTINGS</p>
+    </div>
+
+</div>
+    <div class="container-3">
+    <div class="centerImage4">
+        <a href="/utility/">
+            <img src="{% static 'images/master.jpg' %}" id="utility"></a>
+            <p>UTILITY</p>
+    </div>   
+
+    <div class="centerImage5">
+        <a href="/report/">
+            <img src="{% static 'images/report.jpg' %}" id="report"></a>
+            <p>REPORT</p>
+    </div>
+
+    <div class="centerImage6">
+        <a href="/spc/">
+            <img src="{% static 'images/spc.jpg' %}" id="spc"></a>
+            <p>SPC</p>
+    </div>
 
     <input type="text" id="db_port" value="{{ comport_com_port }}" hidden>
     <input type="text" id="com_ports" value="{{ ports_string }}" hidden>
@@ -197,7 +279,11 @@
     <input type="text" id="databit" value="{{ comport_databit }}" hidden>
     <textarea id="serial-data-display" cols="50" rows="10" readonly hidden></textarea>
 
+    <div class="logout">
     <button id="logout-btn">LOGOUT</button>
+    <div>
+    </div> 
+
 
 
     

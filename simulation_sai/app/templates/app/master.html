@@ -4,14 +4,67 @@ Mastering Page
 {% endblock title %}
 {% block content %}
 <style>
-    .full-page-box {
-         display: flex;
-         flex-direction: column;
-         background-color: lightgrey;
-         padding: 20px; 
-         box-sizing: border-box;
-         
-     }
+
+html, body{
+    margin: 0;
+    padding: 0;
+    /* overflow: hidden; */
+    height: 100vh;
+    width: 100vw;
+}
+
+body {
+   
+    background-color: black;
+    border: 10px double white;
+    padding: 5px;
+}
+
+.master_page{
+    height: 100%;
+    width: 100%;
+   
+}
+
+.clock_box{
+    height: 5%;
+    width: 100%;
+    background-color: black;
+    display: flex;
+}
+#clock-box{
+         background-color:white;
+         height: 100%;
+         width: 20%;
+         border: 1px solid black;
+         font-size: 1.5vw;
+         font-weight: bold;
+       text-align: center; 
+ 
+        }
+        .back_button{
+            height: 100%;
+            width: 20%; 
+            margin-left: 55%;
+        }
+
+        
+#back-btn{
+        background-color: red;
+        height: 100%;
+        width: 40%; 
+        float: right;
+        font-size: 1.5vw;
+        color: white;
+        font-weight: bold;
+               
+         }
+
+  
+
+
+
+     
      .wrapper {
             display: flex;
             flex-wrap: wrap;
@@ -41,59 +94,156 @@ Mastering Page
             margin-top: 5px; /* Spacing between input boxes */
            
         }
+
+
+        .full-page-box {
+         display: flex;
+         background-color: lightgrey;
+         padding: 20px; 
+         border: 2px solid black;
+         width: 100%;
+         height: 23%;
+     }
       
  
      .left-box {
-         width: 350px;
-         height: 100px;
+         width: 35%;
+         height: 100%;
          background-color: white; 
          margin-right: 10px;
          border: 2px solid black; 
      }
-     label {
+
+    
+
+     .radio_container {
+        width: 25%;
+         height: 100%;
+        border: 2px solid black; 
+    display: flex;
+    flex-direction: column;
+   background-color: white;
+    font-family: Arial, sans-serif;
+}
+.radio_container label{
+    width: 60%;
+    margin-left: 10%;
+    margin-top: 5%;
+    font-size: 1.2vw;
+    color: black;
+    font-weight: bold;
+}
+
+.radio_option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+    font-size: 16px;
+}
+
+input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: blue; /* modern browsers only */
+    cursor: pointer;
+    margin-top: 5%;
+}
+
+
+
+
+
+
+
+     .mastering_group_container{
+        width: 25%;
+         height: 100%;
+        margin-left: 1%;
+        border: 2px solid black;
+        background-color: white;
+     }
+
+     .mastering_group_container label{
+        width: 40%;
+        font-weight: bold;
+        font-size: 1.2vw;
+        margin-left: 2%;
+     }
+
+     .mastering_group_container select{
+        width: 50%;
+        font-weight: bold;
+        font-size: 1vw;
+     }
+     
+
+     .button_container{
+        
+        width: 25%;
+         height: 100%;
+         background-color: white; 
+         border: 2px solid black;
+         margin-left: 1%;
+     }
+
+
+
+
+   .left-box label {
              display: inline-block;
-             width: 150px; 
-             margin-top: 15px;
+             width: 35%; 
+             margin-top: 0;
              text-align: center;
              font-weight: bold;
+             font-size: 1.5vw;
          }
  
-         select {
-             margin-top: 10px;
+         .left-box  select {
+             margin-top: 5%;
              box-sizing: border-box;
              width: 50%; 
              height: 30px;
+             font-size: 1.3vw;
+             text-align: center;
+             font-weight: bold;
          } 
          #cancel-btn{
              background-color: orange;
              color:black;
-             height: 40px;
-             width: 130px;
-             margin-left: 10px;
-             margin-top: 10px;
+             height: 35%;
+             width: 35%;
+             margin-left: 5%;
+             margin-top: 5%;
                
          }
          #select-btn{
              background-color: green;
              color:black;           
-             height: 40px;
-             width: 130px; 
+             height: 35%;
+             width: 35%;
              margin-left: 65px; 
-             margin-top: 10px;
+             margin-top: 5%;
          }
+
+
+
+
          #lowMasterBtn{
-             width: 250px;
-             height: 40px;
-             margin-left: 950px;
-             margin-top: -80px;
+             width: 15vw;
+             height: 7vh;
+             font-size: 1.2vw;
+            margin-left: 10%;
+            margin-top: 3%;
              background-color: blue;
              color: white;
          }
 
         #highMasterBtn{
-             width: 250px;
-             height: 40px;
-             margin-left: 950px;
+            width: 15vw;
+            height: 7vh;
+            font-size: 1.2vw;
+             margin-left: 10%;
              background-color: blue;
              color: white;
          }
@@ -101,19 +251,20 @@ Mastering Page
 
          
          #singleMasterBtn{
-            width: 250px;
-             height: 40px;
-             margin-left: 950px;
+            width: 15vw;
+             height: 8vh;
+             font-size: 1.2vw;
+             margin-left: 10%;
              margin-top: 10px;
              background-color: blue;
              color: white;
          }
 
          #measureBtn{
-            width: 120px;
-             height: 70px;
-             margin-left: 800px;
-             margin-top: -50px;
+            width: 10vw;
+             height: 8vh;
+            margin-left: 25%;
+            margin-top: 3%;
              background-color: rgb(255, 0, 76);
              color: white;
          }
@@ -123,7 +274,9 @@ Mastering Page
          
          
         
- 
+ .probe-container{
+    color: white;
+ }
        
  
          #probe-A,
@@ -155,17 +308,7 @@ Mastering Page
          background-color: rgb(250, 106, 54)
  
         }
-        #clock-box{
-         background-color:white;
-         border-radius: 5px;
-         height: 40px;
-         border: 1px solid black;
-         padding-top: 5px;
-         font-weight: bold;
-         max-width: 200px;
-         margin-left: 1000px;
- 
-        }
+       
 
 
 .reset-button {
@@ -235,26 +378,20 @@ Mastering Page
 }
 
 
-#back-btn{
-             background-color: red;
-             color:black;
-             height: 40px;
-             width: 80px;
-             float: right;
-             margin-top: -35px;
-               
-         }
              
  </style>
  
-
- <div class="full-page-box">
-    <div id="clock">
+<div class="master_page">
+    <div class="clock_box">
         <div class="box" id="clock-box"></div>
+        <div class="back_button">
         <a href="{% url 'measurebox' %}">
-            <button type="button" id="back-btn"><b>Back</b></button>
+            <button type="button" id="back-btn">BACK<button>
         </a>
     </div>
+    </div>
+ <div class="full-page-box">
+    
 
     <div class="left-box">
         <label for="partModel">PART MODEL:</label>
@@ -264,40 +401,53 @@ Mastering Page
             {% endfor %}
         </select>
         <a href="{% url 'measurebox' %}">
-            <button type="button" id="cancel-btn"><b>Cancel</b></button>
+            <button type="button" id="cancel-btn"><b>CANCEL</b></button>
         </a>
-        <button type="button" id="select-btn"><b>Select</b></button>
+        <button type="button" id="select-btn"><b>SELECT</b></button>
     </div>
 
-    <label for="all_parameter" style="margin-left: 370px; margin-top: -80px;">
-        All Parameter
-        <input type="radio" name="radio_selection" style="margin-left: 10px;" id="all_parameter" checked onclick="handleRadioClick(this)">
-    </label>
 
-    <label for="parameterwise" style="margin-left: 370px;">
-        Parameterwise
-        <input type="radio" name="radio_selection" style="margin-left: 7px;" id="parameterwise" onclick="handleRadioClick(this)">
-    </label><br>
+    <div class="radio_container">
+        <div class="radio_option">
+            <label for="all_parameter">ALL PARAMETERS</label>
+            <input type="radio" name="radio_selection" id="all_parameter" checked onclick="handleRadioClick(this)">
+        </div>
+    
+        <div class="radio_option">
+            <label for="parameterwise">PARAMETERWISE</label>
+            <input type="radio" name="radio_selection" id="parameterwise" onclick="handleRadioClick(this)">
+        </div>
+    </div>
+    
 
-    <label for="mastering" style="margin-left: 500px; margin-top: -80px;">MASTERING GROUP:</label>
-    <select id="mastering" style="width: 7%; margin-left: 650px; margin-top: -40px;" name="mastering" onchange="updateMastering()">
+
+
+<div class="mastering_group_container">
+    <label for="mastering" >MASTERING GROUP:</label>
+    <select id="mastering" name="mastering" onchange="updateMastering()">
         <script>
             for (var i = 1; i <= 30; i++) {
                 document.write('<option value="' + i + '">' + i + '</option>');
             }
         </script>
-    </select>
-
-    <button id="measureBtn" type="button" onclick="MeasureBtnClick()"><b>Measurement<br>F1</b></button>
-    <button id="lowMasterBtn" type="button" onclick="lowMasteringClick()"><b>Low Mastering</b></button>
-    <button id="highMasterBtn" type="button" onclick="highMasteringClick()"><b>High Mastering</b></button>
-    <button id="singleMasterBtn" type="button" onclick="singleMasteringClick()"><b>Single Mastering</b></button>
+    </select><br>
+    <button id="measureBtn" type="button" onclick="MeasureBtnClick()"><b>MEASUREMENT<br>F1</b></button>
+</div>
 
 
+
+<div class="button_container">
+    <button id="lowMasterBtn" type="button" onclick="lowMasteringClick()"><b>LOW MASTERING</b></button>
+    <button id="highMasterBtn" type="button" onclick="highMasteringClick()"><b>HIGH MASTERING</b></button>
+    <button id="singleMasterBtn" type="button" onclick="singleMasteringClick()"><b>SINGLE MASTERING</b></button>
+</div>
+</div>
+
+<div class="probe_box_container">
     <pre id="pre" style="border: 2px solid black;"></pre>
 
     <div>
-        <h5>RAW COUNT:</h5>
+        <h5 style="color: white;">RAW COUNT:</h5>
         <div class="probe-container">
             <p>P1:</p><textarea id="probe-A"></textarea>
             <p>P2:</p><textarea id="probe-B"></textarea>
@@ -312,7 +462,15 @@ Mastering Page
             <p>P11:</p><textarea id="probe-K"></textarea>
         </div>
     </div>
+</div>
 
+
+
+
+
+
+
+<div class="output_box_container" style="overflow-y: auto; max-height: 50vh;">
     <!-- Ensure wrapper has overflow-y applied -->
     <div class="second_box" >
         <div id="wrapper" class="wrapper" style="overflow-y: auto; max-height: 50vh;">
@@ -320,10 +478,10 @@ Mastering Page
         </div>
     </div>
 
-    <div id="container-wrapper"></div>
+    <div id="container-wrapper" ></div>
     <div id="customAlert"></div>
 </div>
-
+</div>
 
 <script>
 

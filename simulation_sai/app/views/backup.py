@@ -10,7 +10,7 @@ import openpyxl
 import time
 
 # Database credentials
-db_name = 'postgres'
+db_name = 'Multi_Gauge'
 db_user = 'postgres'
 db_password = 'sai@123'
 db_host = 'localhost'
@@ -36,7 +36,7 @@ def backup(request):
 
         return JsonResponse({'status': 'success', 'message': 'Backup settings updated and new entry will be created! and backup also saved in your downloads!'})
 
-    return render(request, 'app/home.html')
+    return render(request, 'app/login.html')
 
 
 def create_new_backup_setting(existing_backup_date, confirm_value):
@@ -47,7 +47,7 @@ def create_new_backup_setting(existing_backup_date, confirm_value):
         existing_date = datetime.strptime(existing_backup_date, '%d-%m-%Y %I:%M:%S %p')
 
         # Call the backup function to save to .xlsx format
-        backup_database_to_xlsx()
+        backup_database_to_sql()
 
         # Calculate new backup date (same day, next month)
         new_month = existing_date.month + 1 if existing_date.month < 12 else 1
@@ -68,16 +68,15 @@ def create_new_backup_setting(existing_backup_date, confirm_value):
             confirm_backup=False  # Set confirm_backup to False for the new record
         )
 
-def backup_database_to_xlsx():
-    # Create a main backup directory if it doesn't exist
-    main_backup_folder = os.path.join(os.path.expanduser('~/Downloads'), 'backup')
+def backup_database_to_sql():
+
+    main_backup_folder = r"C:\Program Files\Gauge_Logic\backup_files"
     os.makedirs(main_backup_folder, exist_ok=True)
 
     # Create a timestamp for the current backup
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     backup_folder = os.path.join(main_backup_folder, f'backup_{timestamp}')
     os.makedirs(backup_folder, exist_ok=True)
-
     # Connect to the PostgreSQL database
     try:
         conn = psycopg2.connect(
@@ -88,9 +87,6 @@ def backup_database_to_xlsx():
             port=db_port
         )
         cursor = conn.cursor()
-
-        # Create a new Excel workbook
-        workbook = openpyxl.Workbook()
 
         # Specify the models (tables) you want to back up
         models = [
@@ -120,35 +116,47 @@ def backup_database_to_xlsx():
             "app_histogram_chart",
             "app_pie_chart",
             "app_backupsettings",
+            "app_master_report",
+            "app_parameterfactor",
         ]
 
-        for model in models:
-            # Query the table data
-            cursor.execute(f'SELECT * FROM "{model}" ORDER BY id ASC;')
-            rows = cursor.fetchall()
+        # Prepare the backup SQL file
+        sql_file_path = os.path.join(backup_folder, f'database_backup_{timestamp}.sql')
+        with open(sql_file_path, 'w') as sql_file:
+            # Write the header for SQL file
+            sql_file.write("-- Database Backup SQL File\n")
+            sql_file.write(f"-- Backup created on {timestamp}\n\n")
 
-            # Get column names
-            column_names = [desc[0] for desc in cursor.description]
+            for model in models:
+                # Query the table data
+                cursor.execute(f'SELECT * FROM "{model}" ORDER BY id ASC;')
+                rows = cursor.fetchall()
 
-            # Create a new worksheet for each model
-            worksheet = workbook.create_sheet(title=model.strip('"'))
+                # Get column names
+                column_names = [desc[0] for desc in cursor.description]
 
-            # Write the header
-            worksheet.append(column_names)
+                # Write the INSERT INTO SQL statements for the current model
+                for row in rows:
+                    # Format values for SQL statement
+                    values = []
+                    for value in row:
+                        if isinstance(value, str):
+                            values.append(f"'{value.replace("'", "''")}'")  # Escape single quotes in string values
+                        elif isinstance(value, datetime):
+                            # Format datetime for SQL
+                            values.append(f"'{value.strftime('%Y-%m-%d %H:%M:%S')}'")
+                        elif value is None:
+                            values.append('NULL')
+                        else:
+                            values.append(str(value))
+                    
+                    # Create the INSERT INTO statement
+                    sql_file.write(f"INSERT INTO {model} ({', '.join(column_names)}) VALUES ({', '.join(values)});\n")
 
-            # Write the data
-            for row in rows:
-                # Convert any timezone-aware datetime to naive datetime
-                row = [
-                    value.replace(tzinfo=None) if isinstance(value, datetime) and value.tzinfo else value
-                    for value in row
-                ]
-                worksheet.append(row)
+                # Add a newline between tables
+                sql_file.write("\n")
 
-        # Save the workbook to the backup folder with a timestamp in the filename
-        xlsx_file_path = os.path.join(backup_folder, f'database_backup_{timestamp}.xlsx')
-        workbook.save(xlsx_file_path)
-        print(f"Backup saved to {xlsx_file_path}")
+        print(f"Backup saved to {sql_file_path}")
 
     except Exception as e:
         print(f"An error occurred while backing up the database: {e}")

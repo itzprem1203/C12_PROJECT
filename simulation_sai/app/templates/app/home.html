@@ -14,8 +14,8 @@
         position: fixed;
         top: 10%;
         left: 45%;
-        height: 60px;
-        width: 350px;
+        height: 30%;
+        width: 60%;
         transform: translate(-50%, -50%);
         z-index: 1000;
         display: none;
@@ -24,28 +24,213 @@
     #clock-box{
          background-color:white;
          border-radius: 5px;
-         height: 40px;
+         height: 10%;
          border: 1px solid black;
-         padding-top: 5px;
+         padding-top: 2%;
          font-weight: bold;
-         max-width: 200px;
-         margin-left: 500px;
+         max-width: 15%;
+         margin-left: 40%;
  
         }
 
-        #close{
-            width: 100%;
+     
+
+
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  background-color: lightgrey;
+ 
+}
+body{
+    border: 8px double black; 
+}
+
+.main_login{
+    height: 100%;
+    width: 100%;
+  
+   
+}
+.first_container{
+    display: flex;
+}
+
+.second_container{
+    display: flex;
+}
+.third_container{
+    display: flex;  
+}
+
+.image_container {
+    width: 35vw;
+    height: 39vh;
+    background-color: red;
+    border: 2px solid black;
+    overflow: hidden; /* optional: hides anything outside the container */
+    display: flex;
+    margin-top: 3%;
+    margin-left: 2%;
+    border-radius: 10px;
+}
+
+.image_container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* or use 'cover' depending on your need */
+}
+
+
+
+
+
+
+.login {
+    width: 30vw;
+    min-width: 300px;
+    height: 39vh;
+    margin-top: 3%;
+    margin-left: 28%;
+    background-color: gray;
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+
+#heading {
+    font-weight: bold;
+    font-size: 2vw;
+    margin-bottom: 5%;
+    margin-top: 1%;
+    display: block;
+    text-align: center;
+    color: white;
+}
+
+.tbox {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    border-radius: 5px;
+    width: 80%;
+    margin-left: 10%;
+  
+}
+
+.tbox input {
+    flex: 1;
+    border: none;
+    outline: none;
+    padding: 0.5rem;
+    font-size: 1.2vw;
+    width: 80%;
+}
+
+.password-input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.toggle-password {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    margin-left: auto;
+}
+
+#login-button {
+    width: 40%;
+    padding: 0.75rem;
+    background-color:red;
+    color: white;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 50%;
+    font-size: 1.2vw;
+}
+
+#login-button:hover {
+    background-color: rgb(247, 79, 79);
+}
+
+.center-align {
+    text-align: center;
+    margin-left: 25%;
+    color: darkorange;
+    font-size: 4vw;
+    margin-top: 2%;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px #000000;
+    font-family: apple-system;
+    font-style: italic;
+}
+
+
+.right-align {
+    text-align: right;
+    font-size: 2.5vw;
+   margin-right: 2%;
+   font-weight: 600;
+    color:aqua;
+    text-shadow: 2px 2px 4px #000000;
+}
+
+
+
+.left-align {
+    text-align: left;
+    font-size: 2vw;
+    font-family: 'Times New Roman', Times, serif;
+    margin-top: 3%;
+    margin-left: 5%;
+    color: black;
+}
+
+.right-align-1{
+    text-align: right;
+    font-size: 2vw;
+   font-family: 'Times New Roman', Times, serif;
+    margin-top: 3%;
+    margin-left: 40%;
+    color: black;
+}
+
+#close{
+            width: 90%;
             background-color: lightslategray;
             text-align: center;
-            margin-top: 1;
+           margin-bottom: 2%;
+            font-weight: bold;
+            font-size: 2vw;
+            margin-left: 5%;
+            color: white;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+
         }
       
 </style>
-<body style="background-color: lightslategray;">
-    <img src="{% static 'images/Gauge.jpg' %}" style="height: 350px; width: 650px; margin-top: 100px; margin-left: 100px; border: 7px solid white;">
-    <div class="login" style="margin-left: 800px;">
+<body>
+<div class="main_login">
+    <div class="first_container">
+    <div class="image_container">
+        
+        <img src="{% static 'images/Gauge.jpg' %}">
+    </div>
+   
+   <div class="login">
         <div class="loginform">
-            <h2>Login</h2> 
+           <label id="heading">LOGIN</label>
             <form method="post" id="login-form">
                 {% csrf_token %}
                 <div class="tbox">
@@ -62,7 +247,7 @@
                 </div>
                 <br>
                 
-                <button type="submit" id="login-button" style="margin-left: 150px;"><b>Login</b></button>
+                <button type="submit" id="login-button"><b>Login</b></button>
             </form>
             {% if error_message %}
             <div class="alert alert-danger alert-center" role="alert" id="error-alert">
@@ -71,13 +256,33 @@
             {% endif %}
         </div>
     </div>
+</div>
 
+<div class="second_container">
+    <div class="center-align">
+        GAUGE LOGIC DAQ - SPC
+    </div>
+    
+</div>
 
-    <h1 class="center-align"><b>Gauge Logic DAQ - SPC</b></h1>
-    <h1 class="left-align">Web: www.gaugelogic.com<br>E-Mail: sales@gaugelogic.com</h1>
-    <h1 class="right-align">-Accuracy is Our Moto & Passion</h1>
-    <h1 class="right-align-1">Sales : +91 7448411234</h1>
+<div class="second_container1">
+   
+    <div class="right-align">
+        -Accuracy is Our Moto & Passion
+    </div>
+</div>
+ 
 
+<div class="third_container">
+    <div class="left-align">
+        Web: www.gaugelogic.com<br>E-Mail: sales@gaugelogic.com
+    </div>
+    <div class="right-align-1">
+        Sales : +91 7448411234
+    </div>
+</div>
+
+ 
 
     <div class="box" id="clock-box" hidden></div>
 
@@ -90,6 +295,7 @@
     <textarea id="serial-data-display" cols="50" rows="10" readonly hidden></textarea>
 
     <button id="close" onclick="closeApp()">Close</button>
+</div>
 
     <!-- <input type="text" id="db_port" value="{{ comport_com_port }}" >
     <input type="text" id="com_ports" value="{{ ports_string }}" >

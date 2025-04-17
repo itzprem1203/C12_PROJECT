@@ -5,194 +5,210 @@
     <title>Serial Data Display</title>
     <script src="{% static 'jquery-jquery-f79d5f1/dist/jquery.min.js' %}"></script>
 </head>
+<style>
 
-<body style="background-color:#1a7d9e;">
-    <div id="notification" style="display: none; background-color: yellow; color: black; padding: 10px; border-radius: 5px; position: fixed; top: 20px; margin-left: 500px;">
-    </div>
+    
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  
+}
+
+    body {
+        background-color: black;
+        border: 10px double white;
+        height: 96vh;
+        width: 98vw;
+        padding: 5px;
+    }
+
+    .notification {
+        display: none;
+        background-color: yellow;
+        color: black;
+        padding: 10px;
+        border-radius: 5px;
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    .status-message {
+        color: red;
+        font-weight: bold;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .frame {
+        border: 2px solid black;
+        padding: 50px;
+        margin: 30px auto;
+        width:40%;
+        height: 50%;
+        background-color: lightblue;
+        border-radius: 10px;
+    }
+
+    .form-group {
+        display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+    }
+
+    .form-label {
+        display: inline-block;
+        width: 40%;
+        font-weight: bold;
+        font-size: 1.5vw;
+        
+       
+    }
+
+    .colon {
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+    .form-select {
+        width:50%;
+        height: 30px;
+        text-align: center;
+        font-size: 1vw;
+        font-weight: bold;
+    }
+
+    .button {
+        width:40%;
+        height: 5vh;
+        margin-top: 10px;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        margin-left: 5%;
+    }
+
+    .button.cancel {
+        background-color: red;
+        color: white;
+        font-size: 1vw;
+    }
+
+    .button.ok {
+        background-color: green;
+        color: white;
+        font-size: 1vw;
+    }
+
+    .serial-output {
+        width: 100%;
+        margin-top: 10px;
+        font-size: 1vw;
+    }
+
+    .title {
+        margin-top: 30px;
+        color: white;
+        font-weight:bold;
+        font-size: 2.5vw;
+        text-shadow: 2px 2px 4px #000000;
+        text-align: center;
+        font-family: 'Courier New', Courier, monospace;
+    }
+</style>
+
+ <body>
+    <div class="notification" id="notification"></div>
+
     <div class="box-0">
-    <center style="margin-top: 30px; color: white; text-shadow: 2px 2px 4px #000000;">
-        <h1><b>COMPORT SETTINGS</b></h1>
-    </center>
+        <h1 class="title"><b>COMPORT SETTINGS</b></h1>
     </div>
-    <div id="status-message" style="color: red; font-weight: bold; margin-top: 10px;"></div>
 
+    <div class="status-message" id="status-message"></div>
 
     <form id="comport-form">
         {% csrf_token %}
-        <div id="frame1" style="border: 2px solid black; padding: 50px; margin-left: 380px;width: 480px;background-color:lightpink;">
-            
-            <label for="card"><b>CARD</b> </label>
-            <select id="card" name="card" style="width: 200px; margin-left: 65px;margin-top: 10px;">
-                <option value="LVDT_4CH" selected>IF BOX</option>
-                <option value="PLC">PLC</option>
-            </select>
-            <br><br>
-            
-            
-            <label for="com_port"><b>COMPORT-NO</b> </label>
-            <select id="com_port" name="com_port" style="width: 200px;">
-                {% for port in com_ports %}
-                    <option value="{{ port }}">{{ port }}</option>
-                {% endfor %}
-            </select>
-            <br>
-    
-            <label for="baud_rate"><b>BAUD RATE</b> </label>
-            <select id="baud_rate" name="baud_rate" style="width: 200px;margin-top: 10px; margin-left: 15px;">
-                {% for rate in baud_rates %}
-                <option id="baud-rate-{{ rate }}" value="{{ rate }}">{{ rate }}</option>
-                {% endfor %}
-            </select>
-            <br>
-    
-            <label for="parity"><b>PARITY</b> </label>
-            <select id="parity" name="parity" style="width: 200px; margin-left: 47px;margin-top: 10px;">
-                <option value="N">None</option>
-                <option value="E">Even</option>
-                <option value="O">Odd</option>
-                <option value="M">Mark</option>
-                <option value="S">Space</option>
-            </select>
-            <br>
+        <div class="frame">
+            <div class="form-group">
+                <label for="card" class="form-label">CARD</label>
+                <span class="colon">:</span>
+                <select id="card" name="card" class="form-select">
+                    <option value="PIEZO_4CH" selected>IF BOX</option>
+                    <option value="PLC">PLC</option>
+                </select>
+            </div>
 
-            <label for="stopbit"><b>STOPBIT</b> </label>
-            <select id="stopbit" name="stopbit" style="width: 200px;margin-top: 10px; margin-left: 38px;">
-                <option value="1">1</option>
-                <option value="1.5">1.5</option>
-                <option value="2">2</option>
-            </select>
-            <br>
+            <div class="form-group">
+                <label for="com_port" class="form-label">COMPORT-NO</label>
+                <span class="colon">:</span>
+                <select id="com_port" name="com_port" class="form-select">
+                    {% for port in com_ports %}
+                        <option value="{{ port }}">{{ port }}</option>
+                    {% endfor %}
+                </select>
+            </div>
 
-            <label for="databit"><b>DATABIT</b> </label>
-            <select id="databit" name="databit" style="width: 200px;margin-top: 10px; margin-left: 37px;">
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
-                <option value="7">7</option>
-                <option value="8" >8</option>
-            </select>
-            <br>
-            <br>
-            <textarea id="serial-data-display" cols="50" rows="10" readonly></textarea>
-            
+            <div class="form-group">
+                <label for="baud_rate" class="form-label">BAUD RATE</label>
+                <span class="colon">:</span>
+                <select id="baud_rate" name="baud_rate" class="form-select">
+                    {% for rate in baud_rates %}
+                        <option id="baud-rate-{{ rate }}" value="{{ rate }}">{{ rate }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="parity" class="form-label">PARITY</label>
+                <span class="colon">:</span>
+                <select id="parity" name="parity" class="form-select">
+                    <option value="N">None</option>
+                    <option value="E">Even</option>
+                    <option value="O">Odd</option>
+                    <option value="M">Mark</option>
+                    <option value="S">Space</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="stopbit" class="form-label">STOPBIT</label>
+                <span class="colon">:</span>
+                <select id="stopbit" name="stopbit" class="form-select">
+                    <option value="1">1</option>
+                    <option value="1.5">1.5</option>
+                    <option value="2">2</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="databit" class="form-label">DATABIT</label>
+                <span class="colon">:</span>
+                <select id="databit" name="databit" class="form-select">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                </select>
+            </div>
+
+            <textarea id="serial-data-display" cols="50" rows="10" readonly class="serial-output"></textarea>
+
             <br>
             <a href="{% url 'index' %}" style="text-decoration: none;">
-                <button type="button" id="cancel-button" style="background-color: red; color: white;margin-top: 10px;height: 30px; width: 200px;"><b>BACK</b></button>
+                <button type="button" class="button cancel"><b>BACK</b></button>
             </a>
-            <button type="button" id="start-button" style="background-color: green; color: white;margin-top: 10px;height: 30px; width: 200px;"><b>OK</b></button>
-            <!-- <button id="delete">DELETE</button> -->
+            <button type="button" id="start-button" class="button ok"><b>OK</b></button>
         </div>
     </form>
 
+
+
     <script>
-
-// document.getElementById('start-button').addEventListener('click', function () {
-//     const card = document.getElementById('card').value;
-
-//     console.log('Your data for this card is:', card);
-
-//     if (card !== "LVDT_4CH") {
-//         console.error("❌ Invalid card. WebSocket will not start.");
-//         return;  // Stop execution if the card is not LVDT_4CH
-//     }
-
-//     let socket = new WebSocket('ws://localhost:8000/ws/measurement/');
-
-//     socket.onopen = function () {
-//         console.log("✅ WebSocket Connected!");
-
-//         const com_port = document.getElementById('com_port').value;
-//         const baud_rate = document.getElementById('baud_rate').value;
-//         const parity = document.getElementById('parity').value;
-//         const stopbit = document.getElementById('stopbit').value;
-//         const databit = document.getElementById('databit').value;
-
-//         if (!com_port || !baud_rate || !databit || !stopbit || !parity) {
-//             console.error("⚠️ Missing PLC connection parameters.");
-//             socket.close(); // Close the socket to prevent issues
-//             return;
-//         }
-
-//         // Send connection request
-//         socket.send(JSON.stringify({
-//             "command": "start_PLC",
-//             "card": card,
-//             "com_port": com_port,
-//             "baud_rate": baud_rate,
-//             "databit": databit,
-//             "stopbit": stopbit,
-//             "parity": parity
-//         }));
-
-//         // Start reading/writing loop
-//         const intervalId = setInterval(() => {
-//             if (socket.readyState === WebSocket.OPEN) {
-//                 socket.send(JSON.stringify({ "action": "write", "address": 4100, "value": 1 }));
-//                 socket.send(JSON.stringify({ "action": "read", "address": 4105 }));
-//             } else {
-//                 clearInterval(intervalId);
-//             }
-//         }, 1000);
-
-//         socket.onclose = function () {
-//             console.log("🔴 WebSocket Closed");
-//             clearInterval(intervalId);
-//         };
-//     };
-
-//     socket.onmessage = function (event) {
-//         let response = JSON.parse(event.data);
-//         if (response.status === "success") {
-//             console.log(`✅ Address ${response.address}: ${response.value}`);
-//         } else {
-//             console.error("⚠️ Error:", response.message);
-//         }
-//     };
-
-//     socket.onerror = function (error) {
-//         console.error("❌ WebSocket Error:", error);
-//     };
-// });
-
-
-
-
-
-// document.addEventListener("DOMContentLoaded", function () {
-//     document.querySelectorAll("select").forEach(select => {
-//         select.addEventListener("focus", function () {
-//             let rect = this.getBoundingClientRect(); // Get current position of select box
-//             let optionCount = Math.min(this.options.length, 8); // Show max 8 options at a time
-//             let optionHeight = 30; // Approximate height of each option in px
-//             let totalHeight = optionCount * optionHeight;
-
-//             // Create a floating dropdown
-//             this.style.overflowY = "auto"; // Enable scrolling inside dropdown
-//             this.style.height = `${totalHeight}px`; // Set height for visible options
-//             this.size = optionCount; // Expand dropdown
-//             this.style.top = `${rect.top - totalHeight}px`; // Move dropdown above
-
-//             // Prevent page scroll when dropdown is open
-//             document.body.style.overflow = "hidden";
-//         });
-
-//         select.addEventListener("blur", function () {
-//             this.style.zIndex = "1";
-//             this.style.overflow = "hidden";
-//             this.style.height = "30px"; // Reset height
-//             this.size = 1; // Collapse dropdown
-
-//             // Restore page scrolling
-//             document.body.style.overflow = "auto";
-//         });
-
-//         select.addEventListener("change", function () {
-//             this.blur(); // Collapse after selection
-//         });
-//     });
-// });
-
-
 
 // document.getElementById('delete').addEventListener('click', function () {
 //     // Confirm deletion before proceeding

@@ -4,19 +4,141 @@ Probe-1 Page
 {% endblock title %}
 {% block content %}
 <style>
+
+     
+html, body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+   
+
+
+}
+
+body {
+   
+    background-color: black;
+    border: 10px double white;
+    padding: 5px;
+}
+.container{
+    display: flex;
+    margin-top: 50px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color:white;
+    height: 55vh;
+}
+
+.container-a{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+    
+}
+
+.container-b{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+}
+
+.container-c{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightpink;
+    font-size: 15px;
+}
+
+.container-d{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+}
+
+.container-e{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightgray;
+}
+
+.container-f{
+    height: 40px;
+    display: flex;
+    margin-top: 12px;
+    box-sizing: border-box;
+    padding: 0;
+    background-color: lightpink;
+}
+
+.card{
+    background-color:beige;
+    width: 180px;
+    height: 400px;
+    margin: 10px;
+}
+
+.card-image{
+    margin-top: 62px;
+}
+
+#lowReferenceBtn, #highReferenceBtn {
+    background-color: rgb(38, 239, 38);
+    color: black;
+    margin-top: 5px;
+    height: 6vh;
+    width: 20vw;
+    font-size: 1.2vw;
+    font-weight: bold;
+    margin-left: 80px;
+}
+
+
+
+#cancel-button {
+    background-color: red;
+    color: black;
+    margin-top: 5px;
+    height: 6vh;
+    width: 20vw;
+    font-size: 1.2vw;
+    font-weight: bold;
+    margin-left: 80px; 
+}
+
+
+
     .box-1{
         margin-top: 10px;
         margin-left: 50px;
-        height: 500px;
-        width: 1200px;
+        height: 75vh;
+        width: 90vw;
         background-color:lightblue;
     }
 
     .box-0{
         margin-top: 10px;
         margin-left: 50px;
-        height: 30px;
-        width: 1200px;
+        height: 7vh;
+        gap: 10px;
+        width: 65vw;
         background-color: white;
         display: flex;
         flex-direction: row;
